@@ -1,0 +1,22 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "gf-announce": {
+      "type": "gripfeet-announcement",
+      "settings": {
+        "text": "Free shipping worldwide · Made in India · Launch pricing — up to 39% off · COD available across India · 4–7 day global delivery · Stretch Supima · 100% silicone grip"
+      }
+    },
+    "gf-header": {
+      "type": "gripfeet-header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": [
+    "gf-announce",
+    "gf-header"
+  ]
+}

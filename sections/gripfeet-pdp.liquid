@@ -1,0 +1,324 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign product_form_id = 'gf-product-form-' | append: section.id -%}
+
+{%- comment -%} Breadcrumb {%- endcomment -%}
+<div class="gf-wrap gf-pdp-breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a>
+  <span class="sep">/</span>
+  {%- if collection -%}
+    <a href="{{ collection.url }}">{{ collection.title }}</a>
+    <span class="sep">/</span>
+  {%- endif -%}
+  <span class="here">{{ product.title }}</span>
+</div>
+
+{%- comment -%} Main PDP grid {%- endcomment -%}
+<section class="gf-wrap gf-pdp">
+
+  {%- comment -%} ── Gallery ── {%- endcomment -%}
+  <div class="gf-pdp-gallery" id="gf-gallery">
+    <div class="gf-pdp-thumbs" id="gf-thumbs">
+      {%- if product.images.size > 0 -%}
+        {%- for image in product.images limit: 5 -%}
+          <button
+            class="gf-pdp-thumb{% if forloop.first %} active{% endif %}"
+            onclick="gfGallerySwitch({{ forloop.index0 }})"
+            aria-label="{{ image.alt | default: product.title }}"
+            type="button"
+          >
+            <img
+              src="{{ image | image_url: width: 160 }}"
+              alt="{{ image.alt | default: product.title }}"
+              width="80" height="80"
+              loading="lazy"
+            >
+          </button>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..5) -%}
+          <button class="gf-pdp-thumb{% if forloop.first %} active{% endif %}" onclick="gfGallerySwitch({{ forloop.index0 }})" type="button">
+            <div class="gf-ph" style="width:100%;height:100%"></div>
+          </button>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <div class="gf-pdp-main" id="gf-main-img">
+      {%- if product.images.size > 0 -%}
+        {%- for image in product.images limit: 5 -%}
+          <img
+            src="{{ image | image_url: width: 1200 }}"
+            srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 900 }} 900w, {{ image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 960px) 100vw, 55vw"
+            alt="{{ image.alt | default: product.title }}"
+            width="800" height="1000"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            {% unless forloop.first %}style="display:none"{% endunless %}
+            data-shot="{{ forloop.index0 }}"
+          >
+        {%- endfor -%}
+      {%- else -%}
+        <div class="gf-ph" style="width:100%;height:100%">
+          <span class="gf-ph__label">[ {{ product.title }} · product shot ]</span>
+          <span class="gf-ph__corner">GF · 4:5</span>
+        </div>
+      {%- endif -%}
+      {%- if product.compare_at_price > product.price -%}
+        <span class="gf-pdp-save-pill">Launch · save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} ── Info panel ── {%- endcomment -%}
+  <div class="gf-pdp-info">
+    <span class="range-tag">{{ product.type | default: product.vendor }}</span>
+    <h1>{{ product.title }}</h1>
+
+    <div class="gf-pdp-price-line">
+      <span class="gf-pdp-price-now">{{ current_variant.price | money }}</span>
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        <span class="gf-pdp-price-was">{{ current_variant.compare_at_price | money }}</span>
+        <span class="gf-pdp-launch-tag">Launch price</span>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_stars -%}
+      <div class="gf-pdp-stars-row">
+        {%- for i in (1..5) -%}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.4"><path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.3l6.1-.7L12 3Z"/></svg>
+        {%- endfor -%}
+        <span>{{ section.settings.review_score }} · {{ section.settings.review_count }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if product.description != blank -%}
+      <p class="gf-pdp-blurb">{{ product.description | strip_html | truncate: 220 }}</p>
+    {%- endif -%}
+
+    {%- comment -%} Product form {%- endcomment -%}
+    {%- form 'product', product, id: product_form_id -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" id="gf-variant-id">
+
+      {%- comment -%} Options — size, colour etc {%- endcomment -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <div class="gf-pdp-opt">
+            <div class="lbl">
+              <span>{{ option.name }}</span>
+              <strong id="gf-opt-val-{{ forloop.index0 }}">{{ option.selected_value }}</strong>
+            </div>
+
+            {%- assign is_color = false -%}
+            {%- if option.name == 'Color' or option.name == 'Colour' -%}
+              {%- assign is_color = true -%}
+            {%- endif -%}
+
+            {%- if is_color -%}
+              <div class="gf-pdp-swatch-row">
+                {%- for value in option.values -%}
+                  <button
+                    type="button"
+                    class="gf-pdp-sw{% if option.selected_value == value %} active{% endif %}"
+                    onclick="gfSelectOption({{ forloop.parentloop.index0 }}, '{{ value | escape }}')"
+                    aria-label="{{ value }}"
+                  >
+                    <span class="dot" style="background:{{ value | downcase | replace: ' ', '' | prepend: '#' }}"></span>
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <div class="gf-pdp-pills">
+                {%- for value in option.values -%}
+                  <button
+                    type="button"
+                    class="gf-pdp-pill{% if option.selected_value == value %} active{% endif %}"
+                    onclick="gfSelectOption({{ forloop.parentloop.index0 }}, '{{ value | escape }}')"
+                  >{{ value }}</button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if option.name == 'Size' or option.name == 'size' -%}
+              <p class="gf-pdp-size-helper">Perfect Fit · Available in 2–3 sizes · <a href="#size-guide">Sizing guide</a></p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      {%- comment -%} Qty + Add to bag {%- endcomment -%}
+      <div class="gf-pdp-qty-add">
+        <div class="gf-pdp-qty">
+          <button type="button" onclick="gfQty(-1)" aria-label="Decrease">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </button>
+          <span class="val" id="gf-qty-val">1</span>
+          <button type="button" onclick="gfQty(1)" aria-label="Increase">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <input type="hidden" name="quantity" id="gf-qty-input" value="1">
+        </div>
+        <button type="submit" name="add" class="gf-btn gf-btn--primary gf-pdp-add">
+          Add to bag
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="gf-pdp-tertiary">
+        <button type="button" class="gf-btn gf-btn--ghost">Add to wishlist</button>
+        <button type="button" class="gf-btn gf-btn--ghost">Notify me</button>
+      </div>
+
+    {%- endform -%}
+
+    {%- comment -%} Promise strip {%- endcomment -%}
+    <div class="gf-pdp-strip">
+      <div class="gf-pdp-strip-item">
+        <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14Z"/><path d="M5 19c4-4 8-6 14-14"/></svg></span>
+        <div><strong>Stretch Supima Yarn</strong><small>Soft, breathable &amp; durable</small></div>
+      </div>
+      <div class="gf-pdp-strip-item">
+        <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="17" cy="7" r="1"/><circle cx="7" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="17" cy="12" r="1"/><circle cx="7" cy="17" r="1"/><circle cx="12" cy="17" r="1"/><circle cx="17" cy="17" r="1"/></svg></span>
+        <div><strong>Superior Antislip Grip</strong><small>100% silicone, full sole</small></div>
+      </div>
+      <div class="gf-pdp-strip-item">
+        <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span>
+        <div><strong>Perfect Fit</strong><small>Available in 2–3 sizes</small></div>
+      </div>
+      <div class="gf-pdp-strip-item">
+        <span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="5"/><circle cx="8" cy="6" r=".5" fill="currentColor"/></svg></span>
+        <div><strong>Easy Care</strong><small>Machine washable</small></div>
+      </div>
+    </div>
+
+    {%- comment -%} Accordion {%- endcomment -%}
+    <div class="gf-pdp-accordion">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'accordion' -%}
+          <div class="gf-pdp-acc" id="acc-{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            <button class="gf-pdp-acc-head" onclick="gfAccToggle('acc-{{ forloop.index0 }}')" type="button">
+              {{ block.settings.title }}
+              <span class="gf-pdp-acc-plus">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+            <div class="gf-pdp-acc-body">
+              <div class="gf-pdp-acc-body-inner">{{ block.settings.content }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Sticky mobile buy bar {%- endcomment -%}
+<div class="gf-pdp-buybar" id="gf-buybar">
+  <div class="meta">
+    <div class="n">{{ product.title }}</div>
+    <div class="p">{{ current_variant.price | money }}</div>
+  </div>
+  <button type="button" class="gf-btn gf-btn--primary" onclick="document.getElementById('{{ product_form_id }}').querySelector('[name=add]').click()">
+    Add to bag
+  </button>
+</div>
+
+<script>
+  // Gallery switcher
+  function gfGallerySwitch(idx) {
+    document.querySelectorAll('.gf-pdp-thumb').forEach(function(t, i) {
+      t.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('[data-shot]').forEach(function(img) {
+      img.style.display = parseInt(img.dataset.shot) === idx ? 'block' : 'none';
+    });
+  }
+
+  // Qty stepper
+  function gfQty(delta) {
+    var input = document.getElementById('gf-qty-input');
+    var val   = document.getElementById('gf-qty-val');
+    var next  = Math.max(1, parseInt(input.value) + delta);
+    input.value = next;
+    val.textContent = next;
+  }
+
+  // Option selector (updates hidden variant id)
+  function gfSelectOption(optionIdx, value) {
+    var label = document.getElementById('gf-opt-val-' + optionIdx);
+    if (label) label.textContent = value;
+    // Update active states
+    var containers = document.querySelectorAll('.gf-pdp-opt');
+    var container  = containers[optionIdx];
+    if (!container) return;
+    container.querySelectorAll('.gf-pdp-pill, .gf-pdp-sw').forEach(function(btn) {
+      btn.classList.toggle('active', btn.textContent.trim() === value || btn.getAttribute('aria-label') === value);
+    });
+    // Find matching variant
+    var form = document.querySelector('[id^="gf-product-form"]');
+    if (!form) return;
+    var variantInput = document.getElementById('gf-variant-id');
+    var opts = [];
+    document.querySelectorAll('.gf-pdp-opt').forEach(function(opt) {
+      var active = opt.querySelector('.active');
+      if (active) opts.push(active.textContent.trim() || active.getAttribute('aria-label'));
+    });
+    var variants = {{ product.variants | json }};
+    var match = variants.find(function(v) {
+      return v.options.every(function(o, i) { return !opts[i] || opts[i] === o; });
+    });
+    if (match) {
+      variantInput.value = match.id;
+      // Update price
+      var priceEl = document.querySelector('.gf-pdp-price-now');
+      if (priceEl) priceEl.textContent = match.price ? (match.price / 100).toLocaleString('en-IN', {style:'currency', currency:'INR', minimumFractionDigits: 0}) : '';
+    }
+  }
+
+  // Accordion toggle
+  function gfAccToggle(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  // Sticky buy bar on scroll
+  window.addEventListener('scroll', function() {
+    var bar = document.getElementById('gf-buybar');
+    if (bar) bar.classList.toggle('visible', window.scrollY > 500);
+  }, { passive: true });
+</script>
+
+{% schema %}
+{
+  "name": "GF Product Page",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_stars",     "label": "Show star rating",   "default": true },
+    { "type": "text",     "id": "review_score",   "label": "Review score",       "default": "4.9" },
+    { "type": "text",     "id": "review_count",   "label": "Review count",       "default": "248 reviews" }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion Row",
+      "settings": [
+        { "type": "text",     "id": "title",   "label": "Title",   "default": "Materials & Make" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane. 100% food-grade silicone grip pattern on the full sole. Reinforced heel &amp; toe.</p>" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "GF Product Page",
+    "blocks": [
+      { "type": "accordion", "settings": { "title": "Materials & Make",     "content": "<p>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane. 100% food-grade silicone grip pattern on the full sole. Reinforced heel &amp; toe.</p><ul><li>Long-staple Supima for softness and durability</li><li>Full-sole silicone — not painted-on rubber</li><li>Ribbed cuff for a secure, no-slip-down fit</li></ul>" } },
+      { "type": "accordion", "settings": { "title": "Sizing & Fit",         "content": "<p>Available in 2–3 sizes. UK 3–6 (S), UK 6–9 (M), UK 9–12 (L). Wears slightly snug out of the wash — softens after first wear.</p>" } },
+      { "type": "accordion", "settings": { "title": "Care & Washing",       "content": "<p>Machine washable, cold cycle, inside out. Tumble dry low or air dry. Do not iron the silicone sole. Lasts 80+ wears with normal care.</p>" } },
+      { "type": "accordion", "settings": { "title": "Shipping & Returns",   "content": "<p>Ships globally, 4–7 day delivery. Free shipping over ₹999. COD available across India. All sales are final — quality guaranteed on every pair.</p>" } }
+    ]
+  }]
+}
+{% endschema %}

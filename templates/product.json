@@ -1,0 +1,46 @@
+{
+  "sections": {
+    "pdp": {
+      "type": "gripfeet-pdp",
+      "settings": {
+        "show_stars": true,
+        "review_score": "4.9",
+        "review_count": "248 reviews"
+      },
+      "blocks": {
+        "acc-1": { "type": "accordion", "settings": { "title": "Materials & Make",   "content": "<p>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane. 100% food-grade silicone grip pattern on the full sole. Reinforced heel & toe.</p><ul><li>Long-staple Supima for softness and durability</li><li>Full-sole silicone — not painted-on rubber</li><li>Ribbed cuff for a secure, no-slip-down fit</li></ul>" } },
+        "acc-2": { "type": "accordion", "settings": { "title": "Sizing & Fit",       "content": "<p>Available in 2–3 sizes. UK 3–6 (S), UK 6–9 (M), UK 9–12 (L). Wears slightly snug out of the wash — softens after first wear.</p>" } },
+        "acc-3": { "type": "accordion", "settings": { "title": "Care & Washing",     "content": "<p>Machine washable, cold cycle, inside out. Tumble dry low or air dry. Do not iron the silicone sole. Lasts 80+ wears with normal care.</p>" } },
+        "acc-4": { "type": "accordion", "settings": { "title": "Shipping & Returns", "content": "<p>Ships globally, 4–7 day delivery. Free shipping over ₹999. COD available across India. All sales final — quality guaranteed on every pair.</p>" } }
+      },
+      "block_order": ["acc-1", "acc-2", "acc-3", "acc-4"]
+    },
+    "marquee": {
+      "type": "gripfeet-editorial-marquee",
+      "settings": {
+        "text": "Pilates · Yoga · Barre · Travel · Home · Hardwood · Marble · Studio · Football · Sleep"
+      }
+    },
+    "reviews": {
+      "type": "gripfeet-reviews",
+      "settings": {
+        "eyebrow": "07 — Worn-in opinions · Reviews",
+        "heading": "Quiet wins, in",
+        "heading_italic": "customers' words.",
+        "score": "4.9",
+        "count": "1,284 reviews"
+      },
+      "blocks": {
+        "rev-1": { "type": "review", "settings": { "stars": 5, "quote": "Honestly the first grip sock I haven't been embarrassed to wear out of the studio. The Supima feels like a proper sock — not a piece of medical equipment.", "name": "Aanya M.",       "location": "Mumbai · Pilates instructor" } },
+        "rev-2": { "type": "review", "settings": { "stars": 5, "quote": "Bought a three-pack of Soft Studio for travel. Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good.",                    "name": "Rohan K.",       "location": "Bengaluru · Frequent traveller" } },
+        "rev-3": { "type": "review", "settings": { "stars": 5, "quote": "My toddler runs across our marble like it's a track. Finally — a kids' grip sock that fits properly and doesn't slide off her ankle every two minutes.",   "name": "Priya & Ishaan", "location": "Delhi · Lil Steps customer" } }
+      },
+      "block_order": ["rev-1", "rev-2", "rev-3"]
+    },
+    "whatsapp": {
+      "type": "gripfeet-whatsapp",
+      "settings": { "label": "Chat with us" }
+    }
+  },
+  "order": ["pdp", "marquee", "reviews", "whatsapp"]
+}

@@ -1,0 +1,287 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+{%- comment -%} Keep Dawn's cart notification & drawer CSS {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<style>
+  .gf-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--gf-hair);
+    transition: background .3s var(--gf-ease);
+  }
+  .gf-nav-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 78px;
+    max-width: var(--gf-max);
+    margin: 0 auto;
+    padding: 0 var(--gf-gutter);
+  }
+  /* Left: nav links */
+  .gf-nav-links {
+    display: flex;
+    gap: 36px;
+    font-family: var(--gf-sans);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .gf-nav-links a {
+    position: relative;
+    padding: 6px 0;
+    color: var(--gf-ink);
+    text-decoration: none;
+  }
+  .gf-nav-links a::after {
+    content: "";
+    position: absolute; left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: var(--gf-ink);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .35s var(--gf-ease);
+  }
+  .gf-nav-links a:hover::after { transform: scaleX(1); }
+  /* Center: logo */
+  .gf-nav-logo {
+    display: flex; justify-content: center; align-items: center;
+  }
+  .gf-nav-logo img {
+    height: 80px;
+    width: auto;
+    display: block;
+  }
+  .gf-nav-logo .gf-nav-wordmark {
+    font-family: var(--gf-sans);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--gf-ink);
+    text-decoration: none;
+  }
+  /* Right: icons */
+  .gf-nav-icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  .gf-nav-icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gf-ink);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 4px;
+    text-decoration: none;
+  }
+  .gf-nav-icon-btn svg {
+    display: block;
+  }
+  /* Cart count */
+  .gf-cart-count {
+    position: absolute;
+    top: -4px; right: -8px;
+    min-width: 16px; height: 16px;
+    background: var(--gf-ink);
+    color: #fff;
+    font-family: var(--gf-mono);
+    font-size: 9px;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0 3px;
+  }
+  /* Mobile burger */
+  .gf-nav-burger {
+    display: none;
+    align-items: center; justify-content: center;
+    background: none; border: 0; cursor: pointer;
+    color: var(--gf-ink); padding: 4px;
+  }
+  /* Mobile drawer */
+  .gf-mnav {
+    position: fixed; inset: 0;
+    background: #fff;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform .35s var(--gf-ease);
+    display: flex; flex-direction: column;
+  }
+  .gf-mnav.open { transform: translateX(0); }
+  .gf-mnav-head {
+    padding: 18px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--gf-hair);
+  }
+  .gf-mnav-head img { height: 22px; width: auto; }
+  .gf-mnav-head .gf-wordmark { font-family: var(--gf-serif); font-size: 22px; color: var(--gf-ink); text-decoration: none; }
+  .gf-mnav-close { background: none; border: 0; cursor: pointer; color: var(--gf-ink); display: flex; }
+  .gf-mnav ul {
+    list-style: none; padding: 32px 24px; margin: 0; flex: 1;
+    overflow-y: auto;
+  }
+  .gf-mnav ul li { border-bottom: 1px solid var(--gf-hair); }
+  .gf-mnav ul li a {
+    display: block; padding: 20px 0;
+    font-family: var(--gf-serif); font-size: 28px;
+    color: var(--gf-ink); text-decoration: none;
+  }
+  .gf-mnav-foot {
+    padding: 20px 24px;
+    border-top: 1px solid var(--gf-hair);
+    display: flex; gap: 20px;
+    font-family: var(--gf-sans); font-size: 12px;
+    color: var(--gf-ink-2);
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  /* Overlay */
+  .gf-mnav-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10,10,10,.4);
+    z-index: 199;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s var(--gf-ease);
+  }
+  .gf-mnav-overlay.open { opacity: 1; pointer-events: auto; }
+
+  @media (max-width: 960px) {
+    .gf-nav-inner { grid-template-columns: auto 1fr auto; height: 64px; }
+    .gf-nav-links  { display: none; }
+    .gf-nav-burger { display: inline-flex; }
+    .gf-nav-logo img { height: 64px; }
+    .gf-nav-logo .gf-nav-wordmark { font-size: 20px; }
+    .gf-nav-icons  { gap: 14px; }
+  }
+</style>
+
+<div class="gf-nav" id="gf-nav">
+  <div class="gf-nav-inner">
+
+    {%- comment -%} LEFT — nav links (desktop) / burger (mobile) {%- endcomment -%}
+    <button class="gf-nav-burger" onclick="gfMenuOpen()" aria-label="Open menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 7h18M3 17h18"/></svg>
+    </button>
+    <nav aria-label="Main navigation">
+      <ul class="gf-nav-links">
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}"{% if link.active %} class="active"{% endif %}>{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    {%- comment -%} CENTER — logo {%- endcomment -%}
+    <div class="gf-nav-logo">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if settings.logo != blank -%}
+          <img
+            src="{{ settings.logo | image_url: width: 400 }}"
+            alt="{{ settings.logo.alt | default: shop.name }}"
+            width="{{ settings.logo_width | default: 140 }}"
+            height="{{ settings.logo_width | default: 140 | divided_by: settings.logo.aspect_ratio | round }}"
+          >
+        {%- else -%}
+          <img
+            src="{{ 'gripfeet-logo.png' | asset_url }}"
+            alt="{{ shop.name }}"
+            height="80"
+            width="auto"
+            style="height:80px;width:auto"
+          >
+        {%- endif -%}
+      </a>
+    </div>
+
+    {%- comment -%} RIGHT — icons {%- endcomment -%}
+    <div class="gf-nav-icons">
+      {%- if settings.predictive_search_enabled -%}
+        <button
+          class="gf-nav-icon-btn"
+          onclick="document.querySelector('details-modal[id^=predictive-search]')?.open()"
+          aria-label="Search"
+          type="button"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      {%- else -%}
+        <a href="{{ routes.search_url }}" class="gf-nav-icon-btn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.account_url }}" class="gf-nav-icon-btn" aria-label="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      </a>
+
+      {%- comment -%} Cart — uses Dawn's cart-icon-bubble id for drawer integration {%- endcomment -%}
+      <a href="{{ routes.cart_url }}" class="gf-nav-icon-btn" id="cart-icon-bubble" aria-label="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.2 13a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="gf-cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{%- comment -%} Mobile drawer overlay {%- endcomment -%}
+<div class="gf-mnav-overlay" id="gf-overlay" onclick="gfMenuClose()"></div>
+
+{%- comment -%} Mobile full-screen menu {%- endcomment -%}
+<nav class="gf-mnav" id="gf-mnav" aria-label="Mobile navigation">
+  <div class="gf-mnav-head">
+    {%- if settings.logo != blank -%}
+      <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" height="22" style="height:22px;width:auto">
+    {%- else -%}
+      <img src="{{ 'gripfeet-logo.png' | asset_url }}" alt="{{ shop.name }}" height="22" style="height:22px;width:auto">
+    {%- endif -%}
+    <button class="gf-mnav-close" onclick="gfMenuClose()" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <ul>
+    {%- for link in section.settings.menu.links -%}
+      <li><a href="{{ link.url }}" onclick="gfMenuClose()">{{ link.title }}</a></li>
+    {%- endfor -%}
+  </ul>
+  <div class="gf-mnav-foot">
+    <span>EN · ₹ INR</span>
+    <a href="{{ routes.account_url }}" style="margin-left:auto;color:inherit">Account</a>
+  </div>
+</nav>
+
+{%- if settings.cart_type == "notification" -%}
+  {%- render 'cart-notification' -%}
+{%- endif -%}
+
+<script>
+  function gfMenuOpen()  { document.getElementById('gf-mnav').classList.add('open'); document.getElementById('gf-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+  function gfMenuClose() { document.getElementById('gf-mnav').classList.remove('open'); document.getElementById('gf-overlay').classList.remove('open'); document.body.style.overflow=''; }
+</script>
+
+{% schema %}
+{
+  "name": "GF Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    }
+  ],
+  "presets": [{ "name": "GF Header" }]
+}
+{% endschema %}

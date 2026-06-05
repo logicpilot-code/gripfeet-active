@@ -1,0 +1,84 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<section class="gf-section gf-section--band">
+  <div class="gf-wrap">
+    <div class="gf-section-head">
+      <div class="gf-section-head__left">
+        <span class="gf-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="gf-h-section">
+          {{ section.settings.heading }}
+          {%- if section.settings.heading_italic != blank -%}
+            <em class="gf-italic">{{ section.settings.heading_italic }}</em>
+          {%- endif -%}
+        </h2>
+      </div>
+      <div class="gf-section-head__right" style="align-items:baseline">
+        <div class="gf-reviews__aggregate">
+          <div class="gf-reviews__score gf-serif">{{ section.settings.score }}</div>
+          <div style="display:inline-flex;gap:3px;margin-top:4px">
+            {%- for i in (1..5) -%}
+              <svg class="gf-star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.4"><path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.3l6.1-.7L12 3Z"/></svg>
+            {%- endfor -%}
+          </div>
+          <div class="gf-reviews__count">{{ section.settings.count }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gf-reviews">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <div class="gf-review" {{ block.shopify_attributes }}>
+            <div class="gf-review__stars">
+              {%- for i in (1..block.settings.stars) -%}
+                <svg class="gf-star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.4"><path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.3l6.1-.7L12 3Z"/></svg>
+              {%- endfor -%}
+            </div>
+            <p class="gf-review__quote">"{{ block.settings.quote }}"</p>
+            <div class="gf-review__who">
+              <span class="gf-review__name">{{ block.settings.name }}</span>
+              <span class="gf-review__loc">{{ block.settings.location }}</span>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gripfeet — Reviews",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow",        "label": "Eyebrow",        "default": "07 — Worn-in opinions · Reviews" },
+    { "type": "text", "id": "heading",        "label": "Heading",        "default": "Quiet wins, in" },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic", "default": "customers' words." },
+    { "type": "text", "id": "score",          "label": "Aggregate score", "default": "4.9" },
+    { "type": "text", "id": "count",          "label": "Review count",    "default": "1,284 reviews" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range",    "id": "stars",    "label": "Stars",    "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote",    "label": "Quote",    "default": "Honestly the first grip sock I haven't been embarrassed to wear out of the studio." },
+        { "type": "text",     "id": "name",     "label": "Name",     "default": "Aanya M." },
+        { "type": "text",     "id": "location", "label": "Location", "default": "Mumbai · Pilates instructor" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Gripfeet — Reviews",
+    "blocks": [
+      { "type": "review", "settings": { "stars": 5, "quote": "Honestly the first grip sock I haven't been embarrassed to wear out of the studio. The Supima feels like a proper sock — not a piece of medical equipment.", "name": "Aanya M.",       "location": "Mumbai · Pilates instructor" } },
+      { "type": "review", "settings": { "stars": 5, "quote": "Bought a three-pack of Soft Studio for travel. Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good.",                    "name": "Rohan K.",       "location": "Bengaluru · Frequent traveller" } },
+      { "type": "review", "settings": { "stars": 5, "quote": "My toddler runs across our marble like it's a track. Finally — a kids' grip sock that fits properly and doesn't slide off her ankle every two minutes.",   "name": "Priya & Ishaan", "location": "Delhi · Lil Steps customer" } }
+    ]
+  }]
+}
+{% endschema %}

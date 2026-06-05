@@ -1,0 +1,115 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<section class="gf-wrap gf-section">
+  <div class="gf-section-head">
+    <div class="gf-section-head__left">
+      <span class="gf-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="gf-h-section">
+        {{ section.settings.heading }}
+        {%- if section.settings.heading_italic != blank -%}
+          <em class="gf-italic">{{ section.settings.heading_italic }}</em>
+        {%- endif -%}
+      </h2>
+    </div>
+    <div class="gf-section-head__right">
+      <span class="gf-muted" style="font-size:13px">{{ section.settings.note }}</span>
+    </div>
+  </div>
+
+  <div class="gf-bundles">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'bundle' -%}
+        <div class="gf-bundle{% if block.settings.featured %} gf-bundle--featured{% endif %}" {{ block.shopify_attributes }}>
+          <span class="gf-bundle__save">{{ block.settings.save }}</span>
+          <div class="gf-bundle__tier-label">{{ block.settings.tag }}</div>
+          <h3 class="gf-bundle__tier-name">{{ block.settings.name }}</h3>
+
+          <div class="gf-bundle__visual">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.name }}"
+                width="600" height="375"
+                loading="lazy"
+                style="width:100%;height:100%;object-fit:cover"
+              >
+            {%- else -%}
+              <div class="gf-ph{% if block.settings.featured %} gf-ph--dark{% endif %}" style="width:100%;height:100%">
+                <span class="gf-ph__label">[ {{ block.settings.name }} · folded stack ]</span>
+                <span class="gf-ph__corner">GF · BUNDLE</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <p class="gf-bundle__desc{% unless block.settings.featured %} gf-muted{% endunless %}">{{ block.settings.desc }}</p>
+
+          <ul class="gf-bundle__list">
+            {%- assign list_items = block.settings.list | newline_to_br | split: '<br />' -%}
+            {%- for item in list_items -%}
+              {%- unless item == blank -%}
+                <li>
+                  <span class="gf-bundle__tick">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+                  </span>
+                  {{ item | strip }}
+                </li>
+              {%- endunless -%}
+            {%- endfor -%}
+          </ul>
+
+          <div class="gf-bundle__price-row">
+            <span class="gf-bundle__price-now">{{ block.settings.price }}</span>
+            <span class="gf-bundle__price-then">{{ block.settings.price_was }}</span>
+          </div>
+
+          <a href="{{ block.settings.link }}" class="gf-bundle__cta">
+            {{ block.settings.cta }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gripfeet — Bundles",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow",        "label": "Eyebrow",        "default": "06 — Pack & save · Bundles" },
+    { "type": "text", "id": "heading",        "label": "Heading",        "default": "Buy them in" },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic", "default": "threes." },
+    { "type": "text", "id": "note",           "label": "Note",           "default": "Free shipping over ₹999 · COD available" }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle",
+      "settings": [
+        { "type": "text",         "id": "tag",      "label": "Tier label",       "default": "Starter" },
+        { "type": "text",         "id": "name",     "label": "Bundle name",      "default": "Studio Pair" },
+        { "type": "text",         "id": "save",     "label": "Save label",       "default": "Save 30%" },
+        { "type": "checkbox",     "id": "featured", "label": "Featured (dark)",  "default": false },
+        { "type": "image_picker", "id": "image",    "label": "Bundle image" },
+        { "type": "text",         "id": "desc",     "label": "Description",      "default": "One pack from the Ankle or Crew range." },
+        { "type": "textarea",     "id": "list",     "label": "Includes (one per line)", "default": "Set of 2 or 3 pairs\nAny colour story\nFree shipping over ₹999" },
+        { "type": "text",         "id": "price",    "label": "Price",            "default": "₹699" },
+        { "type": "text",         "id": "price_was","label": "Was price",        "default": "₹999" },
+        { "type": "text",         "id": "cta",      "label": "CTA label",        "default": "Pick a pack" },
+        { "type": "url",          "id": "link",     "label": "CTA link" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Gripfeet — Bundles",
+    "blocks": [
+      { "type": "bundle", "settings": { "tag": "Starter",     "name": "Studio Pair", "save": "Save 30%", "featured": false, "desc": "One pack from the Ankle or Crew range.",  "list": "Set of 2 or 3 pairs\nAny colour story\nFree shipping over ₹999",                                           "price": "₹699",   "price_was": "₹999",   "cta": "Pick a pack" } },
+      { "type": "bundle", "settings": { "tag": "Most Popular","name": "House Two",   "save": "Save 37%", "featured": true,  "desc": "Two Ankle three-packs. Six pairs.",        "list": "Six pairs total\nMix two colour stories\nFree shipping anywhere\nGripfeet linen pouch included",              "price": "₹1,199", "price_was": "₹1,898", "cta": "Build the two" } },
+      { "type": "bundle", "settings": { "tag": "Household",  "name": "Family Four", "save": "Save 39%", "featured": false, "desc": "One pack from every range.",               "list": "Ankle · Crew · Loafer · Lil Steps\nEleven pairs in total\nFree shipping anywhere\nCOD available",              "price": "₹2,199", "price_was": "₹3,596", "cta": "Build the family" } }
+    ]
+  }]
+}
+{% endschema %}

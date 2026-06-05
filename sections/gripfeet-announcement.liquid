@@ -1,0 +1,35 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<div class="gf-announcement">
+  {%- assign items = section.settings.text | split: '·' -%}
+  {%- assign loop_items = '' -%}
+  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
+  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
+  {%- assign ticker_parts = loop_items | split: '|' -%}
+  <div class="gf-announcement__ticker" aria-hidden="true">
+    {%- for part in ticker_parts -%}
+      {%- unless part == blank -%}
+        <span>{{ part | strip }}</span>
+        <span class="gf-sep">/</span>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gripfeet — Announcement",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Ticker items (separate with ·)",
+      "default": "Free shipping worldwide · Made in India · Launch pricing — up to 39% off · COD available across India · 4–7 day global delivery · Stretch Supima · 100% silicone grip"
+    }
+  ],
+  "presets": [{ "name": "Gripfeet — Announcement" }]
+}
+{% endschema %}

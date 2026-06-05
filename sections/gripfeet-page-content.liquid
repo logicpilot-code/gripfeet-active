@@ -1,0 +1,86 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+  .gf-page {
+    padding-top: clamp(48px, 7vw, 96px);
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+  .gf-page__header {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--gf-hair);
+    margin-bottom: 48px;
+  }
+  .gf-page__eyebrow { margin-bottom: 16px; }
+  .gf-page__body {
+    max-width: 72ch;
+    font-family: var(--gf-sans);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--gf-ink-2);
+  }
+  .gf-page__body h2 {
+    font-family: var(--gf-serif);
+    font-size: clamp(24px, 2.6vw, 36px);
+    color: var(--gf-ink);
+    margin: 40px 0 16px;
+    font-weight: 400;
+  }
+  .gf-page__body h3 {
+    font-family: var(--gf-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gf-ink);
+    margin: 32px 0 12px;
+  }
+  .gf-page__body p  { margin: 0 0 18px; }
+  .gf-page__body ul { padding-left: 20px; margin: 0 0 18px; }
+  .gf-page__body li { padding: 4px 0; }
+  .gf-page__body a  { color: var(--gf-ink); border-bottom: 1px solid var(--gf-ink); text-decoration: none; padding-bottom: 1px; }
+  .gf-page__body strong { color: var(--gf-ink); font-weight: 600; }
+  .gf-page__rte { max-width: 72ch; }
+  /* FAQ accordion */
+  .gf-faq-item { border-bottom: 1px solid var(--gf-hair); }
+  .gf-faq-q {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0; background: none; border: 0; cursor: pointer; text-align: left;
+    font-family: var(--gf-serif); font-size: 22px; color: var(--gf-ink);
+  }
+  .gf-faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+  .gf-faq-item.open .gf-faq-a { max-height: 400px; }
+  .gf-faq-a-inner { padding: 0 0 20px; font-family: var(--gf-sans); color: var(--gf-ink-2); font-size: 15px; line-height: 1.65; max-width: 60ch; }
+  .gf-faq-plus { transition: transform .3s ease; flex-shrink: 0; }
+  .gf-faq-item.open .gf-faq-plus { transform: rotate(45deg); }
+</style>
+
+<div class="gf-wrap gf-page">
+  <div class="gf-page__header">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="gf-eyebrow gf-page__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h1 class="gf-h-section">
+      {{ page.title }}
+      {%- if section.settings.title_italic != blank -%}
+        <em class="gf-italic"> {{ section.settings.title_italic }}</em>
+      {%- endif -%}
+    </h1>
+  </div>
+  <div class="gf-page__body gf-page__rte">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "GF Page Content",
+  "settings": [
+    { "type": "text", "id": "eyebrow",      "label": "Eyebrow" },
+    { "type": "text", "id": "title_italic", "label": "Title italic part" }
+  ],
+  "presets": [{ "name": "GF Page Content" }]
+}
+{% endschema %}

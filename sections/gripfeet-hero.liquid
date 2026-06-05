@@ -1,0 +1,116 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<div class="gf-wrap">
+  <div class="gf-hero">
+
+    <div class="gf-hero__copy gf-fade-in">
+      <div>
+        <p class="gf-eyebrow">{{ section.settings.eyebrow }}</p>
+        <h1 class="gf-h-display" style="margin-top:28px">
+          {{ section.settings.headline }}
+          {%- if section.settings.headline_italic != blank -%}
+            <br><em class="gf-italic">{{ section.settings.headline_italic }}</em>
+          {%- endif -%}
+        </h1>
+        <p class="gf-lede" style="margin-top:28px">{{ section.settings.subline }}</p>
+
+        <div class="gf-hero__actions">
+          {%- if section.settings.cta_label != blank -%}
+            <a href="{{ section.settings.cta_link }}" class="gf-btn gf-btn--primary">
+              {{ section.settings.cta_label }}
+              <svg class="gf-arrow-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_label != blank -%}
+            <a href="{{ section.settings.secondary_link }}" class="gf-btn--link">
+              {{ section.settings.secondary_label }}
+              <svg class="gf-arrow-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="gf-hero__meta">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="gf-hero__stat" {{ block.shopify_attributes }}>
+              <div class="gf-num">{{ block.settings.number }}</div>
+              <span class="gf-lbl">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="gf-hero__visual">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1200 }}"
+          srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
+          sizes="(max-width: 900px) 100vw, 50vw"
+          alt="{{ section.settings.image.alt | default: 'Gripfeet lifestyle' }}"
+          width="800" height="1000"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <div class="gf-ph" style="min-height:560px">
+          <span class="gf-ph__label">[ Hero lifestyle · Pilates on mat, mid-stretch · soft daylight ]</span>
+          <span class="gf-ph__corner">GF · 4:5 · 2400px</span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.tag_title != blank -%}
+        <div class="gf-hero__tag">
+          <div class="gf-hero__tag-swatch"></div>
+          <div class="gf-hero__tag-meta">
+            {{ section.settings.tag_title }}
+            <small>{{ section.settings.tag_sub }}</small>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gripfeet — Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text",         "id": "eyebrow",          "label": "Eyebrow text",        "default": "Premium Grip Socks · Traction Triumphs" },
+    { "type": "text",         "id": "headline",         "label": "Headline",            "default": "Grip socks for every step," },
+    { "type": "text",         "id": "headline_italic",  "label": "Headline italic part", "default": "every day." },
+    { "type": "textarea",     "id": "subline",          "label": "Subline",             "default": "Anti-slip socks for the way you actually live — Pilates at sunrise, hardwood floors at midnight, the long flight in between. Stretch Supima yarn up top. 100% silicone on the sole. Made in India." },
+    { "type": "text",         "id": "cta_label",        "label": "CTA label",           "default": "Shop Grip Socks" },
+    { "type": "url",          "id": "cta_link",         "label": "CTA link" },
+    { "type": "text",         "id": "secondary_label",  "label": "Secondary link label", "default": "Our story" },
+    { "type": "url",          "id": "secondary_link",   "label": "Secondary link" },
+    { "type": "image_picker", "id": "image",            "label": "Hero image (4:5 ratio recommended)" },
+    { "type": "text",         "id": "tag_title",        "label": "Floating tag title",   "default": "Soft Studio · Mat Masters" },
+    { "type": "text",         "id": "tag_sub",          "label": "Floating tag subtitle","default": "Set of 3 pairs · ₹699 launch" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number",  "default": "100%" },
+        { "type": "text", "id": "label",  "label": "Label",   "default": "Silicone Grip" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{
+    "name": "Gripfeet — Hero",
+    "blocks": [
+      { "type": "stat", "settings": { "number": "100%",   "label": "Silicone Grip" } },
+      { "type": "stat", "settings": { "number": "Supima", "label": "Cotton Body" } },
+      { "type": "stat", "settings": { "number": "4–7",    "label": "Day Global Delivery" } }
+    ]
+  }]
+}
+{% endschema %}

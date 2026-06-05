@@ -1,0 +1,39 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<div class="gf-marquee" aria-hidden="true">
+  {%- assign items = section.settings.text | split: '·' -%}
+  {%- assign loop_items = '' -%}
+  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
+  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
+  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
+  {%- assign parts = loop_items | split: '|' -%}
+  <div class="gf-marquee__track">
+    {%- assign idx = 0 -%}
+    {%- for part in parts -%}
+      {%- unless part == blank -%}
+        {%- assign mod = idx | modulo: 3 -%}
+        <span{% if mod == 1 %} class="gf-marquee__it"{% endif %}>{{ part | strip }}</span>
+        <span class="gf-marquee__sep">·</span>
+        {%- assign idx = idx | plus: 1 -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "GF Editorial Marquee",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Marquee items (separate with ·)",
+      "default": "Pilates · Yoga · Barre · Travel · Home · Hardwood · Marble · Studio · Football · Sleep"
+    }
+  ],
+  "presets": [{ "name": "GF Editorial Marquee" }]
+}
+{% endschema %}

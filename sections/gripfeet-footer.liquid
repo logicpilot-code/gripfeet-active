@@ -1,0 +1,129 @@
+{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+<footer class="gf-footer">
+  <div class="gf-wrap">
+    <div class="gf-footer-top">
+
+      {%- comment -%} Brand column {%- endcomment -%}
+      <div class="gf-footer-brand">
+        <div class="gf-footer-brand__logo">
+          {%- if settings.logo != blank -%}
+            <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" style="height:160px;width:auto">
+          {%- else -%}
+            <img src="{{ 'gripfeet-logo.png' | asset_url }}" alt="{{ shop.name }}" style="height:160px;width:auto">
+          {%- endif -%}
+        </div>
+        <p>{{ section.settings.tagline }}</p>
+        <div class="gf-footer-brand__socials">
+          {%- if section.settings.instagram != blank -%}
+            <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.tiktok != blank -%}
+            <a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v9a4 4 0 1 1-4-4"/><path d="M16 4c.5 2.5 2 4 4.5 4"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.pinterest != blank -%}
+            <a href="{{ section.settings.pinterest }}" target="_blank" rel="noopener" aria-label="Pinterest">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 18c1-3 1-7 2-10s2-2 3-1-1 5 0 6 3-1 3-3a6 6 0 0 0-11-3"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.whatsapp != blank -%}
+            <a href="https://wa.me/{{ section.settings.whatsapp | remove: '+' | remove: ' ' | remove: '-' }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.6 11.6 0 0 0 4 19.7L3 23l3.4-1A11.6 11.6 0 1 0 20.5 3.5Zm-8.5 18a9.5 9.5 0 0 1-4.8-1.3l-.3-.2-2 .6.6-2-.2-.3A9.5 9.5 0 1 1 12 21.5Zm5.4-7c-.3-.2-1.7-.9-2-1s-.5-.1-.6.2-.7.9-.8 1.1-.3.2-.5.1a7.8 7.8 0 0 1-3.9-3.4c-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.8.4 3 3 0 0 0-1 2.3c0 1.4 1 2.7 1.1 2.9s2 3.2 5 4.5c1.8.8 2.5.8 3.4.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.3Z"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Shop column {%- endcomment -%}
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="/collections/ankle">Ankle · Mat Masters</a></li>
+          <li><a href="/collections/crew">Crew · Active Hold</a></li>
+          <li><a href="/collections/loafer">Loafer · Invisible Grip</a></li>
+          <li><a href="/collections/kids">Kids · Lil Steps</a></li>
+          <li><a href="/collections/all">All ranges</a></li>
+          <li><a href="/pages/bundles">Bundles</a></li>
+          <li><a href="/pages/gifting">Gifting</a></li>
+        </ul>
+      </div>
+
+      {%- comment -%} Help column {%- endcomment -%}
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="/pages/shipping">Shipping &amp; delivery</a></li>
+          <li><a href="/pages/returns">All sales final</a></li>
+          <li><a href="/pages/cod-payment">COD &amp; payment</a></li>
+          <li><a href="/pages/sizing-guide">Sizing guide</a></li>
+          <li><a href="/pages/care-washing">Care &amp; washing</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      {%- comment -%} Company column {%- endcomment -%}
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/pages/our-story">Our story</a></li>
+          <li><a href="/pages/made-in-india">Made in India</a></li>
+          <li><a href="/blogs/journal">Journal</a></li>
+          <li><a href="/pages/wholesale">Wholesale</a></li>
+          <li><a href="/pages/contact">Contact us</a></li>
+          <li><a href="/pages/press">Press</a></li>
+        </ul>
+      </div>
+
+      {%- comment -%} Coverage column {%- endcomment -%}
+      <div>
+        <h4>Coverage</h4>
+        <ul>
+          <li>Ships globally, 4–7 days</li>
+          <li>Free shipping over ₹999</li>
+          <li>COD available across India</li>
+          <li>Quality guarantee on every pair</li>
+          <li>All sales are final</li>
+        </ul>
+      </div>
+
+    </div>
+
+    {%- comment -%} Footer bottom {%- endcomment -%}
+    <div class="gf-footer-bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · Made in India</span>
+      <span class="gf-footer-pay">
+        <span>VISA</span>
+        <span>MC</span>
+        <span>AMEX</span>
+        <span>UPI</span>
+        <span>COD</span>
+      </span>
+      <span class="gf-footer-bottom__right">
+        <a href="/policies/privacy-policy">Privacy</a> ·
+        <a href="/policies/terms-of-service">Terms</a> ·
+        <a href="/policies/refund-policy">Refund policy</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "GF Footer",
+  "settings": [
+    { "type": "textarea", "id": "tagline",   "label": "Brand tagline",  "default": "Premium grip socks. Traction triumphs. Knit in India for studios, hardwood floors and long flights everywhere." },
+    { "type": "text",     "id": "instagram", "label": "Instagram URL" },
+    { "type": "text",     "id": "tiktok",    "label": "TikTok URL" },
+    { "type": "text",     "id": "pinterest", "label": "Pinterest URL" },
+    { "type": "text",     "id": "whatsapp",  "label": "WhatsApp number (international)" }
+  ],
+  "presets": [{ "name": "GF Footer" }]
+}
+{% endschema %}

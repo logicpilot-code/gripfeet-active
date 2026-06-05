@@ -1,0 +1,15 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "gf-footer": {
+      "type": "gripfeet-footer",
+      "settings": {
+        "tagline": "Premium grip socks. Traction triumphs. Knit in India for studios, hardwood floors and long flights everywhere.",
+        "instagram": "https://instagram.com/gripfeet",
+        "whatsapp": ""
+      }
+    }
+  },
+  "order": ["gf-footer"]
+}

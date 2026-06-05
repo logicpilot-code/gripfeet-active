@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "gripfeet-page-content",
+      "settings": { "eyebrow": "" }
+    }
+  },
+  "order": ["main"]
+}
