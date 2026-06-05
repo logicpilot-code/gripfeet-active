@@ -34,6 +34,8 @@ const Icon = ({ name, size = 16, sw = 1.5 }) => {
     case "shield":    return <svg {...common}><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>;
     case "globe":     return <svg {...common}><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13 13 0 0 1 0 18 13 13 0 0 1 0-18"/></svg>;
     case "truck":     return <svg {...common}><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>;
+    case "sliders":   return <svg {...common}><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg>;
+    case "chev":      return <svg {...common}><path d="m6 9 6 6 6-6"/></svg>;
     default: return null;
   }
 };
@@ -230,6 +232,22 @@ const PRODUCTS = [
     rangeId: "kids",
   },
 ];
+
+// Attach deterministic star ratings + review counts (for the athletic carousel)
+const _RATINGS = {
+  "crew-court-classics":     { rating: 4.8, reviews: 1926 },
+  "crew-varsity":            { rating: 4.7, reviews: 525 },
+  "ank-essential-neutrals":  { rating: 4.9, reviews: 3528 },
+  "ank-soft-studio":         { rating: 4.8, reviews: 2104 },
+  "ank-fresh-pastels":       { rating: 4.7, reviews: 861 },
+  "lof-bare-neutrals":       { rating: 4.6, reviews: 1432 },
+  "lof-dark-essentials":     { rating: 4.7, reviews: 740 },
+  "lof-soft-luxe":           { rating: 4.5, reviews: 318 },
+  "kid-classic-stripe":      { rating: 4.9, reviews: 612 },
+  "kid-play-pastels":        { rating: 4.8, reviews: 224 },
+  "kid-soft-candy":          { rating: 4.7, reviews: 196 },
+};
+PRODUCTS.forEach(p => { const r = _RATINGS[p.id] || { rating: 4.8, reviews: 500 }; p.rating = r.rating; p.reviews = r.reviews; });
 
 // Featured row = one hero SKU from each range
 const FEATURED = [

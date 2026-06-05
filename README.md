@@ -4,25 +4,30 @@ Second theme design for [Gripfeet](https://gripfeet.in) — Premium Grip Socks, 
 
 ## Design System
 
-- **Type:** Instrument Serif (display) + Hanken Grotesk (body) + JetBrains Mono (labels)
-- **Palette:** Monochrome foundation — `#FFFFFF` / `#F7F7F5` / `#0A0A0A` / `#6B6B6B`, one restrained taupe accent `#C9B9A3`
-- **Feel:** Editorial, gallery-like, premium, clean, modern — "quietly premium"
+- **Type:** Hanken Grotesk 800 weight throughout + JetBrains Mono for labels — no serif
+- **Palette:** White + warm cream (`#F3F0E8`) cards, near-black `#0E0E0E`, athletic accent (default blue `#2E64E0` — switchable to lime, red, navy via Tweaks)
+- **Feel:** Bold, athletic, modern — pill buttons, carousel tabs, heavy type, grip-dot footer texture
 
 ## Project Structure
 
 ```
 ├── Gripfeet.html          — Homepage prototype (desktop + mobile responsive)
+├── Collection.html        — Collection / PLP page prototype
 ├── PDP.html               — Product Detail Page prototype
-├── Gripfeet Mobile.html   — iOS-framed mobile preview (homepage + PDP)
 ├── app.jsx                — Homepage app shell
+├── collection-app.jsx     — Collection page app shell
 ├── pdp-app.jsx            — PDP app shell
 ├── data.jsx               — Catalogue data, icon set, palette
-├── styles.css             — Design system CSS
+├── styles.css             — Core tokens, type, nav, hero, buttons
+├── sections.css           — Section components (carousel, cards, bundles, footer)
+├── pdp.css                — PDP-specific styles
+├── collection.css         — Collection/PLP styles
 ├── components/
-│   ├── header.jsx
-│   ├── hero.jsx
-│   ├── products.jsx
-│   └── sections.jsx
+│   ├── header.jsx         — Announcement bar, sticky nav, mobile drawer
+│   ├── hero.jsx           — Hero, Trust strip, Statement, Move band
+│   ├── products.jsx       — Product carousel, quick-view modal, cart drawer
+│   ├── sections.jsx       — Story, USPs, Palette, Bundles, Reviews, Footer
+│   └── collection.jsx     — Collection grid + filter sidebar
 ├── assets/
 │   └── gripfeet-logo-cropped.png
 └── uploads/               — Brand assets
