@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gripfeet — Anti-slip socks, beautifully done.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Libre+Caslon+Display&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ============================================================
+       PRINT STYLES — keep the editorial layout, just paged.
+       ============================================================ */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 10mm;
+      }
+
+      html, body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-adjust: exact;
+        overflow: visible !important;
+      }
+
+      /* Hide all interactive / floating chrome */
+      .nav, .wa, .drawer, .drawer-bg, .modal, .modal-bg, .mnav,
+      .pdp-buybar, .nav-burger, #__edit_root, .twk-panel, .twk-toggle,
+      [class*="twk-"] {
+        display: none !important;
+      }
+
+      /* Stop the marquee + ticker mid-frame */
+      .marquee-track, .announcement .ticker {
+        animation: none !important;
+        transform: none !important;
+      }
+      .announcement { overflow: visible !important; }
+      .announcement .ticker { display: flex !important; gap: 24px !important; justify-content: center; white-space: normal; }
+
+      /* Section rhythm — keep generous but tightened for paper */
+      .section { padding: 32px 0 !important; }
+      .section.tight { padding: 24px 0 !important; }
+      .wrap { padding-left: 14mm !important; padding-right: 14mm !important; max-width: none !important; }
+
+      /* Force major sections to start on a new page */
+      .hero, #shop, #featured, #story,
+      .pdp-related, #palette, #bundles,
+      .gifting, .newsletter, .footer,
+      section[data-screen-label] {
+        break-before: page;
+        page-break-before: always;
+      }
+      /* Don't break before the first one */
+      .hero { break-before: avoid; page-break-before: avoid; }
+
+      /* Avoid splitting cards & atomic blocks across pages */
+      .cat-card, .product, .bundle, .review, .usp, .palette-group,
+      .trust-item, .pdp-strip-item, .acc {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Hover-only revealed quick-add stays visible on print */
+      .product .quick-add { display: none !important; }
+      .product .wish, .product .swatches { display: none !important; }
+
+      /* Bundles featured was dark — make sure bg prints */
+      .bundle.featured {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #0A0A0A !important;
+        color: #fff !important;
+      }
+      .gifting {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #0A0A0A !important;
+        color: #fff !important;
+      }
+      .announcement {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #0A0A0A !important;
+        color: #fff !important;
+      }
+
+      /* Hairline borders should print */
+      .hr, .trust, .section-head, .footer-top, .footer-bottom,
+      .pdp-breadcrumb, .pdp-strip-item, .pdp-strip, .acc, .palette-label,
+      .cat-card, .product, .bundle, .review {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* Cap large placeholders so they fit on a page */
+      .ph { max-height: 60vh; }
+      .hero-visual, .story .visual, .gifting .visual { aspect-ratio: 4 / 3 !important; max-height: 60vh; }
+
+      /* Type sizing tweaks for print rhythm */
+      .h-display { font-size: 56px !important; line-height: 1 !important; }
+      .h-section { font-size: 36px !important; line-height: 1.05 !important; }
+      h1.pdp-info, .pdp-info h1 { font-size: 36px !important; }
+
+      /* No-shadow, no-transition for print */
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+        box-shadow: none !important;
+      }
+
+      a { color: inherit !important; text-decoration: none !important; }
+
+      /* Show static logo at top of first page */
+      .gf-mark { font-size: 22px !important; }
+    }
+
+    /* Auto-print helper indicator — visible only on screen until print fires */
+    .print-banner {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 9999;
+      background: #0A0A0A; color: #fff;
+      padding: 10px 16px;
+      font-family: ui-monospace, "SFMono-Regular", monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    @media print { .print-banner { display: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="print-banner">Gripfeet — preparing print preview… use Cmd/Ctrl+P if the dialog doesn't open.</div>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="components/header.jsx"></script>
+  <script type="text/babel" src="components/hero.jsx"></script>
+  <script type="text/babel" src="components/products.jsx"></script>
+  <script type="text/babel" src="components/sections.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+
+  <script type="text/babel">
+    // Auto-print: wait for fonts + React render + a small buffer, then trigger.
+    (async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+        // Let Babel/React mount the page
+        await new Promise(r => setTimeout(r, 1200));
+
+        // Hide the banner before print so it doesn't flash on the first page
+        const b = document.querySelector(".print-banner");
+        if (b) b.style.display = "none";
+
+        window.print();
+      } catch (e) {
+        console.warn("auto-print failed", e);
+      }
+    })();
+  </script>
+</body>
+</html>
