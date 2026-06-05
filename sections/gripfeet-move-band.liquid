@@ -1,0 +1,22 @@
+{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
+<section class="move-band">
+  {%- if section.settings.image != blank -%}
+    <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="" width="2400" height="900" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+  {%- else -%}
+    <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%">
+      <span class="ph-label">Full-bleed · feet in motion on stairs / street · grip socks + trainers</span>
+    </div>
+  {%- endif -%}
+  <div class="scrim"></div>
+  <h2>{{ section.settings.headline | newline_to_br }}</h2>
+</section>
+{% schema %}
+{
+  "name":"Gripfeet — Move Band (Active)","tag":"section",
+  "settings":[
+    {"type":"text","id":"headline","label":"Headline (use newlines for line breaks)","default":"Every Step,\nEvery Day."},
+    {"type":"image_picker","id":"image","label":"Background image"}
+  ],
+  "presets":[{"name":"Gripfeet — Move Band (Active)"}]
+}
+{% endschema %}

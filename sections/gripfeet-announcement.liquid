@@ -1,35 +1,36 @@
-{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-<div class="gf-announcement">
-  {%- assign items = section.settings.text | split: '·' -%}
-  {%- assign loop_items = '' -%}
-  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
-  {%- for item in items -%}{%- assign loop_items = loop_items | append: item | append: '|' -%}{%- endfor -%}
-  {%- assign ticker_parts = loop_items | split: '|' -%}
-  <div class="gf-announcement__ticker" aria-hidden="true">
-    {%- for part in ticker_parts -%}
-      {%- unless part == blank -%}
-        <span>{{ part | strip }}</span>
-        <span class="gf-sep">/</span>
-      {%- endunless -%}
-    {%- endfor -%}
+{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
+<div class="gf-announce">
+  <div class="gf-announce__inner">
+    <span></span>
+    <div class="gf-announce__msg">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'message' -%}
+          <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          {%- unless forloop.last -%}<span class="sep">&nbsp;·&nbsp;</span>{%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <span></span>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Gripfeet — Announcement",
-  "tag": "div",
-  "settings": [
-    {
-      "type": "text",
-      "id": "text",
-      "label": "Ticker items (separate with ·)",
-      "default": "Free shipping worldwide · Made in India · Launch pricing — up to 39% off · COD available across India · 4–7 day global delivery · Stretch Supima · 100% silicone grip"
+  "name": "Gripfeet — Announcement (Active)",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    { "type": "message", "name": "Message",
+      "settings": [{ "type": "text", "id": "text", "label": "Message", "default": "Free shipping worldwide on orders over ₹999" }]
     }
   ],
-  "presets": [{ "name": "Gripfeet — Announcement" }]
+  "max_blocks": 4,
+  "presets": [{ "name": "Gripfeet — Announcement (Active)",
+    "blocks": [
+      { "type": "message", "settings": { "text": "Launch pricing — up to 39% off · Shop bundles" } },
+      { "type": "message", "settings": { "text": "Free shipping worldwide on orders over ₹999" } },
+      { "type": "message", "settings": { "text": "Stretch Supima yarn · 100% silicone grip · Made in India" } }
+    ]
+  }]
 }
 {% endschema %}

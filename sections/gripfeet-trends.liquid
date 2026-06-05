@@ -1,0 +1,56 @@
+{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
+<section class="gf-wrap section" id="trends">
+  <div class="gf-section-head">
+    <div class="gf-section-head__left">
+      <span class="gf-eyebrow"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
+      <h2 class="gf-h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="gf-section-head__right">
+      <a href="{{ section.settings.all_link | default: '/collections/all' }}" class="gf-btn-link">All ranges <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a>
+    </div>
+  </div>
+  <div class="trends-grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'card' -%}
+        <a href="{{ block.settings.link | default: '/collections/all' }}" class="trend-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title }}" width="600" height="750" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          {%- else -%}
+            <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%;background:{{ block.settings.tone | default: '#191919' }}">
+              <span class="ph-label">{{ block.settings.title }} · lifestyle editorial</span>
+            </div>
+          {%- endif -%}
+          <div class="scrim"></div>
+          <div class="tinfo">
+            <div class="te">{{ block.settings.eyebrow }}</div>
+            <div class="tt">{{ block.settings.title }}</div>
+            <span class="tgo">Explore <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></span>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name":"Gripfeet — Shop Trends (Active)","tag":"section",
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Worn everywhere"},
+    {"type":"text","id":"heading","label":"Heading","default":"Shop the ranges."},
+    {"type":"url","id":"all_link","label":"All link"}
+  ],
+  "blocks":[{"type":"card","name":"Trend card","settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Studio & Mat"},
+    {"type":"text","id":"title","label":"Title","default":"Mat Masters"},
+    {"type":"text","id":"tone","label":"Placeholder bg (hex)","default":"#1e2017"},
+    {"type":"image_picker","id":"image","label":"Image"},
+    {"type":"url","id":"link","label":"Link"}
+  ]}],
+  "max_blocks":3,
+  "presets":[{"name":"Gripfeet — Shop Trends (Active)","blocks":[
+    {"type":"card","settings":{"eyebrow":"Studio & Mat","title":"Mat Masters","tone":"#1e2017","link":"/collections/ankle"}},
+    {"type":"card","settings":{"eyebrow":"Movement & Training","title":"Active Hold","tone":"#191919","link":"/collections/crew"}},
+    {"type":"card","settings":{"eyebrow":"Little Adventures","title":"Lil Steps","tone":"#20171c","link":"/collections/kids"}}
+  ]}]
+}
+{% endschema %}

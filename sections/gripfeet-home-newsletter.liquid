@@ -1,58 +1,37 @@
-{{ 'gripfeet-design.css' | asset_url | stylesheet_tag }}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
 <div class="gf-wrap">
-  <div class="gf-newsletter">
+  <div class="newsletter">
     <div>
-      <span class="gf-eyebrow">{{ section.settings.eyebrow }}</span>
-      <h3 style="margin-top:18px">
-        {{ section.settings.heading }}
-        {%- if section.settings.heading_italic != blank -%}
-          <em class="gf-italic">{{ section.settings.heading_italic }}</em>
-        {%- endif -%}
-      </h3>
+      <h3>{{ section.settings.heading }}</h3>
       <p>{{ section.settings.desc }}</p>
     </div>
-
     <div>
-      {%- form 'customer' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter,email subscriber">
-        <div class="gf-newsletter__form">
-          <input
-            class="gf-newsletter__input"
-            type="email"
-            name="contact[email]"
-            placeholder="{{ section.settings.placeholder }}"
-            required
-            aria-label="{{ section.settings.placeholder }}"
-          >
-          <button class="gf-newsletter__submit" type="submit">
-            {{ section.settings.btn_label }}
-            <svg class="gf-arrow-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-          </button>
+      {% form 'customer', id: 'gf-newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter" style="padding:0;border:0">
+          <form class="" onsubmit="event.preventDefault();this.closest('.newsletter').querySelector('form').style.display='none';this.closest('.newsletter').querySelector('.success').style.display='block'">
+            <input type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | default: 'you@example.com' }}" autocomplete="email" required>
+            <button type="submit" class="gf-btn gf-btn--primary gf-btn--sm">{{ section.settings.btn_label | default: 'Subscribe' }}</button>
+          </form>
         </div>
-        {%- if form.posted_successfully? -%}
-          <div class="gf-newsletter__success">Welcome in. Check your inbox — your ₹200 off is on its way.</div>
-        {%- endif -%}
-      {%- endform -%}
-      <p class="gf-newsletter__fine">By subscribing you agree to receive marketing emails. Unsubscribe any time.</p>
+        <div class="success" style="display:none">
+          <p class="success" style="font-weight:800;font-size:22px">You're in. ✓</p>
+        </div>
+        <p class="fine">{{ section.settings.fine }}</p>
+      {% endform %}
     </div>
   </div>
 </div>
-
 {% schema %}
 {
-  "name": "Gripfeet — Newsletter",
-  "tag": "section",
-  "settings": [
-    { "type": "text",     "id": "eyebrow",         "label": "Eyebrow",      "default": "09 — Letters from the studio" },
-    { "type": "text",     "id": "heading",         "label": "Heading",      "default": "Drop your" },
-    { "type": "text",     "id": "heading_italic",  "label": "Heading italic","default": "email," },
-    { "type": "textarea", "id": "desc",            "label": "Description",  "default": "One quiet note a month — new colourways, studio drops, the occasional travel essentials list. No spam, no neon banners." },
-    { "type": "text",     "id": "placeholder",     "label": "Input placeholder","default": "you@example.com" },
-    { "type": "text",     "id": "btn_label",       "label": "Button label",  "default": "Subscribe" }
+  "name":"Gripfeet — Newsletter (Active)","tag":"section",
+  "settings":[
+    {"type":"text","id":"heading","label":"Heading","default":"Drop your email,"},
+    {"type":"textarea","id":"desc","label":"Description","default":"One quiet note a month — new colourways, studio drops, the occasional travel essentials list. No spam, no neon banners."},
+    {"type":"text","id":"placeholder","label":"Input placeholder","default":"you@example.com"},
+    {"type":"text","id":"btn_label","label":"Button label","default":"Subscribe"},
+    {"type":"text","id":"fine","label":"Fine print","default":"No spam. Unsubscribe anytime."}
   ],
-  "presets": [{ "name": "Gripfeet — Newsletter" }]
+  "presets":[{"name":"Gripfeet — Newsletter (Active)"}]
 }
 {% endschema %}
