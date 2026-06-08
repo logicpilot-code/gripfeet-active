@@ -1,21 +1,16 @@
 {
   "sections": {
-    "w1": {
-      "type": "gripfeet-whatsapp",
+    "hero": {
+      "type": "gripfeet-hero",
       "settings": {}
     },
-    "w2": {
-      "type": "gripfeet-whatsapp",
-      "settings": {}
-    },
-    "w3": {
+    "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
     }
   },
   "order": [
-    "w1",
-    "w2",
-    "w3"
+    "hero",
+    "whatsapp"
   ]
 }
