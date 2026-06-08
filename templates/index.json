@@ -20,30 +20,6 @@
       "type": "gripfeet-brand-story",
       "settings": {}
     },
-    "usps": {
-      "type": "gripfeet-usp-strip",
-      "settings": {}
-    },
-    "palette": {
-      "type": "gripfeet-palette",
-      "settings": {}
-    },
-    "bundles": {
-      "type": "gripfeet-bundles",
-      "settings": {}
-    },
-    "reviews": {
-      "type": "gripfeet-reviews",
-      "settings": {}
-    },
-    "gifting": {
-      "type": "gripfeet-gifting",
-      "settings": {}
-    },
-    "newsletter": {
-      "type": "gripfeet-home-newsletter",
-      "settings": {}
-    },
     "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
@@ -55,12 +31,6 @@
     "categories",
     "featured",
     "story",
-    "usps",
-    "palette",
-    "bundles",
-    "reviews",
-    "gifting",
-    "newsletter",
     "whatsapp"
   ]
 }
