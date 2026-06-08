@@ -14,11 +14,12 @@
       <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
       <h3>{{ section.settings.heading }}</h3>
       <p>{{ section.settings.body }}</p>
+      {%- assign gift_letters = "A,B,C,D,E,F,G,H" | split: "," -%}
       <ul>
         {%- for block in section.blocks -%}
           {%- if block.type == "item" -%}
             <li {{ block.shopify_attributes }}>
-              <span class="n">{{ forloop.index | plus: 64 | chr }}</span>
+              <span class="n">{{ gift_letters[forloop.index0] }}</span>
               {{ block.settings.text }}
             </li>
           {%- endif -%}
