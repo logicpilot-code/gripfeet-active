@@ -1,13 +1,5 @@
 {
   "sections": {
-    "announcement": {
-      "type": "gripfeet-announcement",
-      "settings": {}
-    },
-    "header": {
-      "type": "gripfeet-header",
-      "settings": {}
-    },
     "hero": {
       "type": "gripfeet-hero",
       "settings": {
@@ -284,7 +276,7 @@
         "eyebrow": "Our story \u00b7 Made in India",
         "heading": "A grip sock that finally feels like a sock.",
         "body_1": "Most grip socks fall into two camps \u2014 clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays.",
-        "body_2": "We knit ours in-house in India \u2014 Supima cotton up top, a 100% silicone grip pattern on the sole. A manufacturing depth most lifestyle brands have to import.",
+        "body_2": "We knit ours in-house in India \u2014 Supima cotton up top, a 100% silicone grip pattern on the sole.",
         "sig_name": "The Gripfeet team",
         "sig_sub": "Knit in India \u00b7 Designed for everywhere"
       }
@@ -328,7 +320,7 @@
           "type": "usp",
           "settings": {
             "title": "Made in India",
-            "desc": "Knit in-house. Depth most lifestyle brands have to import."
+            "desc": "Knit in-house. Depth most lifestyle brands import."
           }
         },
         "u6": {
@@ -540,17 +532,9 @@
     "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
-    },
-    "footer": {
-      "type": "gripfeet-footer",
-      "settings": {
-        "tagline": "Anti-slip socks for the way you actually move. Supima up top, 100% silicone on the sole \u2014 knit in India, worn everywhere."
-      }
     }
   },
   "order": [
-    "announcement",
-    "header",
     "hero",
     "trust",
     "statement",
@@ -565,7 +549,6 @@
     "move_band",
     "gifting",
     "newsletter",
-    "whatsapp",
-    "footer"
+    "whatsapp"
   ]
 }

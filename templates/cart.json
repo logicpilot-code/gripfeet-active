@@ -1,21 +1,11 @@
 {
   "sections": {
-    "header": {
-      "type": "gripfeet-header",
-      "settings": {}
-    },
     "cart": {
       "type": "gripfeet-page-cart",
-      "settings": {}
-    },
-    "footer": {
-      "type": "gripfeet-footer",
       "settings": {}
     }
   },
   "order": [
-    "header",
-    "cart",
-    "footer"
+    "cart"
   ]
 }

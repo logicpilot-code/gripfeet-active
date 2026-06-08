@@ -1,21 +1,11 @@
 {
   "sections": {
-    "header": {
-      "type": "gripfeet-header",
-      "settings": {}
-    },
     "contact": {
       "type": "gripfeet-page-contact",
-      "settings": {}
-    },
-    "footer": {
-      "type": "gripfeet-footer",
       "settings": {}
     }
   },
   "order": [
-    "header",
-    "contact",
-    "footer"
+    "contact"
   ]
 }

@@ -7,15 +7,10 @@
     "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
-    },
-    "footer": {
-      "type": "gripfeet-footer",
-      "settings": {}
     }
   },
   "order": [
     "grid",
-    "whatsapp",
-    "footer"
+    "whatsapp"
   ]
 }
