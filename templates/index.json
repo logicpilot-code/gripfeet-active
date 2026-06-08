@@ -4,6 +4,58 @@
       "type": "gripfeet-hero",
       "settings": {}
     },
+    "trust": {
+      "type": "gripfeet-trust-strip",
+      "settings": {}
+    },
+    "statement": {
+      "type": "gripfeet-statement",
+      "settings": {}
+    },
+    "categories": {
+      "type": "gripfeet-category-grid",
+      "settings": {}
+    },
+    "featured": {
+      "type": "gripfeet-featured-products",
+      "settings": {}
+    },
+    "trends": {
+      "type": "gripfeet-trends",
+      "settings": {}
+    },
+    "story": {
+      "type": "gripfeet-brand-story",
+      "settings": {}
+    },
+    "usps": {
+      "type": "gripfeet-usp-strip",
+      "settings": {}
+    },
+    "palette": {
+      "type": "gripfeet-palette",
+      "settings": {}
+    },
+    "bundles": {
+      "type": "gripfeet-bundles",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "gripfeet-reviews",
+      "settings": {}
+    },
+    "move_band": {
+      "type": "gripfeet-move-band",
+      "settings": {}
+    },
+    "gifting": {
+      "type": "gripfeet-gifting",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "gripfeet-home-newsletter",
+      "settings": {}
+    },
     "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
@@ -11,6 +63,19 @@
   },
   "order": [
     "hero",
+    "trust",
+    "statement",
+    "categories",
+    "featured",
+    "trends",
+    "story",
+    "usps",
+    "palette",
+    "bundles",
+    "reviews",
+    "move_band",
+    "gifting",
+    "newsletter",
     "whatsapp"
   ]
 }
