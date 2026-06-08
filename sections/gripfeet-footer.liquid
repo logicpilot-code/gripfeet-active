@@ -1,95 +1,94 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<footer class="gf-footer">
-  <div class="gf-footer__grid">
-    <div class="gf-footer__brand">
-      {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 300 }}" alt="Gripfeet" class="gf-footer__logo" width="150" height="42">
-      {%- else -%}
-        <img src="{{ 'gripfeet-logo-cropped.png' | asset_url }}" alt="Gripfeet" class="gf-footer__logo" width="150" height="42">
-      {%- endif -%}
-      <p class="gf-footer__tag">{{ section.settings.tagline }}</p>
-      <div class="gf-footer__socials">
-        {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".7" fill="currentColor"/></svg></a>{%- endif -%}
-        {%- if section.settings.whatsapp != blank -%}<a href="{{ section.settings.whatsapp }}" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.6 11.6 0 0 0 4 19.7L3 23l3.4-1A11.6 11.6 0 1 0 20.5 3.5Z"/></svg></a>{%- endif -%}
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        {%- if section.settings.logo != blank -%}
+          <img class="gf-mark footer-logo" src="{{ section.settings.logo | image_url: width: 220 }}" alt="{{ shop.name }}" width="110" height="22">
+        {%- else -%}
+          <span style="font-weight:800;font-size:20px;letter-spacing:-0.04em">{{ shop.name }}</span>
+        {%- endif -%}
+        <p class="footer-tag">{{ section.settings.tagline }}</p>
+        <div class="footer-socials">
+          {%- if section.settings.instagram != blank -%}
+            <a href="{{ section.settings.instagram }}" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.whatsapp != blank -%}
+            <a href="{{ section.settings.whatsapp }}" aria-label="WhatsApp">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            </a>
+          {%- endif -%}
+        </div>
       </div>
-      <div class="gf-footer__region">
-        <span class="rlbl">Ships to</span>
-        <span class="rval">{{ section.settings.ships_to }}</span>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="/collections/all">All socks</a></li>
+          <li><a href="/collections/mat-masters">Ankle · Mat Masters</a></li>
+          <li><a href="/collections/active-hold">Crew · Active Hold</a></li>
+          <li><a href="/collections/invisible-grip">Loafer · Invisible Grip</a></li>
+          <li><a href="/collections/lil-steps">Kids · Lil Steps</a></li>
+        </ul>
       </div>
+
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="/pages/shipping">Shipping & delivery</a></li>
+          <li><a href="/pages/returns">All sales final</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/sizing-guide">Sizing guide</a></li>
+          <li><a href="/pages/care">Care & washing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/pages/our-story">Our story</a></li>
+          <li><a href="/pages/made-in-india">Made in India</a></li>
+          <li><a href="/pages/contact">Contact us</a></li>
+        </ul>
+        <div class="footer-region">
+          <span class="rlbl">Ships globally</span>
+          <span class="rval">4–7 days · EN · ₹ INR</span>
+        </div>
+      </div>
+
     </div>
 
-    <div class="gf-footer__col">
-      <h4>Shop</h4>
-      <ul>
-        <li><a href="/collections/ankle">Ankle · Mat Masters</a></li>
-        <li><a href="/collections/crew">Crew · Active Hold</a></li>
-        <li><a href="/collections/loafer">Loafer · Invisible Grip</a></li>
-        <li><a href="/collections/kids">Kids · Lil Steps</a></li>
-        <li><a href="/collections/all">All grip socks</a></li>
-      </ul>
-    </div>
-
-    <div class="gf-footer__col">
-      <h4>Help</h4>
-      <ul>
-        <li><a href="/pages/shipping">Shipping</a></li>
-        <li><a href="/pages/returns">Returns & Quality</a></li>
-        <li><a href="/pages/sizing-guide">Sizing guide</a></li>
-        <li><a href="/pages/faq">FAQ</a></li>
-        <li><a href="/pages/contact">Contact us</a></li>
-      </ul>
-    </div>
-
-    <div class="gf-footer__col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="/pages/our-story">Our story</a></li>
-        <li><a href="/pages/made-in-india">Made in India</a></li>
-        <li><a href="/blogs/journal">Journal</a></li>
-      </ul>
-      <div class="gf-footer__region" style="margin-top:24px">
-        <span class="rlbl">Delivery</span>
-        <span class="rval">{{ section.settings.delivery }}</span>
-      </div>
-      <div class="gf-footer__region" style="margin-top:12px">
-        <span class="rlbl">Payment</span>
-        <span class="rval">{{ section.settings.payment }}</span>
-      </div>
+    <div class="footer-bottom">
+      <span>© {{ "now" | date: "%Y" }} {{ shop.name }} · Made in India</span>
+      <span class="pay"><span>VISA</span><span>MC</span><span>UPI</span><span>COD</span></span>
+      <span>Privacy · Terms</span>
     </div>
   </div>
 
-  <div class="gf-footer__bottom" style="padding-left:var(--gf-gutter);padding-right:var(--gf-gutter);max-width:var(--gf-max);margin:0 auto">
-    <span>© {{ 'now' | date: '%Y' }} Gripfeet. All rights reserved.</span>
-    <div class="pay">
-      <span>Visa</span><span>Mastercard</span><span>UPI</span><span>COD</span>
-    </div>
-    <span><a href="/policies/privacy-policy" style="color:inherit">Privacy</a> · <a href="/policies/terms-of-service" style="color:inherit">Terms</a></span>
-  </div>
-
-  <div class="gf-footer__grip">
-    <div class="gf-grip-texture"></div>
-    <div class="gf-grip-line">
-      <span class="gf-g-dot"></span>
-      Premium Grip Socks
-      <span class="gf-g-dot"></span>
-      Traction Triumphs
-      <span class="gf-g-dot"></span>
-      Made in India
+  <div class="footer-grip" aria-hidden="true">
+    <div class="grip-texture"></div>
+    <div class="grip-line">
+      <span>Every Step</span>
+      <span class="g-dot"></span>
+      <span>Every Day</span>
+      <span class="g-dot"></span>
+      <span>Made to Grip</span>
     </div>
   </div>
 </footer>
+
 {% schema %}
 {
-  "name":"Gripfeet — Footer (Active)","tag":"section",
-  "settings":[
-    {"type":"image_picker","id":"logo","label":"Logo (inverted)"},
-    {"type":"text","id":"tagline","label":"Tagline","default":"Premium grip socks for every step, every day. Supima up top, silicone on the sole. Knit in India."},
-    {"type":"url","id":"instagram","label":"Instagram URL"},
-    {"type":"url","id":"whatsapp","label":"WhatsApp URL"},
-    {"type":"text","id":"ships_to","label":"Ships to","default":"Globally · Free over ₹999"},
-    {"type":"text","id":"delivery","label":"Delivery","default":"4–7 business days"},
-    {"type":"text","id":"payment","label":"Payment","default":"Visa · MC · UPI · COD"}
+  "name": "Gripfeet — Footer",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "logo",      "label": "Footer logo" },
+    { "type": "textarea",     "id": "tagline",   "label": "Brand tagline", "default": "Anti-slip socks for the way you actually move. Supima up top, 100% silicone on the sole — knit in India, worn everywhere." },
+    { "type": "url",          "id": "instagram", "label": "Instagram URL" },
+    { "type": "url",          "id": "whatsapp",  "label": "WhatsApp URL" }
   ],
-  "presets":[{"name":"Gripfeet — Footer (Active)"}]
+  "presets": [{ "name": "Gripfeet — Footer" }]
 }
 {% endschema %}

@@ -1,50 +1,41 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap section" id="story">
+<section class="wrap section" id="story">
   <div class="story">
     <div class="visual">
       {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="Gripfeet story" width="500" height="625" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:var(--gf-radius,18px)">
+        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Gripfeet story" width="900" height="1125" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)">
       {%- else -%}
-        <div class="gf-ph" style="width:100%;height:100%;min-height:420px">
-          <span class="gf-ph__label">Editorial · macro of knit + silicone grip dots</span>
-          <span class="gf-ph__corner">GF · 4:5</span>
+        <div class="ph" style="aspect-ratio:4/5;border-radius:var(--radius)">
+          <span class="ph-label">Editorial · macro of knit + silicone grip dots</span>
+          <span class="ph-corner">GF · 4:5</span>
         </div>
       {%- endif -%}
     </div>
     <div class="text">
-      <span class="gf-eyebrow"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
-      <h2 class="gf-h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'paragraph' -%}
-          <p {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
-        {%- endif -%}
-      {%- endfor -%}
-      <div class="sig">{{ section.settings.sig_name }}<small>{{ section.settings.sig_sub }}</small></div>
-      {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_link | default: '/pages/our-story' }}" class="gf-btn gf-btn--outline" style="margin-top:28px">{{ section.settings.cta_label }}</a>
-      {%- endif -%}
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body_1 }}</p>
+      <p>{{ section.settings.body_2 }}</p>
+      <div class="sig">
+        {{ section.settings.sig_name }}
+        <small>{{ section.settings.sig_sub }}</small>
+      </div>
     </div>
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Brand Story (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Our story · Made in India"},
-    {"type":"text","id":"heading","label":"Heading","default":"A grip sock that finally feels like a sock."},
-    {"type":"text","id":"sig_name","label":"Signature name","default":"The Gripfeet team"},
-    {"type":"text","id":"sig_sub","label":"Signature sub","default":"Knit in India · Designed for everywhere"},
-    {"type":"text","id":"cta_label","label":"CTA label","default":"Read our story"},
-    {"type":"url","id":"cta_link","label":"CTA link"},
-    {"type":"image_picker","id":"image","label":"Story image (4:5 ratio)"}
+  "name": "Gripfeet — Brand Story",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image",   "label": "Story image" },
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow",  "default": "Our story · Made in India" },
+    { "type": "text",     "id": "heading",  "label": "Heading",  "default": "A grip sock that finally feels like a sock." },
+    { "type": "textarea", "id": "body_1",   "label": "Body 1",   "default": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays." },
+    { "type": "textarea", "id": "body_2",   "label": "Body 2",   "default": "We knit ours in-house in India — Supima cotton up top, a 100% silicone grip pattern on the sole. A manufacturing depth most lifestyle brands have to import." },
+    { "type": "text",     "id": "sig_name", "label": "Signature name", "default": "The Gripfeet team" },
+    { "type": "text",     "id": "sig_sub",  "label": "Signature sub",  "default": "Knit in India · Designed for everywhere" }
   ],
-  "blocks":[{"type":"paragraph","name":"Paragraph","settings":[
-    {"type":"textarea","id":"text","label":"Text","default":"Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty."}
-  ]}],
-  "max_blocks":4,
-  "presets":[{"name":"Gripfeet — Brand Story (Active)","blocks":[
-    {"type":"paragraph","settings":{"text":"Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays."}},
-    {"type":"paragraph","settings":{"text":"We knit ours in-house in India — Supima cotton up top and a 100% silicone grip pattern on the sole. A manufacturing depth most lifestyle brands have to import. The result is the first Made-in-India grip sock you'd genuinely wear out of the studio."}}
-  ]}]
+  "presets": [{ "name": "Gripfeet — Brand Story" }]
 }
 {% endschema %}

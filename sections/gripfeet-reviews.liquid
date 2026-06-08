@@ -1,59 +1,70 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap section" id="reviews">
-  <div class="reviews-hero">
-    <div class="gf-section-head">
-      <div class="gf-section-head__left">
-        <span class="gf-eyebrow"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
-        <h2 class="gf-h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+<section class="section band">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+        <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
       </div>
-      <div class="gf-section-head__right">
+      <div class="right">
         <div class="reviews-rating">
-          <span class="big">{{ section.settings.score }}</span>
+          <span class="big">{{ section.settings.rating }}</span>
           <div class="meta">
             <div class="stars">★★★★★</div>
-            <div>{{ section.settings.count }}</div>
+            <div class="mono" style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)">{{ section.settings.review_count }}</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="reviews">
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'review' -%}
-        <div class="review" {{ block.shopify_attributes }}>
-          <div class="stars">
-            {%- for i in (1..block.settings.stars) -%}★{%- endfor -%}
+
+    <div class="reviews">
+      {%- for block in section.blocks -%}
+        {%- if block.type == "review" -%}
+          <div class="review" {{ block.shopify_attributes }}>
+            <span class="stars">
+              {%- for i in (1..block.settings.stars) -%}★{%- endfor -%}
+            </span>
+            <p class="quote">"{{ block.settings.quote }}"</p>
+            <div class="who">
+              <span class="name">{{ block.settings.name }}</span>
+              <span class="loc">{{ block.settings.location }}</span>
+            </div>
           </div>
-          <p class="quote">"{{ block.settings.quote }}"</p>
-          <div class="who">
-            <span class="name">{{ block.settings.name }}</span>
-            <span class="loc">{{ block.settings.location }}</span>
-          </div>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Reviews (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Worn-in opinions · Reviews"},
-    {"type":"text","id":"heading","label":"Heading","default":"Quiet wins, in customers' words."},
-    {"type":"text","id":"score","label":"Score","default":"4.9"},
-    {"type":"text","id":"count","label":"Count text","default":"1,284 reviews"}
+  "name": "Gripfeet — Reviews",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow",      "label": "Eyebrow",       "default": "Worn-in opinions · Reviews" },
+    { "type": "text", "id": "heading",      "label": "Heading",       "default": "Quiet wins, in their words." },
+    { "type": "text", "id": "rating",       "label": "Avg rating",    "default": "4.9" },
+    { "type": "text", "id": "review_count", "label": "Review count",  "default": "1,284 reviews" }
   ],
-  "blocks":[{"type":"review","name":"Review","settings":[
-    {"type":"range","id":"stars","label":"Stars","min":1,"max":5,"step":1,"default":5},
-    {"type":"textarea","id":"quote","label":"Quote","default":"Finally a grip sock that doesn't embarrass me."},
-    {"type":"text","id":"name","label":"Name","default":"Aanya M."},
-    {"type":"text","id":"location","label":"Location","default":"Mumbai · Pilates instructor"}
-  ]}],
-  "max_blocks":6,
-  "presets":[{"name":"Gripfeet — Reviews (Active)","blocks":[
-    {"type":"review","settings":{"stars":5,"quote":"Honestly the first grip sock I haven't been embarrassed to wear out of the studio. The Supima feels like a proper sock — not a piece of medical equipment.","name":"Aanya M.","location":"Mumbai · Pilates instructor"}},
-    {"type":"review","settings":{"stars":5,"quote":"Bought a three-pack of Soft Studio for travel. Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good.","name":"Rohan K.","location":"Bengaluru · Frequent traveller"}},
-    {"type":"review","settings":{"stars":5,"quote":"My toddler runs across our marble like it's a track. Finally — a kids' grip sock that fits properly and doesn't slide off her ankle every two minutes.","name":"Priya & Ishaan","location":"Delhi · Lil Steps customer"}}
-  ]}]
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range",    "id": "stars",    "label": "Stars",    "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote",    "label": "Quote" },
+        { "type": "text",     "id": "name",     "label": "Name" },
+        { "type": "text",     "id": "location", "label": "Location" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Gripfeet — Reviews",
+    "blocks": [
+      { "type": "review", "settings": { "stars": 5, "quote": "Finally a grip sock that doesn\'t look like a hospital slipper. The silicone dots actually grip and the cotton is genuinely soft.", "name": "Priya M.", "location": "Mumbai" } },
+      { "type": "review", "settings": { "stars": 5, "quote": "Wore them for Pilates, a 14-hour flight, and two days of meetings. Still look new. That\'s all you need to know.", "name": "Shreya A.", "location": "Bangalore" } },
+      { "type": "review", "settings": { "stars": 5, "quote": "Bought the three-pack for my daughter\'s dance class. She refuses to take them off. We\'re back for the crew version.", "name": "Anita R.", "location": "Delhi" } }
+    ]
+  }]
 }
 {% endschema %}

@@ -1,34 +1,40 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap section" id="shop">
-  <div class="gf-section-head" style="flex-direction:column;align-items:center;text-align:center">
-    <div class="gf-section-head__left">
-      <span class="gf-eyebrow"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
-      <h2 class="gf-h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+<section class="wrap section" id="shop">
+  <div class="section-head center">
+    <div class="left">
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
     </div>
   </div>
-  <div class="gf-cat-grid">
+
+  <div class="height-grid">
     {%- for block in section.blocks -%}
-      {%- if block.type == 'category' -%}
-        <a href="{{ block.settings.link | default: '/collections/all' }}" class="gf-cat-card" {{ block.shopify_attributes }}>
-          <div class="gf-cat-card__frame">
+      {%- if block.type == "card" -%}
+        <a href="{{ block.settings.link }}" class="height-card" {{ block.shopify_attributes }}>
+          <div class="frame">
             {%- if block.settings.badge != blank -%}
-              <span class="gf-cat-card__badge">{{ block.settings.badge }}</span>
+              <span class="badge">{{ block.settings.badge }}</span>
             {%- endif -%}
             {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.cuff }}" width="400" height="400" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                alt="{{ block.settings.name }}"
+                width="800" height="800"
+                loading="lazy"
+                style="width:100%;height:100%;object-fit:cover;display:block"
+              >
             {%- else -%}
-              <div class="gf-ph{% if block.settings.dark_ph %} gf-ph--dark{% endif %}" style="width:100%;height:100%;min-height:240px{% if block.settings.bg_color != blank %};background:{{ block.settings.bg_color }}{% endif %}">
-                <span class="gf-ph__label">{{ block.settings.cuff }} · {{ block.settings.name }}</span>
-                <span class="gf-ph__corner">GF</span>
+              <div class="ph{% if block.settings.dark_bg %} ph-dark{% endif %}" style="width:100%;height:100%;{% if block.settings.bg_color != blank %}background:{{ block.settings.bg_color }};{% endif %}">
+                <span class="ph-label">{{ block.settings.name }} · {{ block.settings.subtitle }}</span>
+                <span class="ph-corner">GF</span>
               </div>
             {%- endif -%}
           </div>
-          <div class="gf-cat-card__label">
-            <div class="gf-cat-card__name">
-              <small>{{ block.settings.name }}</small>
-              {{ block.settings.cuff }}
+          <div class="label">
+            <div class="n">
+              <small>{{ block.settings.subtitle }}</small>
+              {{ block.settings.name }}
             </div>
-            <span class="gf-cat-card__go">
+            <span class="go">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
             </span>
           </div>
@@ -37,29 +43,39 @@
     {%- endfor -%}
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Category Grid (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"By cuff height"},
-    {"type":"text","id":"heading","label":"Heading","default":"Shop by Height"}
+  "name": "Gripfeet — Shop by Height",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow",  "label": "Eyebrow",  "default": "By cuff height" },
+    { "type": "text", "id": "heading",  "label": "Heading",  "default": "Shop by Height" }
   ],
-  "blocks":[{"type":"category","name":"Category card","settings":[
-    {"type":"text","id":"code","label":"Code","default":"01"},
-    {"type":"text","id":"cuff","label":"Cuff name","default":"Ankle"},
-    {"type":"text","id":"name","label":"Range name","default":"Mat Masters"},
-    {"type":"text","id":"badge","label":"Badge (optional)","default":""},
-    {"type":"checkbox","id":"dark_ph","label":"Dark placeholder","default":false},
-    {"type":"text","id":"bg_color","label":"Placeholder bg colour","default":""},
-    {"type":"image_picker","id":"image","label":"Category image"},
-    {"type":"url","id":"link","label":"Link"}
-  ]}],
-  "max_blocks":5,
-  "presets":[{"name":"Gripfeet — Category Grid (Active)","blocks":[
-    {"type":"category","settings":{"code":"01","cuff":"Loafer","name":"Invisible Grip","badge":"","dark_ph":false,"link":"/collections/loafer"}},
-    {"type":"category","settings":{"code":"02","cuff":"Ankle","name":"Mat Masters","badge":"Bestseller","dark_ph":false,"link":"/collections/ankle"}},
-    {"type":"category","settings":{"code":"03","cuff":"Crew","name":"Active Hold","badge":"","dark_ph":true,"link":"/collections/crew"}},
-    {"type":"category","settings":{"code":"04","cuff":"Kids","name":"Lil Steps","badge":"","dark_ph":false,"link":"/collections/kids"}}
-  ]}]
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Category card",
+      "settings": [
+        { "type": "text",         "id": "name",     "label": "Name",     "default": "Ankle" },
+        { "type": "text",         "id": "subtitle", "label": "Subtitle", "default": "Mat Masters" },
+        { "type": "text",         "id": "badge",    "label": "Badge",    "default": "" },
+        { "type": "url",          "id": "link",     "label": "Link" },
+        { "type": "image_picker", "id": "image",    "label": "Image" },
+        { "type": "color",        "id": "bg_color", "label": "Placeholder bg", "default": "#F3F0E8" },
+        { "type": "checkbox",     "id": "dark_bg",  "label": "Dark placeholder", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Gripfeet — Shop by Height",
+    "blocks": [
+      { "type": "card", "settings": { "name": "Loafer", "subtitle": "Invisible Grip", "bg_color": "#EFE9DD" } },
+      { "type": "card", "settings": { "name": "Ankle",  "subtitle": "Mat Masters",    "bg_color": "#F3F0E8", "badge": "Bestseller" } },
+      { "type": "card", "settings": { "name": "Crew",   "subtitle": "Active Hold",    "bg_color": "#16160F", "dark_bg": true } },
+      { "type": "card", "settings": { "name": "Kids",   "subtitle": "Lil Steps",      "bg_color": "#F2EBDF" } }
+    ]
+  }]
 }
 {% endschema %}

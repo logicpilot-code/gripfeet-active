@@ -1,38 +1,48 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap statement">
+<section class="wrap statement">
   <p>
     <span class="lead">{{ section.settings.lead }} </span>
     <span class="rest">{{ section.settings.rest }}</span>
   </p>
   <div class="foot">
     {%- for block in section.blocks -%}
-      {%- if block.type == 'stat' -%}
+      {%- if block.type == "stat" -%}
         <div class="stat" {{ block.shopify_attributes }}>
-          <b>{{ block.settings.number }}</b>
+          <b>{{ block.settings.value }}</b>
           <span>{{ block.settings.label }}</span>
         </div>
-        {%- unless forloop.last -%}<div class="div"></div>{%- endunless -%}
+        {%- unless forloop.last %}<div class="div"></div>{%- endunless -%}
       {%- endif -%}
     {%- endfor -%}
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Statement (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"lead","label":"Lead text (muted)","default":"India's grip sock you'd actually wear out of the studio —"},
-    {"type":"text","id":"rest","label":"Rest text (strong)","default":"trusted on the mat, loved for everyday."}
+  "name": "Gripfeet — Statement",
+  "tag": "section",
+  "settings": [
+    { "type": "textarea", "id": "lead", "label": "Muted lead text", "default": "India\'s grip sock you\'d actually wear out of the studio —" },
+    { "type": "textarea", "id": "rest", "label": "Strong rest text", "default": "trusted on the mat, loved for everyday." }
   ],
-  "blocks":[{"type":"stat","name":"Stat","settings":[
-    {"type":"text","id":"number","label":"Number","default":"4.9"},
-    {"type":"text","id":"label","label":"Label","default":"Avg rating"}
-  ]}],
-  "max_blocks":5,
-  "presets":[{"name":"Gripfeet — Statement (Active)","blocks":[
-    {"type":"stat","settings":{"number":"4.9","label":"Avg rating"}},
-    {"type":"stat","settings":{"number":"1,284","label":"Reviews"}},
-    {"type":"stat","settings":{"number":"11 SKUs","label":"Across 4 ranges"}},
-    {"type":"stat","settings":{"number":"100%","label":"Silicone sole"}}
-  ]}]
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "4.9" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Avg rating" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Gripfeet — Statement",
+    "blocks": [
+      { "type": "stat", "settings": { "value": "4.9",   "label": "Avg rating" } },
+      { "type": "stat", "settings": { "value": "1,284", "label": "Reviews" } },
+      { "type": "stat", "settings": { "value": "11 SKUs","label": "Across 4 ranges" } },
+      { "type": "stat", "settings": { "value": "100%",  "label": "Silicone sole" } }
+    ]
+  }]
 }
 {% endschema %}

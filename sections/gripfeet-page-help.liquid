@@ -1,0 +1,87 @@
+{{ 'gripfeet-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="page-hero compact">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+    <h1 class="page-hero-title">{{ section.settings.title }}</h1>
+  </div>
+</div>
+
+<section class="wrap section">
+  <div class="help-layout">
+    <!-- Sidebar nav -->
+    <nav class="help-nav">
+      {%- for block in section.blocks -%}
+        {%- if block.type == "category" -%}
+          <a href="#help-{{ forloop.index }}" class="help-nav-item{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <!-- Content -->
+    <div class="help-content">
+      {%- for block in section.blocks -%}
+        {%- if block.type == "category" -%}
+          <div id="help-{{ forloop.index }}" class="help-section" {{ block.shopify_attributes }}>
+            <h2>{{ block.settings.title }}</h2>
+            <div class="faq-list">
+              {%- assign qs = block.settings.questions | split: "||" -%}
+              {%- assign as = block.settings.answers | split: "||" -%}
+              {%- for q in qs -%}
+                <div class="faq-item">
+                  <button class="faq-q" onclick="var p=this.closest('.faq-item');p.classList.toggle('open')">
+                    {{ q | strip }}
+                    <span class="faq-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+                  </button>
+                  <div class="faq-a"><div class="faq-inner"><p>{{ as[forloop.index0] | strip }}</p></div></div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<div class="page-cta">
+  <div class="wrap">
+    <h2>Still need help?</h2>
+    <p>Our team is online 9am–6pm IST, Monday–Saturday.</p>
+    <div class="cta-actions">
+      <a href="/pages/contact" class="btn btn-light">Contact us</a>
+      <a href="https://wa.me/919999999999" class="btn btn-ghost-light">WhatsApp us</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gripfeet — Help",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Help centre" },
+    { "type": "text", "id": "title",   "label": "Title",   "default": "How can we help?" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "FAQ category",
+      "settings": [
+        { "type": "text",     "id": "title",     "label": "Category title", "default": "Shipping & delivery" },
+        { "type": "textarea", "id": "questions", "label": "Questions (separated by ||)", "default": "How long does delivery take?||Do you offer COD?||Do you ship internationally?" },
+        { "type": "textarea", "id": "answers",   "label": "Answers (separated by ||)",   "default": "4–7 business days worldwide. India orders arrive in 2–4 days.||Yes, COD is available on all India orders.||Yes — we ship to 40+ countries. Duties may apply." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Gripfeet — Help",
+    "blocks": [
+      { "type": "category", "settings": { "title": "Shipping & delivery", "questions": "How long does delivery take?||Do you offer COD?||Is shipping free?", "answers": "4–7 business days worldwide. India orders in 2–4 days.||Yes, COD available for all India orders.||Free on orders over ₹999. Otherwise ₹99 flat." } },
+      { "type": "category", "settings": { "title": "Returns & quality",   "questions": "What is your returns policy?||What if my order is damaged?", "answers": "All sales are final — we cannot accept returns or issue refunds. Every pair is quality-checked before dispatch.||Please email us within 48 hours with a photo. We will replace any defective pair, no questions asked." } },
+      { "type": "category", "settings": { "title": "Sizing",              "questions": "How do I find my size?||Do you have half sizes?", "answers": "Adults: S-M fits UK 3–6, L-XL fits UK 7–11. Kids: 0-2Y fits foot 10–13 cm, 3-5Y fits 14–17 cm.||No — our two-size adult run covers the full range with the stretch cotton knit." } }
+    ]
+  }]
+}
+{% endschema %}

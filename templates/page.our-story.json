@@ -1,1 +1,21 @@
-{"sections":{"main":{"type":"gripfeet-page-content","settings":{"eyebrow":"Our story · Made in India","title_italic":""}}},"order":["main"]}
+{
+  "sections": {
+    "header": {
+      "type": "gripfeet-header",
+      "settings": {}
+    },
+    "about": {
+      "type": "gripfeet-page-about",
+      "settings": {}
+    },
+    "footer": {
+      "type": "gripfeet-footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header",
+    "about",
+    "footer"
+  ]
+}

@@ -1,0 +1,94 @@
+{{ 'gripfeet-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+    <h1 class="page-hero-title">{{ section.settings.title }}</h1>
+    <p class="page-hero-sub">{{ section.settings.subtitle }}</p>
+  </div>
+</div>
+
+<section class="wrap section">
+  <div class="about-split">
+    <div class="about-visual">
+      {%- if section.settings.image_1 != blank -%}
+        <img src="{{ section.settings.image_1 | image_url: width: 900 }}" alt="Gripfeet story" width="900" height="1125" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+      {%- else -%}
+        <div class="ph" style="aspect-ratio:4/5;border-radius:var(--radius)">
+          <span class="ph-label">Knitting room · India · hands at loom · Supima thread</span>
+          <span class="ph-corner">GF · STORY</span>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="about-text">
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.chapter_1_eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.chapter_1_heading }}</h2>
+      <p>{{ section.settings.chapter_1_body }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="wrap">
+    <div class="about-values">
+      {%- for block in section.blocks -%}
+        {%- if block.type == "value" -%}
+          <div class="about-value" {{ block.shopify_attributes }}>
+            <span class="n">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.body }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<div class="page-cta">
+  <div class="wrap">
+    <h2>{{ section.settings.cta_heading }}</h2>
+    <p>{{ section.settings.cta_body }}</p>
+    <div class="cta-actions">
+      <a href="/collections/all" class="btn btn-light">Shop all socks</a>
+      <a href="/pages/contact" class="btn btn-ghost-light">Get in touch</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gripfeet — About",
+  "tag": "section",
+  "settings": [
+    { "type": "text",         "id": "eyebrow",           "label": "Hero eyebrow",    "default": "Our story · Made in India" },
+    { "type": "text",         "id": "title",             "label": "Hero title",      "default": "Built between the mat and the floor." },
+    { "type": "textarea",     "id": "subtitle",          "label": "Hero subtitle",   "default": "We made Gripfeet because the grip socks we could find were either clinical, loud, or forgettable. We wanted something worth wearing." },
+    { "type": "image_picker", "id": "image_1",           "label": "Story image" },
+    { "type": "text",         "id": "chapter_1_eyebrow", "label": "Chapter 1 eyebrow", "default": "The beginning" },
+    { "type": "text",         "id": "chapter_1_heading", "label": "Chapter 1 heading", "default": "A sock that finally feels like a sock." },
+    { "type": "textarea",     "id": "chapter_1_body",    "label": "Chapter 1 body",    "default": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays. We knit ours in-house in India — Supima cotton up top, a 100% silicone grip pattern on the sole." },
+    { "type": "text",         "id": "cta_heading",       "label": "CTA heading",     "default": "Try a pair." },
+    { "type": "text",         "id": "cta_body",          "label": "CTA body",        "default": "Start with one pair. Most people come back for a three-pack." }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Brand value",
+      "settings": [
+        { "type": "text",     "id": "title", "label": "Title", "default": "Made in India" },
+        { "type": "textarea", "id": "body",  "label": "Body",  "default": "Knit in-house with manufacturing depth most brands import." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Gripfeet — About",
+    "blocks": [
+      { "type": "value", "settings": { "title": "Made in India",            "body": "Designed and knit in-house with the manufacturing depth most lifestyle brands import." } },
+      { "type": "value", "settings": { "title": "100% Silicone Grip",        "body": "Full-sole pattern, set in permanently. Never peels after 50+ washes." } },
+      { "type": "value", "settings": { "title": "Stretch Supima Cotton",     "body": "Naturally breathable and beautifully soft — every single wash." } },
+      { "type": "value", "settings": { "title": "Designed for Modern Life",  "body": "Studio, hardwood, hotel rooms, sofa Sundays." } }
+    ]
+  }]
+}
+{% endschema %}

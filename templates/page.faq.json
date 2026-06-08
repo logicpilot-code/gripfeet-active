@@ -1,1 +1,21 @@
-{"sections":{"main":{"type":"gripfeet-page-content","settings":{"eyebrow":"Help · Frequently asked","title_italic":""}}},"order":["main"]}
+{
+  "sections": {
+    "header": {
+      "type": "gripfeet-header",
+      "settings": {}
+    },
+    "help": {
+      "type": "gripfeet-page-help",
+      "settings": {}
+    },
+    "footer": {
+      "type": "gripfeet-footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header",
+    "help",
+    "footer"
+  ]
+}

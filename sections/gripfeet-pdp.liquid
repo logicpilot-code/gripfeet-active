@@ -1,190 +1,255 @@
 {{ 'gripfeet-pdp.css' | asset_url | stylesheet_tag }}
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
 
-<div class="gf-wrap pdp-breadcrumb">
+{%- assign product = product -%}
+
+<div class="wrap pdp-breadcrumb">
   <a href="/">Home</a>
   <span class="sep">/</span>
-  <a href="{{ product.collections.first.url | default: '/collections/all' }}">{{ product.collections.first.title | default: 'Shop' }}</a>
-  <span class="sep">/</span>
+  {%- if product.collections.first -%}
+    <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+    <span class="sep">/</span>
+  {%- endif -%}
   <span class="here">{{ product.title }}</span>
 </div>
 
-{%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign product_image = product.featured_image -%}
+<section class="wrap pdp">
 
-<section class="gf-wrap pdp" id="pdp-hero">
-
-  <div class="pdp-gallery">
-    <div class="pdp-thumbs">
-      {%- for image in product.images limit: 5 -%}
-        <button class="pdp-thumb{% if forloop.first %} active{% endif %}" onclick="document.getElementById('pdp-main-img').src='{{ image | image_url: width: 1200 }}';document.querySelectorAll('.pdp-thumb').forEach(el=>el.classList.remove('active'));this.classList.add('active')" aria-label="View image {{ forloop.index }}">
-          <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | default: product.title }}" width="84" height="84" loading="lazy">
+  <!-- Gallery -->
+  <div class="pdp-gallery" id="pdp-gallery">
+    <div class="pdp-thumbs" id="pdp-thumbs">
+      {%- for media in product.media limit: 5 -%}
+        <button class="pdp-thumb{% if forloop.first %} active{% endif %}" data-idx="{{ forloop.index0 }}" aria-label="View {{ forloop.index }}">
+          <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | default: product.title }}" width="160" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover">
         </button>
       {%- else -%}
         {%- for i in (1..5) -%}
-          <button class="pdp-thumb{% if forloop.first %} active{% endif %}" aria-label="View {{ i }}">
-            <div class="gf-ph" style="width:100%;height:100%;min-height:80px"><span class="gf-ph__corner">{{ i }}</span></div>
+          <button class="pdp-thumb{% if forloop.first %} active{% endif %}" data-idx="{{ forloop.index0 }}" aria-label="View {{ forloop.index }}">
+            <div class="ph" style="width:100%;height:100%"><span class="ph-corner">{{ forloop.index }}</span></div>
           </button>
         {%- endfor -%}
       {%- endfor -%}
     </div>
-    <div class="pdp-main">
-      {%- if product_image != blank -%}
-        <img id="pdp-main-img" src="{{ product_image | image_url: width: 1200 }}" alt="{{ product_image.alt | default: product.title }}" width="600" height="750" loading="eager" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;display:block">
+
+    <div class="pdp-main" id="pdp-main-img">
+      {%- if product.featured_image != blank -%}
+        <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}" width="1200" height="1500" loading="eager" style="width:100%;height:100%;object-fit:cover">
       {%- else -%}
-        <div class="gf-ph" style="width:100%;height:100%;min-height:480px">
-          <span class="gf-ph__label">{{ product.title }} · product image</span>
-          <span class="gf-ph__corner">{{ product.handle }}</span>
+        <div class="ph ph-photo" style="width:100%;height:100%">
+          <span class="ph-label">{{ product.title }} · lifestyle shot</span>
+          <span class="ph-corner">GF</span>
         </div>
       {%- endif -%}
-      <span class="pdp-save">Launch price</span>
+      {%- if product.compare_at_price_max > product.price_min -%}
+        {%- assign off = product.compare_at_price_max | minus: product.price_min | times: 100 | divided_by: product.compare_at_price_max -%}
+        <span class="pdp-save">Launch · save {{ off }}%</span>
+      {%- endif -%}
     </div>
   </div>
 
+  <!-- Info -->
   <div class="pdp-info">
-    <span class="pdp-range">{{ product.type | default: product.collections.first.title }}</span>
+    <span class="pdp-range">{{ product.type }}</span>
     <h1 class="pdp-name">{{ product.title }}</h1>
 
-    <a href="#pdp-reviews" class="pdp-stars">
-      <span style="color:var(--gf-ink)">★★★★★</span>
-      <span>4.8 · 1,200+ reviews</span>
-    </a>
+    <div class="pdp-stars">
+      <span class="stars-svg">★★★★★</span>
+      <span>4.9 · 284 reviews</span>
+    </div>
 
-    <div class="pdp-price" id="pdp-price-display">
-      <span class="now">{{ current_variant.price | money }}</span>
-      {%- if current_variant.compare_at_price > current_variant.price -%}
-        <span class="was">{{ current_variant.compare_at_price | money }}</span>
-        <span class="tag">−{{ current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price }}% off</span>
+    <div class="pdp-price">
+      <span class="now" id="pdp-price">₹{{ product.price | money_without_currency }}</span>
+      {%- if product.compare_at_price_max > product.price_min -%}
+        <span class="was">₹{{ product.compare_at_price_max | money_without_currency }}</span>
+        <span class="tag">−{{ off }}% off</span>
       {%- endif -%}
     </div>
 
-    <p class="pdp-blurb">{{ product.description | strip_html | truncatewords: 40 }}</p>
-
-    {%- unless product.has_only_default_variant -%}
-      <div class="pdp-opt">
-        {%- for option in product.options_with_values -%}
-          <div class="olbl"><span>{{ option.name }}</span></div>
-          <div class="pdp-pills">
-            {%- for value in option.values -%}
-              <label class="pdp-pill {% if option.selected_value == value %}on{% endif %}">
-                <input type="radio" name="{{ option.name | handleize }}" value="{{ value }}" style="display:none" {% if option.selected_value == value %}checked{% endif %}>
-                {{ value }}
-              </label>
-            {%- endfor -%}
-          </div>
-        {%- endfor -%}
-      </div>
-    {%- endunless -%}
-
-    <div class="pdp-opt">
-      <div class="olbl"><span>Pack size</span></div>
-      <div class="pack-grid">
-        <button class="pack-card" data-pack="single">
-          <span class="pack-name">Single</span>
-          <span class="pack-sub">1 pair</span>
-          <span class="pack-price">{{ current_variant.price | minus: 150 | money }}</span>
-        </button>
-        <button class="pack-card on">
-          <span class="pack-badge">Save 17%</span>
-          <span class="pack-name">Pack of 3</span>
-          <span class="pack-sub">3 pairs</span>
-          <span class="pack-price">{{ current_variant.price | money }}</span>
-        </button>
-        <button class="pack-card">
-          <span class="pack-badge">Best value</span>
-          <span class="pack-name">Pack of 6</span>
-          <span class="pack-sub">6 pairs</span>
-          <span class="pack-price">{{ current_variant.price | times: 2 | minus: 200 | money }}</span>
-        </button>
-      </div>
-    </div>
-
-    {%- if product.options contains 'Size' -%}
-      <div class="pdp-opt">
-        <div class="olbl"><span>Size</span><a class="size-guide" href="/pages/sizing-guide">Sizing guide</a></div>
-        <div class="pdp-sizes">
-          {%- assign size_option = product.options_with_values | where: "name", "Size" | first -%}
-          {%- for size in size_option.values -%}
-            <button class="pdp-size {% if size_option.selected_value == size %}on{% endif %}">
-              <b>{{ size }}</b>
-            </button>
-          {%- endfor -%}
-        </div>
-      </div>
+    {%- if product.description != blank -%}
+      <p class="pdp-blurb">{{ product.description | strip_html | truncate: 280 }}</p>
     {%- endif -%}
 
-    <div class="pdp-buy" style="margin-top:28px">
-      {%- form 'product', product, id: 'gf-pdp-form' -%}
-        <input type="hidden" name="id" value="{{ current_variant.id }}">
+    {%- form 'product', product, id: 'gf-pdp-form' -%}
+
+      <!-- Pack size selector (Option 3: Pack Quantity) -->
+      {%- assign pack_option_idx = nil -%}
+      {%- for opt in product.options -%}
+        {%- if opt contains "Pack" or opt contains "pack" -%}
+          {%- assign pack_option_idx = forloop.index0 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if pack_option_idx != nil -%}
+        {%- assign pack_values = product.options_with_values[pack_option_idx].values -%}
+        <div class="pdp-opt">
+          <div class="olbl"><span>Pack size</span></div>
+          <div class="pack-grid">
+            {%- for val in pack_values -%}
+              <button type="button" class="pack-card{% if forloop.first %} on{% endif %}" data-pack="{{ val }}">
+                {%- if val contains "6" %}<span class="pack-badge">Best value</span>{%- endif -%}
+                <span class="pack-name">{{ val }}</span>
+                <span class="pack-sub">
+                  {%- if val contains "1" or val == "1 Pair" -%}Single pair
+                  {%- elsif val contains "3" -%}Pack of 3
+                  {%- elsif val contains "6" -%}Pack of 6
+                  {%- else -%}{{ val }}
+                  {%- endif -%}
+                </span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Colour / Style -->
+      {%- assign colour_idx = nil -%}
+      {%- for opt in product.options -%}
+        {%- if opt contains "Style" or opt contains "Colour" or opt contains "Color" -%}
+          {%- assign colour_idx = forloop.index0 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if colour_idx != nil -%}
+        {%- assign colour_values = product.options_with_values[colour_idx].values -%}
+        <div class="pdp-opt">
+          <div class="olbl"><span>Colour story</span></div>
+          <div class="pdp-swatches">
+            {%- for val in colour_values -%}
+              <button type="button" class="pdp-sw{% if forloop.first %} on{% endif %}" data-colour="{{ val }}">
+                <span class="dot" style="background:#C9B9A3"></span>
+                <span class="swl">{{ val }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Size -->
+      {%- assign size_idx = nil -%}
+      {%- for opt in product.options -%}
+        {%- if opt == "Size" -%}
+          {%- assign size_idx = forloop.index0 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if size_idx != nil -%}
+        {%- assign size_values = product.options_with_values[size_idx].values -%}
+        <div class="pdp-opt">
+          <div class="olbl"><span>Size</span><a class="size-guide" href="/pages/sizing-guide">Sizing guide</a></div>
+          <div class="pdp-sizes">
+            {%- for val in size_values -%}
+              <button type="button" class="pdp-size{% if forloop.first %} on{% endif %}" data-size="{{ val }}">
+                <b>{{ val }}</b>
+                <span>
+                  {%- if val == "S-M" -%}UK 3–6
+                  {%- elsif val == "L-XL" -%}UK 7–11
+                  {%- elsif val == "0-2Y" -%}Toddler
+                  {%- elsif val == "3-5Y" -%}Pre-school
+                  {%- else -%}&nbsp;
+                  {%- endif -%}
+                </span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Hidden variant selector -->
+      <select name="id" id="gf-variant-select" style="display:none">
+        {%- for variant in product.variants -%}
+          <option value="{{ variant.id }}"
+            {%- if variant == product.selected_or_first_available_variant %} selected{% endif -%}
+            {% unless variant.available %}disabled{% endunless %}>
+            {{ variant.title }} — ₹{{ variant.price | money_without_currency }}
+          </option>
+        {%- endfor -%}
+      </select>
+
+      <!-- Buy row -->
+      <div class="pdp-buy">
         <div class="pdp-qty">
-          <button type="button" onclick="var v=document.getElementById('pdp-qty-val');v.textContent=Math.max(1,parseInt(v.textContent)-1)" aria-label="Decrease">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+          <button type="button" id="pdp-qty-dec" aria-label="Decrease">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
           <span class="val" id="pdp-qty-val">1</span>
-          <button type="button" onclick="var v=document.getElementById('pdp-qty-val');v.textContent=parseInt(v.textContent)+1" aria-label="Increase">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          <input type="number" name="quantity" id="pdp-qty-input" value="1" min="1" style="display:none">
+          <button type="button" id="pdp-qty-inc" aria-label="Increase">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
         </div>
-        <button type="submit" name="add" class="gf-btn gf-btn--primary pdp-add">
-          Add to bag — {{ current_variant.price | money }}
+        <button type="submit" class="btn btn-primary pdp-add" id="pdp-add-btn">
+          Add to bag
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
         </button>
-      {%- endform -%}
-    </div>
+      </div>
 
+    {%- endform -%}
+
+    <!-- Trust grid -->
     <div class="pdp-trust">
-      <div class="pdp-trust-item"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14Z"/><path d="M5 19c4-4 8-6 14-14"/></svg></span><div><strong>Stretch Supima Yarn</strong><small>Soft, breathable & durable.</small></div></div>
-      <div class="pdp-trust-item"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="17" cy="7" r="1"/><circle cx="7" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="17" cy="12" r="1"/><circle cx="7" cy="17" r="1"/><circle cx="12" cy="17" r="1"/><circle cx="17" cy="17" r="1"/></svg></span><div><strong>100% Silicone Grip</strong><small>Full-sole antislip pattern.</small></div></div>
-      <div class="pdp-trust-item"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span><div><strong>Perfect Fit</strong><small>2–3 sizes for a better fit.</small></div></div>
-      <div class="pdp-trust-item"><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><div><strong>Ships Globally</strong><small>4–7 days · COD available.</small></div></div>
-    </div>
-
-    <div class="pdp-accordion">
-      <div class="pacc open">
-        <button class="pacc-head" onclick="this.closest('.pacc').classList.toggle('open')">Materials & Make<span class="pacc-ico">+</span></button>
-        <div class="pacc-body"><div class="pacc-inner"><p>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane. 100% food-grade silicone grip on the full sole. Reinforced heel & toe. Ribbed cuff for a secure, no-slip-down fit.</p></div></div>
+      <div class="pdp-trust-item">
+        <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <div><strong>Quality guaranteed</strong><small>Each pair checked before dispatch.</small></div>
       </div>
-      <div class="pacc">
-        <button class="pacc-head" onclick="this.closest('.pacc').classList.toggle('open')">Sizing & Fit<span class="pacc-ico">+</span></button>
-        <div class="pacc-body"><div class="pacc-inner"><p>Available in 2–3 sizes. UK 3–6 (S), 6–9 (M), 9–12 (L). Wears slightly snug out of the wash — softens after first wear.</p></div></div>
+      <div class="pdp-trust-item">
+        <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="m16 8 5 3v5h-5"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+        <div><strong>Ships in 1–2 days</strong><small>4–7 day global delivery. COD available.</small></div>
       </div>
-      <div class="pacc">
-        <button class="pacc-head" onclick="this.closest('.pacc').classList.toggle('open')">Care & Washing<span class="pacc-ico">+</span></button>
-        <div class="pacc-body"><div class="pacc-inner"><p>Machine washable, cold cycle, inside out. Tumble dry low or air dry. Do not iron the silicone sole. The pair will last 80+ wears with normal care.</p></div></div>
+      <div class="pdp-trust-item">
+        <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg></span>
+        <div><strong>Supima cotton</strong><small>Naturally breathable, soft every wash.</small></div>
       </div>
-      <div class="pacc">
-        <button class="pacc-head" onclick="this.closest('.pacc').classList.toggle('open')">Shipping & Returns<span class="pacc-ico">+</span></button>
-        <div class="pacc-body"><div class="pacc-inner"><p>Ships globally, 4–7 day delivery. Free shipping over ₹999. COD available across India. All sales are final, with a quality guarantee — if anything's wrong with the make, we replace it.</p></div></div>
+      <div class="pdp-trust-item">
+        <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></span>
+        <div><strong>Made in India</strong><small>Knit in-house. Depth most brands import.</small></div>
       </div>
     </div>
-  </div>
 
-</section>
-
-{%- if section.settings.show_related -%}
-  <section class="gf-wrap section pdp-related" id="pdp-reviews">
-    <div class="gf-section-head">
-      <div class="gf-section-head__left">
-        <span class="gf-eyebrow"><span class="gf-dot"></span>Wear it with</span>
-        <h2 class="gf-h-section" style="margin-top:14px">The rest of the range.</h2>
+    <!-- Accordion -->
+    <div class="pdp-accordion" id="pdp-accordion">
+      <div class="pacc" data-id="materials">
+        <button class="pacc-head">Materials<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>78% Supima cotton · 18% nylon · 4% elastane</li><li>100% medical-grade silicone grip dots (full-sole pattern)</li><li>No latex, no polyester in the knit</li></ul></div></div>
       </div>
-      <div class="gf-section-head__right"><a href="/collections/all" class="gf-btn-link">Shop all</a></div>
+      <div class="pacc" data-id="sizing">
+        <button class="pacc-head">Sizing<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Adults — S-M: UK 3–6 / EU 36–40</li><li>Adults — L-XL: UK 7–11 / EU 41–45</li><li>Kids — 0-2Y: toddler foot 10–13 cm</li><li>Kids — 3-5Y: pre-school foot 14–17 cm</li></ul></div></div>
+      </div>
+      <div class="pacc" data-id="care">
+        <button class="pacc-head">Care<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Machine wash cold, gentle cycle</li><li>Air dry or tumble dry low — no high heat</li><li>Do not bleach or iron the sole</li><li>The grip stays set for 50+ washes</li></ul></div></div>
+      </div>
+      <div class="pacc" data-id="shipping">
+        <button class="pacc-head">Shipping &amp; returns<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Ships in 1–2 business days from India</li><li>4–7 day delivery worldwide · COD available</li><li>Free shipping over ₹999</li><li>All sales final — quality guaranteed on every pair</li></ul></div></div>
+      </div>
+    </div>
+  </div><!-- /pdp-info -->
+
+</section><!-- /pdp -->
+
+<!-- Related products -->
+{%- assign collection = product.collections.first -%}
+{%- if collection -%}
+  <section class="wrap section pdp-related">
+    <div class="section-head">
+      <div class="left">
+        <h2 class="h-sub">Wear it with</h2>
+      </div>
     </div>
     <div class="pdp-related-grid">
-      {%- assign related = collections[product.collections.first.handle].products | where: 'available', true -%}
-      {%- for rp in related limit: 4 -%}
-        {%- unless rp.id == product.id -%}
-          <a class="gf-pcard" href="{{ rp.url }}">
-            <div class="gf-pcard__img">
-              {%- if rp.featured_image -%}
-                <img src="{{ rp.featured_image | image_url: width: 600 }}" alt="{{ rp.title }}" width="300" height="300" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+      {%- for rel in collection.products limit: 4 -%}
+        {%- unless rel.id == product.id -%}
+          <a class="pcard" href="{{ rel.url }}">
+            <div class="pimg">
+              {%- if rel.featured_image -%}
+                <img src="{{ rel.featured_image | image_url: width: 600 }}" alt="{{ rel.title }}" width="600" height="600" loading="lazy" style="width:100%;height:100%;object-fit:cover">
               {%- else -%}
-                <div class="gf-ph" style="width:100%;height:100%;min-height:200px"><span class="gf-ph__label">{{ rp.title }}</span></div>
+                <div class="ph" style="width:100%;height:100%"><span class="ph-label">{{ rel.title }}</span></div>
               {%- endif -%}
             </div>
-            <div class="gf-pcard__range">{{ rp.type }}</div>
-            <div class="gf-pcard__name">{{ rp.title }}</div>
-            <div class="gf-pcard__price">{{ rp.price | money }}</div>
+            <div class="prange">{{ rel.type }}</div>
+            <div class="pname">{{ rel.title }}</div>
+            <div class="pprice">₹{{ rel.price | money_without_currency }}</div>
           </a>
         {%- endunless -%}
       {%- endfor -%}
@@ -192,40 +257,93 @@
   </section>
 {%- endif -%}
 
+<!-- Sticky buy bar -->
 <div class="pdp-buybar" id="pdp-buybar">
-  <div class="bb-meta">
+  <div>
     <div class="bb-name">{{ product.title }}</div>
-    <div class="bb-sub">{{ current_variant.price | money }} · Pack of 3</div>
+    <div class="bb-sub">{{ product.type }}</div>
   </div>
-  <button class="gf-btn gf-btn--primary" onclick="document.getElementById('gf-pdp-form').querySelector('[name=add]').click()">Add to bag</button>
+  <button class="btn btn-primary btn-sm" onclick="document.getElementById('pdp-add-btn').click()">
+    Add to bag — ₹{{ product.price | money_without_currency }}
+  </button>
 </div>
 
 <script>
-  window.addEventListener('scroll', function(){
-    var bar = document.getElementById('pdp-buybar');
-    if(bar) bar.classList.toggle('visible', window.scrollY > 600);
-  }, {passive:true});
-  document.querySelectorAll('.pack-card').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.pack-card').forEach(function(b){b.classList.remove('on')});
-      this.classList.add('on');
+(function(){
+  // Qty stepper
+  var qVal = document.getElementById("pdp-qty-val");
+  var qInp = document.getElementById("pdp-qty-input");
+  var qty = 1;
+  function setQty(n){ qty = Math.max(1,n); if(qVal) qVal.textContent = qty; if(qInp) qInp.value = qty; }
+  var dec = document.getElementById("pdp-qty-dec");
+  var inc = document.getElementById("pdp-qty-inc");
+  if(dec) dec.addEventListener("click", function(){ setQty(qty-1); });
+  if(inc) inc.addEventListener("click", function(){ setQty(qty+1); });
+
+  // Gallery thumbs
+  var thumbs = document.querySelectorAll(".pdp-thumb");
+  var imgs = {{ product.media | json }};
+  thumbs.forEach(function(btn, i){
+    btn.addEventListener("click", function(){
+      thumbs.forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
     });
   });
-  document.querySelectorAll('.pacc-head').forEach(function(btn){
-    var ico = btn.querySelector('.pacc-ico');
-    if(ico) btn.addEventListener('click', function(){
-      var open = btn.closest('.pacc').classList.contains('open');
-      ico.textContent = open ? '+' : '−';
+
+  // Accordion
+  document.querySelectorAll(".pacc-head").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var pacc = btn.closest(".pacc");
+      pacc.classList.toggle("open");
+      var ico = btn.querySelector(".pacc-ico");
+      if(ico){
+        ico.innerHTML = pacc.classList.contains("open")
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+      }
     });
   });
+
+  // Pack card selection
+  document.querySelectorAll(".pack-card").forEach(function(card){
+    card.addEventListener("click", function(){
+      document.querySelectorAll(".pack-card").forEach(function(c){ c.classList.remove("on"); });
+      card.classList.add("on");
+    });
+  });
+
+  // Swatch selection
+  document.querySelectorAll(".pdp-sw").forEach(function(sw){
+    sw.addEventListener("click", function(){
+      document.querySelectorAll(".pdp-sw").forEach(function(s){ s.classList.remove("on"); });
+      sw.classList.add("on");
+    });
+  });
+
+  // Size selection
+  document.querySelectorAll(".pdp-size").forEach(function(sz){
+    sz.addEventListener("click", function(){
+      document.querySelectorAll(".pdp-size").forEach(function(s){ s.classList.remove("on"); });
+      sz.classList.add("on");
+    });
+  });
+
+  // Sticky buy bar
+  var buybar = document.getElementById("pdp-buybar");
+  var addBtn = document.getElementById("pdp-add-btn");
+  if(buybar && addBtn){
+    var obs = new IntersectionObserver(function(entries){
+      buybar.classList.toggle("visible", !entries[0].isIntersecting);
+    }, { threshold: 0.1 });
+    obs.observe(addBtn);
+  }
+})();
 </script>
 
 {% schema %}
 {
-  "name":"Gripfeet — PDP (Active)","tag":"section",
-  "settings":[
-    {"type":"checkbox","id":"show_related","label":"Show related products","default":true}
-  ],
-  "presets":[{"name":"Gripfeet — PDP (Active)"}]
+  "name": "Gripfeet — PDP",
+  "tag": "section",
+  "presets": [{ "name": "Gripfeet — PDP" }]
 }
 {% endschema %}

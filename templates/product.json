@@ -1,31 +1,21 @@
 {
   "sections": {
-    "main": {
+    "pdp": {
       "type": "gripfeet-pdp",
-      "settings": {
-        "show_related": true
-      }
-    },
-    "footer": {
-      "type": "gripfeet-footer",
-      "settings": {
-        "tagline": "Premium grip socks for every step, every day. Supima up top, silicone on the sole. Knit in India.",
-        "ships_to": "Globally · Free over ₹999",
-        "delivery": "4–7 business days",
-        "payment": "Visa · MC · UPI · COD"
-      }
+      "settings": {}
     },
     "whatsapp": {
       "type": "gripfeet-whatsapp",
-      "settings": {
-        "label": "Chat with us",
-        "number": "+919999999999"
-      }
+      "settings": {}
+    },
+    "footer": {
+      "type": "gripfeet-footer",
+      "settings": {}
     }
   },
   "order": [
-    "main",
-    "footer",
-    "whatsapp"
+    "pdp",
+    "whatsapp",
+    "footer"
   ]
 }

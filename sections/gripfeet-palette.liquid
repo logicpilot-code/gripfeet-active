@@ -1,27 +1,29 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap section tight" id="palette">
-  <div class="gf-section-head">
-    <div class="gf-section-head__left">
-      <span class="gf-eyebrow"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
-      <h2 class="gf-h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+<section class="wrap section tight" id="palette">
+  <div class="section-head">
+    <div class="left">
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
     </div>
-    <div class="gf-section-head__right">
-      <span style="font-size:13px;color:var(--gf-ink-2);max-width:30ch">{{ section.settings.desc }}</span>
+    <div class="right">
+      <span class="muted" style="font-size:13px;max-width:30ch">{{ section.settings.subtext }}</span>
     </div>
   </div>
+
   <div class="palette-groups">
     {%- for block in section.blocks -%}
-      {%- if block.type == 'group' -%}
+      {%- if block.type == "group" -%}
         <div class="palette-group" {{ block.shopify_attributes }}>
-          <span class="palette-label">{{ block.settings.group_name }}</span>
+          <span class="palette-label">{{ block.settings.title }}</span>
           <div class="palette-chips">
-            {%- assign chip_list = block.settings.chips | split: '|' -%}
-            {%- for chip in chip_list -%}
-              {%- assign parts = chip | split: ':' -%}
+            {%- assign colors = block.settings.colors | split: "," -%}
+            {%- assign labels = block.settings.labels | split: "," -%}
+            {%- for color in colors -%}
+              {%- assign idx = forloop.index0 -%}
+              {%- assign lbl = labels[idx] | strip -%}
               <div class="palette-chip">
-                <span class="dot" style="background:{{ parts[0] }};box-shadow:inset 0 0 0 1px rgba(0,0,0,0.12)"></span>
-                <span class="lab">{{ parts[1] }}</span>
-                <span class="hex">{{ parts[0] }}</span>
+                <span class="dot" style="background:{{ color | strip }};box-shadow:inset 0 0 0 1px rgba(10,10,10,0.12)"></span>
+                <span class="lab">{{ lbl }}</span>
+                <span class="hex">{{ color | strip }}</span>
               </div>
             {%- endfor -%}
           </div>
@@ -30,23 +32,35 @@
     {%- endfor -%}
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Palette (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Signature palette"},
-    {"type":"text","id":"heading","label":"Heading","default":"Colours that get along."},
-    {"type":"text","id":"desc","label":"Description","default":"Thoughtfully curated for comfort, style & everyday function."}
+  "name": "Gripfeet — Signature Palette",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow",  "label": "Eyebrow",  "default": "Signature palette" },
+    { "type": "text", "id": "heading",  "label": "Heading",  "default": "Colours that get along." },
+    { "type": "text", "id": "subtext",  "label": "Subtext",  "default": "Thoughtfully curated for comfort, style & everyday function." }
   ],
-  "blocks":[{"type":"group","name":"Colour group","settings":[
-    {"type":"text","id":"group_name","label":"Group name","default":"Core Neutrals"},
-    {"type":"text","id":"chips","label":"Chips (hex:name|hex:name)","default":"#FFFFFF:White|#0A0A0A:Black|#D9C9B3:Warm Beige"}
-  ]}],
-  "max_blocks":3,
-  "presets":[{"name":"Gripfeet — Palette (Active)","blocks":[
-    {"type":"group","settings":{"group_name":"Core Neutrals","chips":"#FFFFFF:White|#0A0A0A:Black|#D9C9B3:Warm Beige|#A9ACA9:Grey|#7A6A57:Dusty Brown"}},
-    {"type":"group","settings":{"group_name":"Soft Pastels","chips":"#B6C5A8:Sage|#C7B9D8:Lavender|#F1E2A6:Butter Yellow|#BFE0CE:Mint|#C6D9E2:Ice Blue|#F1C9CF:Pink"}},
-    {"type":"group","settings":{"group_name":"Heritage Sport Tones","chips":"#9E2A2A:Red|#1E2E4F:Navy|#3A3D3F:Deep Grey"}}
-  ]}]
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Colour group",
+      "settings": [
+        { "type": "text", "id": "title",  "label": "Group title", "default": "Core Neutrals" },
+        { "type": "text", "id": "colors", "label": "Hex values (comma-separated)", "default": "#FFFFFF,#0E0E0E,#C9B9A3,#9C9A92" },
+        { "type": "text", "id": "labels", "label": "Labels (comma-separated)",     "default": "White,Black,Warm Beige,Grey" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{
+    "name": "Gripfeet — Signature Palette",
+    "blocks": [
+      { "type": "group", "settings": { "title": "Core Neutrals",       "colors": "#FFFFFF,#0E0E0E,#C9B9A3,#9C9A92,#8B7355", "labels": "White,Black,Warm Beige,Grey,Dusty Brown" } },
+      { "type": "group", "settings": { "title": "Soft Pastels",        "colors": "#B2C4B0,#C8B8D8,#F5E6A0,#A8D8C4,#B8D4E8,#F4C4C4", "labels": "Sage,Lavender,Butter,Mint,Ice Blue,Pink" } },
+      { "type": "group", "settings": { "title": "Heritage Sport Tones","colors": "#C1392B,#1E2E4F,#404040", "labels": "Red,Navy,Deep Grey" } }
+    ]
+  }]
 }
 {% endschema %}

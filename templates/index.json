@@ -2,118 +2,139 @@
   "sections": {
     "announcement": {
       "type": "gripfeet-announcement",
-      "settings": {},
-      "blocks": {
-        "msg-1": {
-          "type": "message",
-          "settings": {
-            "text": "Launch pricing — up to 39% off · Shop bundles"
-          }
-        },
-        "msg-2": {
-          "type": "message",
-          "settings": {
-            "text": "Free shipping worldwide on orders over ₹999"
-          }
-        },
-        "msg-3": {
-          "type": "message",
-          "settings": {
-            "text": "Stretch Supima yarn · 100% silicone grip · Made in India"
-          }
-        }
-      },
-      "block_order": [
-        "msg-1",
-        "msg-2",
-        "msg-3"
-      ]
+      "settings": {}
+    },
+    "header": {
+      "type": "gripfeet-header",
+      "settings": {}
     },
     "hero": {
       "type": "gripfeet-hero",
       "settings": {
-        "eyebrow": "Premium Grip Socks · Traction Triumphs",
+        "eyebrow": "Premium Grip Socks \u00b7 Traction Triumphs",
         "headline": "Made to Grip.",
-        "subline": "Anti-slip socks for the way you actually move — sunrise Pilates, hardwood floors, the long flight in between. Supima up top, 100% silicone on the sole.",
+        "subline": "Anti-slip socks for the way you actually move \u2014 sunrise Pilates, hardwood floors, the long flight in between. Supima up top, 100% silicone on the sole.",
         "cta_label": "Shop Grip Socks",
-        "cta_link": "/collections/all",
-        "secondary_label": "Shop Bundles",
-        "secondary_link": "/collections/all#bundles"
+        "secondary_label": "Shop Bundles"
       },
       "blocks": {
-        "badge-1": {
+        "b1": {
           "type": "badge",
           "settings": {
             "text": "100% Silicone Grip"
           }
         },
-        "badge-2": {
+        "b2": {
           "type": "badge",
           "settings": {
             "text": "Stretch Supima Cotton"
           }
         },
-        "badge-3": {
+        "b3": {
           "type": "badge",
           "settings": {
             "text": "Made in India"
           }
         },
-        "badge-4": {
+        "b4": {
           "type": "badge",
           "settings": {
-            "text": "4–7 Day Global Delivery"
+            "text": "4\u20137 Day Global Delivery"
           }
         }
       },
       "block_order": [
-        "badge-1",
-        "badge-2",
-        "badge-3",
-        "badge-4"
+        "b1",
+        "b2",
+        "b3",
+        "b4"
       ]
     },
     "trust": {
       "type": "gripfeet-trust-strip",
+      "settings": {},
       "blocks": {
-        "trust-1": {
+        "t1": {
           "type": "item",
           "settings": {
             "icon": "leaf",
-            "label": "Stretch Supima Yarn",
-            "sublabel": "Soft, breathable & durable"
+            "title": "Stretch Supima Yarn",
+            "subtitle": "Soft, breathable & durable"
           }
         },
-        "trust-2": {
+        "t2": {
           "type": "item",
           "settings": {
             "icon": "grip",
-            "label": "Superior Antislip Grip",
-            "sublabel": "100% silicone, full sole"
+            "title": "Superior Antislip Grip",
+            "subtitle": "100% silicone, full sole"
           }
         },
-        "trust-3": {
+        "t3": {
           "type": "item",
           "settings": {
             "icon": "fit",
-            "label": "Perfect Fit",
-            "sublabel": "Available in 2–3 sizes"
+            "title": "Perfect Fit",
+            "subtitle": "Available in 2\u20133 sizes"
           }
         },
-        "trust-4": {
+        "t4": {
           "type": "item",
           "settings": {
             "icon": "washer",
-            "label": "Easy Care",
-            "sublabel": "Machine washable"
+            "title": "Easy Care",
+            "subtitle": "Machine washable"
           }
         }
       },
       "block_order": [
-        "trust-1",
-        "trust-2",
-        "trust-3",
-        "trust-4"
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "statement": {
+      "type": "gripfeet-statement",
+      "settings": {
+        "lead": "India's grip sock you'd actually wear out of the studio \u2014",
+        "rest": "trusted on the mat, loved for everyday."
+      },
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "value": "4.9",
+            "label": "Avg rating"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "value": "1,284",
+            "label": "Reviews"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "value": "11 SKUs",
+            "label": "Across 4 ranges"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "value": "100%",
+            "label": "Silicone sole"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
       ]
     },
     "categories": {
@@ -123,321 +144,208 @@
         "heading": "Shop by Height"
       },
       "blocks": {
-        "cat-1": {
-          "type": "category",
+        "c1": {
+          "type": "card",
           "settings": {
-            "code": "01",
-            "cuff": "Loafer",
-            "name": "Invisible Grip",
-            "badge": "",
-            "dark_ph": false,
-            "bg_color": "#EFE9DD",
-            "link": "/collections/loafer"
+            "name": "Loafer",
+            "subtitle": "Invisible Grip",
+            "bg_color": "#EFE9DD"
           }
         },
-        "cat-2": {
-          "type": "category",
+        "c2": {
+          "type": "card",
           "settings": {
-            "code": "02",
-            "cuff": "Ankle",
-            "name": "Mat Masters",
-            "badge": "Bestseller",
-            "dark_ph": false,
+            "name": "Ankle",
+            "subtitle": "Mat Masters",
             "bg_color": "#F3F0E8",
-            "link": "/collections/ankle"
+            "badge": "Bestseller"
           }
         },
-        "cat-3": {
-          "type": "category",
+        "c3": {
+          "type": "card",
           "settings": {
-            "code": "03",
-            "cuff": "Crew",
-            "name": "Active Hold",
-            "badge": "",
-            "dark_ph": true,
+            "name": "Crew",
+            "subtitle": "Active Hold",
             "bg_color": "#16160F",
-            "link": "/collections/crew"
+            "dark_bg": true
           }
         },
-        "cat-4": {
-          "type": "category",
+        "c4": {
+          "type": "card",
           "settings": {
-            "code": "04",
-            "cuff": "Kids",
-            "name": "Lil Steps",
-            "badge": "",
-            "dark_ph": false,
-            "bg_color": "#F2EBDF",
-            "link": "/collections/kids"
+            "name": "Kids",
+            "subtitle": "Lil Steps",
+            "bg_color": "#F2EBDF"
           }
         }
       },
       "block_order": [
-        "cat-1",
-        "cat-2",
-        "cat-3",
-        "cat-4"
-      ]
-    },
-    "statement": {
-      "type": "gripfeet-statement",
-      "settings": {
-        "lead": "India's grip sock you'd actually wear out of the studio —",
-        "rest": "trusted on the mat, loved for everyday."
-      },
-      "blocks": {
-        "stat-1": {
-          "type": "stat",
-          "settings": {
-            "number": "4.9",
-            "label": "Avg rating"
-          }
-        },
-        "stat-2": {
-          "type": "stat",
-          "settings": {
-            "number": "1,284",
-            "label": "Reviews"
-          }
-        },
-        "stat-3": {
-          "type": "stat",
-          "settings": {
-            "number": "11 SKUs",
-            "label": "Across 4 ranges"
-          }
-        },
-        "stat-4": {
-          "type": "stat",
-          "settings": {
-            "number": "100%",
-            "label": "Silicone sole"
-          }
-        }
-      },
-      "block_order": [
-        "stat-1",
-        "stat-2",
-        "stat-3",
-        "stat-4"
+        "c1",
+        "c2",
+        "c3",
+        "c4"
       ]
     },
     "featured": {
       "type": "gripfeet-featured-products",
       "settings": {
-        "eyebrow": "Newly knit · Featured sets",
-        "all_label": "Shop all",
-        "all_link": "/collections/all",
-        "sub_banner_title": "Subscribe & save 15% on every refill.",
-        "sub_banner_desc": "Pick a pack, pick a cadence — every 2, 3 or 6 months. Skip or cancel anytime. Free shipping, always.",
-        "sub_banner_cta": "How it works",
-        "sub_banner_link": "/pages/subscribe"
+        "eyebrow": "Newly knit \u00b7 Featured sets",
+        "heading": "Built for the way you move.",
+        "sub_banner_text": "Subscribe & save 15% on every refill.",
+        "sub_banner_sub": "Pick a pack, pick a cadence \u2014 every 2, 3 or 6 months. Skip or cancel anytime.",
+        "sub_banner_cta": "How it works"
       },
       "blocks": {
-        "prod-1": {
+        "p1": {
           "type": "product",
           "settings": {
-            "name": "Soft Studio",
-            "range": "Ankle · Mat Masters",
-            "pack": "Set of 3 Pairs",
-            "color_note": "Warm Beige · Sage · Lavender",
-            "price": "₹699",
-            "price_was": "₹999",
-            "swatches": "#D9C9B3,#B6C5A8,#C7B9D8",
-            "ph_style": "light",
-            "link": "/products/soft-studio"
+            "name": "Soft Studio Ankle",
+            "range": "Ankle \u00b7 Mat Masters",
+            "price": "299",
+            "was": "499"
           }
         },
-        "prod-2": {
+        "p2": {
           "type": "product",
           "settings": {
-            "name": "Court Classics",
-            "range": "Crew · Active Hold",
-            "pack": "Set of 2 Pairs",
-            "color_note": "White & Black",
-            "price": "₹699",
-            "price_was": "₹999",
-            "swatches": "#FFFFFF,#0A0A0A",
-            "ph_style": "dark",
-            "link": "/products/court-classics"
+            "name": "Active Crew Hold",
+            "range": "Crew \u00b7 Active Hold",
+            "price": "299",
+            "was": "499"
           }
         },
-        "prod-3": {
+        "p3": {
           "type": "product",
           "settings": {
-            "name": "Bare Neutrals",
-            "range": "Loafer · Invisible Grip",
-            "pack": "Set of 3 Pairs",
-            "color_note": "Warm Beige · Grey · Dusty Brown",
-            "price": "₹599",
-            "price_was": "₹899",
-            "swatches": "#D9C9B3,#A9ACA9,#7A6A57",
-            "ph_style": "light",
-            "link": "/products/bare-neutrals"
+            "name": "Loafer Invisible",
+            "range": "Loafer \u00b7 Invisible Grip",
+            "price": "249",
+            "was": "399"
           }
         },
-        "prod-4": {
+        "p4": {
           "type": "product",
           "settings": {
-            "name": "Classic Stripe",
-            "range": "Kids · Lil Steps",
-            "pack": "Set of 3 Pairs",
-            "color_note": "White · Red · Navy",
-            "price": "₹399",
-            "price_was": "₹699",
-            "swatches": "#FFFFFF,#9E2A2A,#1E2E4F",
-            "ph_style": "kids",
-            "link": "/products/classic-stripe"
+            "name": "Lil Steps Kids",
+            "range": "Kids \u00b7 Lil Steps",
+            "price": "179",
+            "was": "299"
           }
         }
       },
       "block_order": [
-        "prod-1",
-        "prod-2",
-        "prod-3",
-        "prod-4"
+        "p1",
+        "p2",
+        "p3",
+        "p4"
       ]
     },
     "trends": {
       "type": "gripfeet-trends",
       "settings": {
         "eyebrow": "Worn everywhere",
-        "heading": "Shop the ranges.",
-        "all_link": "/collections/all"
+        "heading": "Shop the ranges."
       },
       "blocks": {
-        "trend-1": {
+        "tr1": {
           "type": "card",
           "settings": {
             "eyebrow": "Studio & Mat",
             "title": "Mat Masters",
-            "tone": "#1e2017",
-            "link": "/collections/ankle"
+            "bg_color": "#1e2017"
           }
         },
-        "trend-2": {
+        "tr2": {
           "type": "card",
           "settings": {
             "eyebrow": "Movement & Training",
             "title": "Active Hold",
-            "tone": "#191919",
-            "link": "/collections/crew"
+            "bg_color": "#191919"
           }
         },
-        "trend-3": {
+        "tr3": {
           "type": "card",
           "settings": {
             "eyebrow": "Little Adventures",
             "title": "Lil Steps",
-            "tone": "#20171c",
-            "link": "/collections/kids"
+            "bg_color": "#20171c"
           }
         }
       },
       "block_order": [
-        "trend-1",
-        "trend-2",
-        "trend-3"
+        "tr1",
+        "tr2",
+        "tr3"
       ]
     },
     "story": {
       "type": "gripfeet-brand-story",
       "settings": {
-        "eyebrow": "Our story · Made in India",
+        "eyebrow": "Our story \u00b7 Made in India",
         "heading": "A grip sock that finally feels like a sock.",
+        "body_1": "Most grip socks fall into two camps \u2014 clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays.",
+        "body_2": "We knit ours in-house in India \u2014 Supima cotton up top, a 100% silicone grip pattern on the sole. A manufacturing depth most lifestyle brands have to import.",
         "sig_name": "The Gripfeet team",
-        "sig_sub": "Knit in India · Designed for everywhere",
-        "cta_label": "Read our story",
-        "cta_link": "/pages/our-story"
-      },
-      "blocks": {
-        "p1": {
-          "type": "paragraph",
-          "settings": {
-            "text": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays."
-          }
-        },
-        "p2": {
-          "type": "paragraph",
-          "settings": {
-            "text": "We knit ours in-house in India — Supima cotton up top and a 100% silicone grip pattern on the sole. A manufacturing depth most lifestyle brands have to import. The result is the first Made-in-India grip sock you'd genuinely wear out of the studio."
-          }
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2"
-      ]
+        "sig_sub": "Knit in India \u00b7 Designed for everywhere"
+      }
     },
     "usps": {
       "type": "gripfeet-usp-strip",
       "settings": {
-        "eyebrow": "Our promise · Six things that matter",
+        "eyebrow": "Our promise \u00b7 Six things that matter",
         "heading": "Quietly built, obsessively."
       },
       "blocks": {
-        "usp-1": {
+        "u1": {
           "type": "usp",
           "settings": {
-            "number": "01",
             "title": "Stretch Supima Yarn",
-            "desc": "Soft, breathable & durable. Long-staple cotton that softens with every wash.",
-            "icon": "leaf"
+            "desc": "Naturally breathable, beautifully soft \u2014 every wash."
           }
         },
-        "usp-2": {
+        "u2": {
           "type": "usp",
           "settings": {
-            "number": "02",
-            "title": "Superior Antislip Grip",
-            "desc": "100% silicone, full-sole pattern. Extra stability on any surface.",
-            "icon": "grip"
+            "title": "100% Silicone Grip",
+            "desc": "Full-sole pattern, set in permanently. Never peels."
           }
         },
-        "usp-3": {
+        "u3": {
           "type": "usp",
           "settings": {
-            "number": "03",
-            "title": "Perfect Fit",
-            "desc": "Available in 2–3 sizes for a better fit. Reinforced heel, ribbed cuff.",
-            "icon": "fit"
+            "title": "Perfect Fit, Always",
+            "desc": "Two size runs covering all adult and kids feet."
           }
         },
-        "usp-4": {
+        "u4": {
           "type": "usp",
           "settings": {
-            "number": "04",
-            "title": "Easy Care",
-            "desc": "Machine washable & long-lasting. Knit and finished in India.",
-            "icon": "washer"
+            "title": "Easy Machine Care",
+            "desc": "Cold wash, air dry. Grip stays set after 50+ washes."
           }
         },
-        "usp-5": {
+        "u5": {
           "type": "usp",
           "settings": {
-            "number": "05",
             "title": "Made in India",
-            "desc": "Designed and knit in-house with manufacturing depth most lifestyle brands import.",
-            "icon": "india"
+            "desc": "Knit in-house. Depth most lifestyle brands have to import."
           }
         },
-        "usp-6": {
+        "u6": {
           "type": "usp",
           "settings": {
-            "number": "06",
             "title": "Designed for Modern Life",
-            "desc": "A wardrobe sock that happens to grip. Studio, hardwood, hotel rooms, sofa Sundays.",
-            "icon": "lifestyle"
+            "desc": "Studio, hardwood, hotel rooms, sofa Sundays."
           }
         }
       },
       "block_order": [
-        "usp-1",
-        "usp-2",
-        "usp-3",
-        "usp-4",
-        "usp-5",
-        "usp-6"
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6"
       ]
     },
     "palette": {
@@ -445,141 +353,135 @@
       "settings": {
         "eyebrow": "Signature palette",
         "heading": "Colours that get along.",
-        "desc": "Thoughtfully curated for comfort, style & everyday function."
+        "subtext": "Thoughtfully curated for comfort, style & everyday function."
       },
       "blocks": {
-        "grp-1": {
+        "pg1": {
           "type": "group",
           "settings": {
-            "group_name": "Core Neutrals",
-            "chips": "#FFFFFF:White|#0A0A0A:Black|#D9C9B3:Warm Beige|#A9ACA9:Grey|#7A6A57:Dusty Brown"
+            "title": "Core Neutrals",
+            "colors": "#FFFFFF,#0E0E0E,#C9B9A3,#9C9A92,#8B7355",
+            "labels": "White,Black,Warm Beige,Grey,Dusty Brown"
           }
         },
-        "grp-2": {
+        "pg2": {
           "type": "group",
           "settings": {
-            "group_name": "Soft Pastels",
-            "chips": "#B6C5A8:Sage|#C7B9D8:Lavender|#F1E2A6:Butter Yellow|#BFE0CE:Mint|#C6D9E2:Ice Blue|#F1C9CF:Pink"
+            "title": "Soft Pastels",
+            "colors": "#B2C4B0,#C8B8D8,#F5E6A0,#A8D8C4,#B8D4E8,#F4C4C4",
+            "labels": "Sage,Lavender,Butter,Mint,Ice Blue,Pink"
           }
         },
-        "grp-3": {
+        "pg3": {
           "type": "group",
           "settings": {
-            "group_name": "Heritage Sport Tones",
-            "chips": "#9E2A2A:Red|#1E2E4F:Navy|#3A3D3F:Deep Grey"
+            "title": "Heritage Sport Tones",
+            "colors": "#C1392B,#1E2E4F,#404040",
+            "labels": "Red,Navy,Deep Grey"
           }
         }
       },
       "block_order": [
-        "grp-1",
-        "grp-2",
-        "grp-3"
+        "pg1",
+        "pg2",
+        "pg3"
       ]
     },
     "bundles": {
       "type": "gripfeet-bundles",
       "settings": {
-        "eyebrow": "Pack & save · Bundles",
-        "heading": "Buy them in threes.",
-        "note": "Free shipping over ₹999 · COD available"
+        "eyebrow": "Pack & save \u00b7 Bundles",
+        "heading": "Buy them in threes."
       },
       "blocks": {
-        "bdl-1": {
+        "bd1": {
           "type": "bundle",
           "settings": {
-            "tag": "Starter",
-            "name": "Studio Pair",
-            "save": "Save 30%",
-            "featured": false,
-            "desc": "One pack from the Ankle or Crew range.",
-            "list": "Set of 2 or 3 pairs\nAny colour story\nFree shipping over ₹999",
-            "price": "₹699",
-            "price_was": "₹999",
-            "cta": "Pick a pack",
-            "link": "/collections/all"
+            "tag": "Duo",
+            "name": "Studio Duo",
+            "save_label": "Save 12%",
+            "desc": "Two pairs, same range.",
+            "price": "549",
+            "was": "598",
+            "cta": "Add to bag"
           }
         },
-        "bdl-2": {
+        "bd2": {
           "type": "bundle",
           "settings": {
-            "tag": "Most Popular",
-            "name": "House Two",
-            "save": "Save 37%",
-            "featured": true,
-            "desc": "Two Ankle three-packs. Six pairs.",
-            "list": "Six pairs total\nMix two colour stories\nFree shipping anywhere\nGripfeet linen pouch included",
-            "price": "₹1,199",
-            "price_was": "₹1,898",
-            "cta": "Build the two",
-            "link": "/collections/all"
+            "tag": "Trio",
+            "name": "Studio Three",
+            "save_label": "Save 21%",
+            "desc": "Three pairs \u2014 your full rotation.",
+            "price": "699",
+            "was": "897",
+            "cta": "Add to bag",
+            "featured": true
           }
         },
-        "bdl-3": {
+        "bd3": {
           "type": "bundle",
           "settings": {
-            "tag": "Household",
-            "name": "Family Four",
-            "save": "Save 39%",
-            "featured": false,
-            "desc": "One pack from every range.",
-            "list": "Ankle · Crew · Loafer · Lil Steps\nEleven pairs in total\nFree shipping anywhere\nCOD available",
-            "price": "₹2,199",
-            "price_was": "₹3,596",
-            "cta": "Build the family",
-            "link": "/collections/all"
+            "tag": "Six",
+            "name": "Six-Pack",
+            "save_label": "Save 39%",
+            "desc": "Six pairs for daily carry.",
+            "price": "1099",
+            "was": "1794",
+            "cta": "Add to bag"
           }
         }
       },
       "block_order": [
-        "bdl-1",
-        "bdl-2",
-        "bdl-3"
+        "bd1",
+        "bd2",
+        "bd3"
       ]
     },
     "reviews": {
       "type": "gripfeet-reviews",
       "settings": {
-        "eyebrow": "Worn-in opinions · Reviews",
-        "heading": "Quiet wins, in customers' words.",
-        "score": "4.9",
-        "count": "1,284 reviews"
+        "eyebrow": "Worn-in opinions \u00b7 Reviews",
+        "heading": "Quiet wins, in their words.",
+        "rating": "4.9",
+        "review_count": "1,284 reviews"
       },
       "blocks": {
-        "rev-1": {
+        "r1": {
           "type": "review",
           "settings": {
             "stars": 5,
-            "quote": "Honestly the first grip sock I haven't been embarrassed to wear out of the studio. The Supima feels like a proper sock — not a piece of medical equipment.",
-            "name": "Aanya M.",
-            "location": "Mumbai · Pilates instructor"
+            "quote": "Finally a grip sock that doesn't look like a hospital slipper. The silicone dots actually grip and the cotton is genuinely soft.",
+            "name": "Priya M.",
+            "location": "Mumbai"
           }
         },
-        "rev-2": {
+        "r2": {
           "type": "review",
           "settings": {
             "stars": 5,
-            "quote": "Bought a three-pack of Soft Studio for travel. Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good.",
-            "name": "Rohan K.",
-            "location": "Bengaluru · Frequent traveller"
+            "quote": "Wore them for Pilates, a 14-hour flight, and two days of meetings. Still look new.",
+            "name": "Shreya A.",
+            "location": "Bangalore"
           }
         },
-        "rev-3": {
+        "r3": {
           "type": "review",
           "settings": {
             "stars": 5,
-            "quote": "My toddler runs across our marble like it's a track. Finally — a kids' grip sock that fits properly and doesn't slide off her ankle every two minutes.",
-            "name": "Priya & Ishaan",
-            "location": "Delhi · Lil Steps customer"
+            "quote": "Bought the three-pack for my daughter's dance class. She refuses to take them off.",
+            "name": "Anita R.",
+            "location": "Delhi"
           }
         }
       },
       "block_order": [
-        "rev-1",
-        "rev-2",
-        "rev-3"
+        "r1",
+        "r2",
+        "r3"
       ]
     },
-    "move-band": {
+    "move_band": {
       "type": "gripfeet-move-band",
       "settings": {
         "headline": "Every Step,\nEvery Day."
@@ -590,73 +492,69 @@
       "settings": {
         "eyebrow": "Gift & travel",
         "heading": "The cleanest small gift we know.",
-        "desc": "Hand-folded into a Gripfeet linen pouch. A premium-feeling essential that's quietly useful — for the friend who travels, the partner who's just got into Pilates, the parent on hardwood floors.",
-        "cta_primary_label": "Shop gifting",
-        "cta_primary_link": "/collections/gifts",
-        "cta_secondary_label": "Build a custom set",
-        "cta_secondary_link": "/collections/all"
+        "body": "Hand-folded into a Gripfeet linen pouch \u2014 a premium-feeling essential that's quietly useful.",
+        "cta_label": "Shop gifting"
       },
       "blocks": {
-        "gift-a": {
+        "g1": {
           "type": "item",
           "settings": {
-            "code": "A",
             "text": "Hand-tied linen pouch"
           }
         },
-        "gift-b": {
+        "g2": {
           "type": "item",
           "settings": {
-            "code": "B",
             "text": "Personalised note card"
           }
         },
-        "gift-c": {
+        "g3": {
           "type": "item",
           "settings": {
-            "code": "C",
             "text": "Three-pair gift set"
           }
         },
-        "gift-d": {
+        "g4": {
           "type": "item",
           "settings": {
-            "code": "D",
             "text": "Free shipping worldwide"
           }
         }
       },
       "block_order": [
-        "gift-a",
-        "gift-b",
-        "gift-c",
-        "gift-d"
+        "g1",
+        "g2",
+        "g3",
+        "g4"
       ]
     },
     "newsletter": {
       "type": "gripfeet-home-newsletter",
       "settings": {
-        "heading": "Drop your email,",
-        "desc": "One quiet note a month — new colourways, studio drops, the occasional travel essentials list. No spam, no neon banners.",
-        "placeholder": "you@example.com",
-        "btn_label": "Subscribe",
-        "fine": "No spam. Unsubscribe anytime."
+        "eyebrow": "Letters from the studio",
+        "heading": "Drop your email, get \u20b9200 off.",
+        "body": "One quiet note a month \u2014 new colourways, studio drops, the occasional travel-essentials list.",
+        "cta": "Subscribe"
       }
     },
     "whatsapp": {
       "type": "gripfeet-whatsapp",
+      "settings": {}
+    },
+    "footer": {
+      "type": "gripfeet-footer",
       "settings": {
-        "label": "Chat with us",
-        "number": "+919999999999"
+        "tagline": "Anti-slip socks for the way you actually move. Supima up top, 100% silicone on the sole \u2014 knit in India, worn everywhere."
       }
     }
   },
   "order": [
     "announcement",
+    "header",
     "hero",
     "trust",
-    "categories",
     "statement",
+    "categories",
     "featured",
     "trends",
     "story",
@@ -664,9 +562,10 @@
     "palette",
     "bundles",
     "reviews",
-    "move-band",
+    "move_band",
     "gifting",
     "newsletter",
-    "whatsapp"
+    "whatsapp",
+    "footer"
   ]
 }

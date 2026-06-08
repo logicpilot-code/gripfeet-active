@@ -1,83 +1,80 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap section" id="bundles">
-  <div class="gf-section-head">
-    <div class="gf-section-head__left">
-      <span class="gf-eyebrow"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
-      <h2 class="gf-h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+<section class="wrap section" id="bundles">
+  <div class="section-head">
+    <div class="left">
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
     </div>
-    <div class="gf-section-head__right">
-      <span style="color:var(--gf-ink-2);font-size:13px">{{ section.settings.note }}</span>
-    </div>
+    <div class="right"><span class="muted" style="font-size:13px">Free shipping over ₹999 · COD available</span></div>
   </div>
+
   <div class="bundles">
     {%- for block in section.blocks -%}
-      {%- if block.type == 'bundle' -%}
+      {%- if block.type == "bundle" -%}
         <div class="bundle{% if block.settings.featured %} featured{% endif %}" {{ block.shopify_attributes }}>
-          <span class="save">{{ block.settings.save }}</span>
+          {%- if block.settings.save_label != blank -%}
+            <span class="save">{{ block.settings.save_label }}</span>
+          {%- endif -%}
           <div class="tier-label">{{ block.settings.tag }}</div>
-          <div class="tier-name">{{ block.settings.name }}</div>
+          <h3 class="tier-name">{{ block.settings.name }}</h3>
           <div class="visual">
-            <div class="gf-ph{% if block.settings.featured %} gf-ph--dark{% endif %}" style="width:100%;height:100%">
-              <span class="gf-ph__label">{{ block.settings.name }} · bundle shot</span>
-            </div>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.name }}" width="600" height="400" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+            {%- else -%}
+              <div class="ph{% if block.settings.featured %} ph-dark{% endif %}">
+                <span class="ph-label">{{ block.settings.name }} · folded stack</span>
+                <span class="ph-corner">GF · BDL</span>
+              </div>
+            {%- endif -%}
           </div>
           <p class="bdesc">{{ block.settings.desc }}</p>
-          <ul>
-            {%- assign lines = block.settings.list | newline_to_br | split: '<br />' -%}
-            {%- for line in lines -%}
-              {%- unless line == blank -%}
-                <li>
-                  <span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></span>
-                  {{ line | strip }}
-                </li>
-              {%- endunless -%}
-            {%- endfor -%}
-          </ul>
           <div class="price-row">
-            <span class="price-now">{{ block.settings.price }}</span>
-            <span class="price-then">{{ block.settings.price_was }}</span>
+            <span class="price-now">₹{{ block.settings.price }}</span>
+            <span class="price-then">₹{{ block.settings.was }}</span>
           </div>
-          <a href="{{ block.settings.link | default: '/collections/all' }}" class="gf-btn{% if block.settings.featured %} gf-btn--light{% else %} gf-btn--primary{% endif %} cta-btn">{{ block.settings.cta }}</a>
+          <a href="{{ block.settings.link }}" class="btn btn-outline cta-btn">
+            {{ block.settings.cta }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
         </div>
       {%- endif -%}
     {%- endfor -%}
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Bundles (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Pack & save · Bundles"},
-    {"type":"text","id":"heading","label":"Heading","default":"Buy them in threes."},
-    {"type":"text","id":"note","label":"Note","default":"Free shipping over ₹999 · COD available"}
+  "name": "Gripfeet — Bundles",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Pack & save · Bundles" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Buy them in threes." }
   ],
-  "blocks":[{"type":"bundle","name":"Bundle","settings":[
-    {"type":"text","id":"tag","label":"Tag","default":"Starter"},
-    {"type":"text","id":"name","label":"Name","default":"Studio Pair"},
-    {"type":"text","id":"save","label":"Save badge","default":"Save 30%"},
-    {"type":"checkbox","id":"featured","label":"Featured (dark)","default":false},
-    {"type":"textarea","id":"desc","label":"Description","default":"One pack from the Ankle or Crew range."},
-    {"type":"textarea","id":"list","label":"Checklist (one per line)","default":"Set of 2 or 3 pairs
-Any colour story
-Free shipping over ₹999"},
-    {"type":"text","id":"price","label":"Price","default":"₹699"},
-    {"type":"text","id":"price_was","label":"Was price","default":"₹999"},
-    {"type":"text","id":"cta","label":"CTA","default":"Pick a pack"},
-    {"type":"url","id":"link","label":"Link"}
-  ]}],
-  "max_blocks":3,
-  "presets":[{"name":"Gripfeet — Bundles (Active)","blocks":[
-    {"type":"bundle","settings":{"tag":"Starter","name":"Studio Pair","save":"Save 30%","featured":false,"desc":"One pack from the Ankle or Crew range.","list":"Set of 2 or 3 pairs
-Any colour story
-Free shipping over ₹999","price":"₹699","price_was":"₹999","cta":"Pick a pack","link":"/collections/all"}},
-    {"type":"bundle","settings":{"tag":"Most Popular","name":"House Two","save":"Save 37%","featured":true,"desc":"Two Ankle three-packs. Six pairs.","list":"Six pairs total
-Mix two colour stories
-Free shipping anywhere
-Gripfeet linen pouch included","price":"₹1,199","price_was":"₹1,898","cta":"Build the two","link":"/collections/all"}},
-    {"type":"bundle","settings":{"tag":"Household","name":"Family Four","save":"Save 39%","featured":false,"desc":"One pack from every range.","list":"Ankle · Crew · Loafer · Lil Steps
-Eleven pairs in total
-Free shipping anywhere
-COD available","price":"₹2,199","price_was":"₹3,596","cta":"Build the family","link":"/collections/all"}}
-  ]}]
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle",
+      "settings": [
+        { "type": "text",         "id": "tag",        "label": "Tag",          "default": "Duo" },
+        { "type": "text",         "id": "name",       "label": "Name",         "default": "Studio Duo" },
+        { "type": "text",         "id": "save_label", "label": "Save label",   "default": "Save 12%" },
+        { "type": "textarea",     "id": "desc",       "label": "Description",  "default": "Two pairs from the same range." },
+        { "type": "text",         "id": "price",      "label": "Price",        "default": "549" },
+        { "type": "text",         "id": "was",        "label": "Was",          "default": "598" },
+        { "type": "text",         "id": "cta",        "label": "CTA",          "default": "Add to bag" },
+        { "type": "url",          "id": "link",       "label": "Link" },
+        { "type": "image_picker", "id": "image",      "label": "Image" },
+        { "type": "checkbox",     "id": "featured",   "label": "Featured",     "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [{
+    "name": "Gripfeet — Bundles",
+    "blocks": [
+      { "type": "bundle", "settings": { "tag": "Duo",   "name": "Studio Duo",   "save_label": "Save 12%", "desc": "Two pairs, same range.", "price": "549",  "was": "598",  "cta": "Add to bag" } },
+      { "type": "bundle", "settings": { "tag": "Trio",  "name": "Studio Three", "save_label": "Save 21%", "desc": "Three pairs — your full rotation.", "price": "699",  "was": "897",  "cta": "Add to bag", "featured": true } },
+      { "type": "bundle", "settings": { "tag": "Six",   "name": "Six-Pack",     "save_label": "Save 39%", "desc": "Six pairs for daily carry.", "price": "1099", "was": "1794", "cta": "Add to bag" } }
+    ]
+  }]
 }
 {% endschema %}

@@ -1,0 +1,71 @@
+{{ 'gripfeet-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="wrap section">
+  <div class="cart-layout">
+    <div class="cart-main">
+      <h1 class="h-sub" style="margin-bottom:28px">Your bag</h1>
+
+      {%- if cart.item_count == 0 -%}
+        <div class="cart-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <h3>Bag's empty.</h3>
+          <p>Add a pack, or build a three-pack to save up to 39%.</p>
+          <a href="/collections/all" class="btn btn-primary">Continue shopping</a>
+        </div>
+      {%- else -%}
+        {%- form 'cart', cart -%}
+          {%- for item in cart.items -%}
+            <div class="cart-row">
+              <div class="cart-img">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title }}" width="160" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+                {%- else -%}
+                  <div class="ph" style="width:100%;height:100%"></div>
+                {%- endif -%}
+              </div>
+              <div class="cart-info">
+                <a href="{{ item.url }}" class="cart-name">{{ item.product.title }}</a>
+                <span class="cart-var">{{ item.variant.title }}</span>
+                <div class="cart-qty">
+                  <button type="button" onclick="var i=this.nextElementSibling;i.value=Math.max(1,parseInt(i.value)-1);i.form.submit()" aria-label="Decrease">−</button>
+                  <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" style="width:40px;text-align:center;border:1px solid var(--hair);border-radius:6px;padding:4px">
+                  <button type="button" onclick="var i=this.previousElementSibling;i.value=parseInt(i.value)+1;i.form.submit()" aria-label="Increase">+</button>
+                </div>
+              </div>
+              <div class="cart-price">
+                <span>₹{{ item.line_price | money_without_currency }}</span>
+                <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart-remove">Remove</a>
+              </div>
+            </div>
+          {%- endfor -%}
+          <button type="submit" name="update" style="display:none" id="cart-update-btn">Update cart</button>
+        {%- endform -%}
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-summary">
+        <h2 class="h-card" style="margin-bottom:20px">Order summary</h2>
+        <div class="summary-row"><span>Subtotal</span><span>₹{{ cart.total_price | money_without_currency }}</span></div>
+        <div class="summary-row muted"><span>Shipping</span><span>Calculated at checkout</span></div>
+        <hr style="border:0;height:1px;background:var(--hair);margin:18px 0">
+        <a href="/checkout" class="btn btn-primary" style="width:100%">
+          Checkout — ₹{{ cart.total_price | money_without_currency }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </a>
+        <p style="margin:14px 0 0;font-size:12px;color:var(--ink-3);text-align:center">Ships in 1–2 days · All sales final · Quality guaranteed</p>
+        <div class="summary-trust">
+          <span>VISA</span><span>MC</span><span>UPI</span><span>COD</span>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gripfeet — Cart",
+  "tag": "section",
+  "presets": [{ "name": "Gripfeet — Cart" }]
+}
+{% endschema %}

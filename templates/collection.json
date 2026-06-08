@@ -1,34 +1,21 @@
 {
   "sections": {
-    "main-collection-banner": {
-      "type": "main-collection-banner",
+    "grid": {
+      "type": "gripfeet-collection-grid",
       "settings": {}
     },
-    "main-collection-product-grid": {
-      "type": "main-collection-product-grid",
+    "whatsapp": {
+      "type": "gripfeet-whatsapp",
       "settings": {}
     },
     "footer": {
       "type": "gripfeet-footer",
-      "settings": {
-        "tagline": "Premium grip socks for every step, every day.",
-        "ships_to": "Globally · Free over ₹999",
-        "delivery": "4–7 business days",
-        "payment": "Visa · MC · UPI · COD"
-      }
-    },
-    "whatsapp": {
-      "type": "gripfeet-whatsapp",
-      "settings": {
-        "label": "Chat with us",
-        "number": "+919999999999"
-      }
+      "settings": {}
     }
   },
   "order": [
-    "main-collection-banner",
-    "main-collection-product-grid",
-    "footer",
-    "whatsapp"
+    "grid",
+    "whatsapp",
+    "footer"
   ]
 }

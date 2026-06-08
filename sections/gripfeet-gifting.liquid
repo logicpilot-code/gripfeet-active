@@ -1,63 +1,69 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<section class="gf-wrap section">
+<section class="wrap section" id="gifting">
   <div class="gifting">
     <div class="visual">
       {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Gifting" width="450" height="540" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px">
+        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Gripfeet gifting" width="900" height="900" loading="lazy" style="width:100%;height:100%;object-fit:cover">
       {%- else -%}
-        <div class="gf-ph gf-ph--dark" style="width:100%;height:100%;min-height:360px;border-radius:12px">
-          <span class="gf-ph__label">Gifting · product + linen pouch · soft studio light</span>
-          <span class="gf-ph__corner">GF · 5:6</span>
+        <div class="ph ph-dark">
+          <span class="ph-label">Linen pouch · 3 folded pairs · hand-tied</span>
+          <span class="ph-corner">GF · GIFT</span>
         </div>
       {%- endif -%}
     </div>
     <div>
-      <span class="gf-eyebrow" style="color:rgba(255,255,255,0.7)"><span class="gf-dot"></span>{{ section.settings.eyebrow }}</span>
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
       <h3>{{ section.settings.heading }}</h3>
-      <p>{{ section.settings.desc }}</p>
+      <p>{{ section.settings.body }}</p>
       <ul>
         {%- for block in section.blocks -%}
-          {%- if block.type == 'item' -%}
+          {%- if block.type == "item" -%}
             <li {{ block.shopify_attributes }}>
-              <span class="n">{{ block.settings.code }}</span>{{ block.settings.text }}
+              <span class="n">{{ forloop.index | plus: 64 | chr }}</span>
+              {{ block.settings.text }}
             </li>
           {%- endif -%}
         {%- endfor -%}
       </ul>
       <div class="actions">
-        {%- if section.settings.cta_primary_label != blank -%}
-          <a href="{{ section.settings.cta_primary_link | default: '/collections/gifts' }}" class="gf-btn gf-btn--light">{{ section.settings.cta_primary_label }}</a>
-        {%- endif -%}
-        {%- if section.settings.cta_secondary_label != blank -%}
-          <a href="{{ section.settings.cta_secondary_link | default: '/collections/all' }}" class="gf-btn gf-btn--ghost-light">{{ section.settings.cta_secondary_label }}</a>
-        {%- endif -%}
+        <a href="{{ section.settings.cta_link }}" class="btn btn-light">
+          {{ section.settings.cta_label }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </div>
 </section>
+
 {% schema %}
 {
-  "name":"Gripfeet — Gifting (Active)","tag":"section",
-  "settings":[
-    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Gift & travel"},
-    {"type":"text","id":"heading","label":"Heading","default":"The cleanest small gift we know."},
-    {"type":"textarea","id":"desc","label":"Description","default":"Hand-folded into a Gripfeet linen pouch. A premium-feeling essential that's quietly useful — for the friend who travels, the partner who's just got into Pilates."},
-    {"type":"text","id":"cta_primary_label","label":"Primary CTA","default":"Shop gifting"},
-    {"type":"url","id":"cta_primary_link","label":"Primary CTA link"},
-    {"type":"text","id":"cta_secondary_label","label":"Secondary CTA","default":"Build a custom set"},
-    {"type":"url","id":"cta_secondary_link","label":"Secondary CTA link"},
-    {"type":"image_picker","id":"image","label":"Image (5:6)"}
+  "name": "Gripfeet — Gifting",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image",     "label": "Gift image" },
+    { "type": "text",     "id": "eyebrow",    "label": "Eyebrow",    "default": "Gift & travel" },
+    { "type": "text",     "id": "heading",    "label": "Heading",    "default": "The cleanest small gift we know." },
+    { "type": "textarea", "id": "body",       "label": "Body",       "default": "Hand-folded into a Gripfeet linen pouch — a premium-feeling essential that\'s quietly useful." },
+    { "type": "text",     "id": "cta_label",  "label": "CTA label",  "default": "Shop gifting" },
+    { "type": "url",      "id": "cta_link",   "label": "CTA link" }
   ],
-  "blocks":[{"type":"item","name":"Gift item","settings":[
-    {"type":"text","id":"code","label":"Code","default":"A"},
-    {"type":"text","id":"text","label":"Text","default":"Hand-tied linen pouch"}
-  ]}],
-  "max_blocks":6,
-  "presets":[{"name":"Gripfeet — Gifting (Active)","blocks":[
-    {"type":"item","settings":{"code":"A","text":"Hand-tied linen pouch"}},
-    {"type":"item","settings":{"code":"B","text":"Personalised note card"}},
-    {"type":"item","settings":{"code":"C","text":"Three-pair gift set"}},
-    {"type":"item","settings":{"code":"D","text":"Free shipping worldwide"}}
-  ]}]
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Gift item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Hand-tied linen pouch" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Gripfeet — Gifting",
+    "blocks": [
+      { "type": "item", "settings": { "text": "Hand-tied linen pouch" } },
+      { "type": "item", "settings": { "text": "Personalised note card" } },
+      { "type": "item", "settings": { "text": "Three-pair gift set" } },
+      { "type": "item", "settings": { "text": "Free shipping worldwide" } }
+    ]
+  }]
 }
 {% endschema %}
