@@ -4,20 +4,8 @@
       "type": "gripfeet-hero",
       "settings": {}
     },
-    "trust": {
+    "test": {
       "type": "gripfeet-trust-strip",
-      "settings": {}
-    },
-    "categories": {
-      "type": "gripfeet-category-grid",
-      "settings": {}
-    },
-    "featured": {
-      "type": "gripfeet-featured-products",
-      "settings": {}
-    },
-    "story": {
-      "type": "gripfeet-brand-story",
       "settings": {}
     },
     "whatsapp": {
@@ -27,10 +15,7 @@
   },
   "order": [
     "hero",
-    "trust",
-    "categories",
-    "featured",
-    "story",
+    "test",
     "whatsapp"
   ]
 }
