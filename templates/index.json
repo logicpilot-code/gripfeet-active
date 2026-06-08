@@ -8,20 +8,12 @@
       "type": "gripfeet-trust-strip",
       "settings": {}
     },
-    "statement": {
-      "type": "gripfeet-statement",
-      "settings": {}
-    },
     "categories": {
       "type": "gripfeet-category-grid",
       "settings": {}
     },
     "featured": {
       "type": "gripfeet-featured-products",
-      "settings": {}
-    },
-    "trends": {
-      "type": "gripfeet-trends",
       "settings": {}
     },
     "story": {
@@ -44,10 +36,6 @@
       "type": "gripfeet-reviews",
       "settings": {}
     },
-    "move_band": {
-      "type": "gripfeet-move-band",
-      "settings": {}
-    },
     "gifting": {
       "type": "gripfeet-gifting",
       "settings": {}
@@ -64,16 +52,13 @@
   "order": [
     "hero",
     "trust",
-    "statement",
     "categories",
     "featured",
-    "trends",
     "story",
     "usps",
     "palette",
     "bundles",
     "reviews",
-    "move_band",
     "gifting",
     "newsletter",
     "whatsapp"
