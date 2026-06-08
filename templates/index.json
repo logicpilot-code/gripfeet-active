@@ -8,26 +8,6 @@
       "type": "gripfeet-trust-strip",
       "settings": {}
     },
-    "statement": {
-      "type": "gripfeet-statement",
-      "settings": {}
-    },
-    "categories": {
-      "type": "gripfeet-category-grid",
-      "settings": {}
-    },
-    "featured": {
-      "type": "gripfeet-featured-products",
-      "settings": {}
-    },
-    "trends": {
-      "type": "gripfeet-trends",
-      "settings": {}
-    },
-    "story": {
-      "type": "gripfeet-brand-story",
-      "settings": {}
-    },
     "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
@@ -36,11 +16,6 @@
   "order": [
     "hero",
     "trust",
-    "statement",
-    "categories",
-    "featured",
-    "trends",
-    "story",
     "whatsapp"
   ]
 }
