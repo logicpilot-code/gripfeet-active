@@ -4,8 +4,8 @@
       "type": "gripfeet-hero",
       "settings": {}
     },
-    "categories": {
-      "type": "gripfeet-category-grid",
+    "trust": {
+      "type": "gripfeet-trust-strip",
       "settings": {}
     },
     "whatsapp": {
@@ -15,7 +15,7 @@
   },
   "order": [
     "hero",
-    "categories",
+    "trust",
     "whatsapp"
   ]
 }
