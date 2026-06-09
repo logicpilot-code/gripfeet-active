@@ -8,13 +8,10 @@
       style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
     >
   {%- else -%}
-    <img
-      src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=2400&auto=format&fit=crop&q=85"
-      alt="Gripfeet active lifestyle"
-      width="2400" height="900"
-      loading="lazy"
-      style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-    >
+    <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%">
+      <span class="ph-label">Full-bleed · feet in motion on stairs / street · grip socks + trainers</span>
+      <span class="ph-corner">GF · BAND</span>
+    </div>
   {%- endif -%}
   <div class="scrim"></div>
   <h2>{{ section.settings.headline | newline_to_br }}</h2>

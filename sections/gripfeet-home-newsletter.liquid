@@ -8,16 +8,18 @@
     <div>
       {%- form "customer" -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
-        <input
-          type="email" name="contact[email]"
-          placeholder="{{ section.settings.placeholder }}"
-          required
-          autocomplete="email"
-        >
-        <button type="submit" class="btn btn-primary">
-          {{ section.settings.cta }}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-        </button>
+        <div class="nl-field">
+          <input
+            type="email" name="contact[email]"
+            placeholder="{{ section.settings.placeholder }}"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" class="btn btn-primary">
+            {{ section.settings.cta }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </button>
+        </div>
       {%- endform -%}
       <div class="fine">{{ section.settings.fine }}</div>
     </div>

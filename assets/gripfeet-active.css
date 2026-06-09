@@ -69,6 +69,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- type ---------- */
 h1, h2, h3, h4 { margin: 0; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+body h1, body h2, body h3, body h4 { color: var(--ink); }
 
 .display {
   font-weight: 800;
