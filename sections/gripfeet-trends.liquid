@@ -19,10 +19,15 @@
           {%- if block.settings.image != blank -%}
             <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title }}" width="900" height="1100" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           {%- else -%}
-            <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%;background:{{ block.settings.bg_color | default: '#191919' }}">
-              <span class="ph-label">{{ block.settings.title }} · lifestyle editorial</span>
-              <span class="ph-corner">GF</span>
-            </div>
+            {%- assign _trend_ids = '1518611012118-696072aa579a,1517838277536-f5f99be501cd,1503454537195-1dcabb73ffb9' | split: ',' -%}
+            {%- assign _tid = _trend_ids[forloop.index0] | default: _trend_ids[0] -%}
+            <img
+              src="https://images.unsplash.com/photo-{{ _tid }}?w=900&auto=format&fit=crop&q=80"
+              alt="{{ block.settings.title }}"
+              width="900" height="1100"
+              loading="lazy"
+              style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+            >
           {%- endif -%}
           <div class="scrim"></div>
           <div class="tinfo">
