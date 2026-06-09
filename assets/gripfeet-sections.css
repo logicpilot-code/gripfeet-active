@@ -177,7 +177,7 @@
   border-radius: var(--radius);
 }
 .sub-banner .icn { width: 46px; height: 46px; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
-.sub-banner .copy h4 { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin: 0 0 5px; }
+.sub-banner .copy h4 { font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin: 0 0 5px; color: #fff; }
 .sub-banner .copy p { color: rgba(255,255,255,0.65); margin: 0; font-size: 14px; max-width: 60ch; }
 @media (max-width: 720px) { .sub-banner { grid-template-columns: 1fr; text-align: center; gap: 16px; } .sub-banner .icn { margin: 0 auto; } .sub-banner .btn { width: 100%; } }
 
@@ -233,6 +233,7 @@
 }
 .bundle:hover { transform: translateY(-3px); box-shadow: 0 24px 44px -30px rgba(0,0,0,0.35); }
 .bundle.featured { background: var(--ink); color: #fff; border-color: var(--ink); }
+.bundle.featured .tier-name { color: #fff; }
 .bundle .save { position: absolute; top: clamp(20px,2.4vw,30px); right: clamp(20px,2.4vw,30px); background: var(--accent); color: var(--on-accent); font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; }
 .bundle .tier-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2); }
 .bundle.featured .tier-label { color: rgba(255,255,255,0.7); }
@@ -282,7 +283,7 @@
 .gifting .visual .ph { width: 100%; height: 100%; border-radius: 12px; }
 .gifting .eyebrow { color: rgba(255,255,255,0.7); }
 .gifting .eyebrow .dot { background: var(--accent); }
-.gifting h3 { font-weight: 800; font-size: clamp(34px, 4vw, 60px); letter-spacing: -0.03em; line-height: 0.98; margin: 16px 0 22px; }
+.gifting h3 { font-weight: 800; font-size: clamp(34px, 4vw, 60px); letter-spacing: -0.03em; line-height: 0.98; margin: 16px 0 22px; color: #fff; }
 .gifting p { color: rgba(255,255,255,0.66); max-width: 44ch; font-size: 15px; line-height: 1.6; }
 .gifting ul { list-style: none; padding: 0; margin: 26px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; }
 .gifting li { font-size: 13.5px; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.14); display: flex; gap: 10px; align-items: center; }
