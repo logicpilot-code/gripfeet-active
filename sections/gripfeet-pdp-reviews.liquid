@@ -1,0 +1,128 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+
+<section class="section band" id="pdp-reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="left">
+        <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+        <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+      </div>
+      <div class="right"><a href="#" class="btn btn-outline btn-sm">Write a review</a></div>
+    </div>
+
+    <div class="rev-layout">
+      <aside class="rev-summary">
+        <div class="rev-big">{{ section.settings.rating }}</div>
+        <span class="stars-svg">★★★★★</span>
+        <div class="rev-count">{{ section.settings.review_count }} verified reviews</div>
+        <div class="rev-bars" id="gf-rev-bars">
+          {%- assign bars = section.settings.distribution | split: ',' -%}
+          {%- for pct in bars -%}
+            {%- assign star = 5 | minus: forloop.index0 -%}
+            <button type="button" class="rev-bar" data-star="{{ star }}">
+              <span class="rb-n">{{ star }}★</span>
+              <span class="rb-track"><span class="rb-fill" style="width:{{ pct }}%"></span></span>
+              <span class="rb-pct">{{ pct }}%</span>
+            </button>
+          {%- endfor -%}
+        </div>
+        <div class="rev-recommend"><strong>{{ section.settings.recommend_pct }}%</strong> would recommend to a friend</div>
+      </aside>
+
+      <div class="rev-list" id="gf-rev-list">
+        <div class="rev-filterbar" id="gf-rev-filter">
+          <button type="button" class="on" data-star="0">All</button>
+          <button type="button" data-star="5">5 star</button>
+          <button type="button" data-star="4">4 star</button>
+          <button type="button" data-star="3">3 star</button>
+        </div>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'review' -%}
+            <div class="rev-card" data-stars="{{ block.settings.stars }}" {{ block.shopify_attributes }}>
+              <div class="rc-top">
+                <span class="stars-svg">{% for i in (1..block.settings.stars) %}★{% endfor %}</span>
+                {%- if block.settings.verified -%}
+                  <span class="rc-verified"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg> Verified buyer</span>
+                {%- endif -%}
+              </div>
+              <h4 class="rc-title">{{ block.settings.title }}</h4>
+              <p class="rc-quote">{{ block.settings.quote }}</p>
+              <div class="rc-foot"><span class="rc-name">{{ block.settings.name }} · {{ block.settings.location }}</span><span class="rc-tag">{{ block.settings.fit_tag }}</span></div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+        <p class="rev-empty mono" id="gf-rev-empty" style="display:none;padding:24px 0;color:var(--ink-3);font-size:12px;letter-spacing:.08em;text-transform:uppercase">No reviews at this rating yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var cards = Array.prototype.slice.call(document.querySelectorAll("#gf-rev-list .rev-card"));
+  var empty = document.getElementById("gf-rev-empty");
+  function apply(star) {
+    var shown = 0;
+    cards.forEach(function (c) {
+      var match = star === 0 || parseInt(c.dataset.stars, 10) === star;
+      c.style.display = match ? "" : "none";
+      if (match) shown++;
+    });
+    if (empty) empty.style.display = shown === 0 ? "block" : "none";
+  }
+  function setActive(group, star) {
+    group.querySelectorAll("[data-star]").forEach(function (b) { b.classList.toggle("on", parseInt(b.dataset.star, 10) === star); });
+  }
+  var filterbar = document.getElementById("gf-rev-filter");
+  var bars = document.getElementById("gf-rev-bars");
+  var active = 0;
+  function choose(star) {
+    active = (active === star && star !== 0) ? 0 : star;
+    apply(active);
+    if (filterbar) setActive(filterbar, active);
+  }
+  if (filterbar) filterbar.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { choose(parseInt(b.dataset.star, 10)); }); });
+  if (bars) bars.querySelectorAll(".rev-bar").forEach(function (b) { b.addEventListener("click", function () { choose(parseInt(b.dataset.star, 10)); }); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "GF PDP — Reviews",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Worn-in opinions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What buyers say." },
+    { "type": "text", "id": "rating", "label": "Average rating", "default": "4.9" },
+    { "type": "text", "id": "review_count", "label": "Review count", "default": "1,284" },
+    { "type": "text", "id": "recommend_pct", "label": "% would recommend", "default": "94" },
+    { "type": "text", "id": "distribution", "label": "Star distribution % (5,4,3,2,1)", "default": "86,11,2,1,0" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "location", "label": "Location" },
+        { "type": "text", "id": "fit_tag", "label": "Fit tag", "default": "Fit: True to size" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{
+    "name": "GF PDP — Reviews",
+    "blocks": [
+      { "type": "review", "settings": { "stars": 5, "title": "Finally a grip sock I'd wear out", "quote": "The Supima feels like a proper sock — not a piece of medical equipment. The grip is genuinely grippy.", "name": "Aanya M.", "location": "Mumbai", "fit_tag": "Fit: True to size" } },
+      { "type": "review", "settings": { "stars": 5, "title": "Travel staple now", "quote": "Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good folded in the bag.", "name": "Rohan K.", "location": "Bengaluru", "fit_tag": "Fit: True to size" } },
+      { "type": "review", "settings": { "stars": 4, "title": "Great, runs a touch snug", "quote": "Brilliant grip and softness. Sized up after the first wash and they're perfect now.", "name": "Devika S.", "location": "Pune", "fit_tag": "Fit: Runs small" } },
+      { "type": "review", "settings": { "stars": 5, "title": "Bought a second pack", "quote": "Held up after 30+ washes, silicone still grips like day one. Reordering the neutrals.", "name": "Karan T.", "location": "Delhi", "fit_tag": "Fit: True to size" } },
+      { "type": "review", "settings": { "stars": 5, "title": "Studio approved", "quote": "I teach 12 classes a week in these. Zero slip on the reformer, zero slip on hardwood.", "name": "Megha R.", "location": "Hyderabad", "fit_tag": "Fit: True to size" } }
+    ]
+  }]
+}
+{% endschema %}

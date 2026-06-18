@@ -294,37 +294,7 @@
   {%- endif -%}
 </div>
 
-<!-- Related products -->
-{%- assign collection = product.collections.first -%}
-{%- if collection -%}
-  <section class="wrap section pdp-related">
-    <div class="section-head">
-      <div class="left"><h2 class="h-sub">Wear it with</h2></div>
-    </div>
-    <div class="pdp-related-grid">
-      {%- assign shown = 0 -%}
-      {%- for rel in collection.products limit: 6 -%}
-        {%- unless rel.id == product.id -%}
-          {%- if shown < 4 -%}
-            <a class="pcard" href="{{ rel.url }}">
-              <div class="pimg">
-                {%- if rel.featured_image -%}
-                  <div class="ph has-photo" style="width:100%;height:100%"><img class="ph-img" src="{{ rel.featured_image | image_url: width: 600 }}" alt="{{ rel.title | escape }}" width="600" height="600" loading="lazy"></div>
-                {%- else -%}
-                  <div class="ph" style="width:100%;height:100%"><span class="ph-label">{{ rel.title }}</span></div>
-                {%- endif -%}
-              </div>
-              <div class="prange">{{ rel.type }}</div>
-              <div class="pname">{{ rel.title }}</div>
-              <div class="pprice">₹{{ rel.price | money_without_currency }}</div>
-            </a>
-            {%- assign shown = shown | plus: 1 -%}
-          {%- endif -%}
-        {%- endunless -%}
-      {%- endfor -%}
-    </div>
-  </section>
-{%- endif -%}
+{%- comment -%} Related products / cross-sell handled by the GF PDP — Cross-sell section in product.json {%- endcomment -%}
 
 <!-- Sticky buy bar -->
 <div class="pdp-buybar" id="pdp-buybar">
@@ -345,6 +315,14 @@
 
   var selected = (first.options || []).slice();
   var currentVariant = first;
+
+  // record this product for "recently viewed" (lightweight, no fetch)
+  try {
+    var RV = "gf_recently_viewed";
+    var cur = { handle: {{ product.handle | json }}, title: {{ product.title | json }}, type: {{ product.type | json }}, price: {{ product.price | money_without_currency | json }}, url: {{ product.url | json }}, img: {{ product.featured_image | image_url: width: 600 | json }} };
+    var prevRV = JSON.parse(localStorage.getItem(RV) || "[]").filter(function (x) { return x && x.handle !== cur.handle; });
+    localStorage.setItem(RV, JSON.stringify([cur].concat(prevRV).slice(0, 8)));
+  } catch (e) {}
 
   var priceEl = document.getElementById("pdp-price");
   var wasEl   = document.getElementById("pdp-was");

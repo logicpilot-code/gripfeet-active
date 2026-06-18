@@ -1,0 +1,112 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  if product.collections.first
+    assign pool = product.collections.first.products
+  else
+    assign pool = collections.all.products
+  endif
+-%}
+
+<!-- Buy it with -->
+<section class="wrap section pdp-related">
+  <div class="section-head">
+    <div class="left">
+      <span class="eyebrow"><span class="dot"></span>Complete the set</span>
+      <h2 class="h-section" style="margin-top:14px">Buy it with.</h2>
+    </div>
+    <div class="right"><span class="muted" style="font-size:13px">Add the bundle &amp; save on shipping</span></div>
+  </div>
+
+  <div class="xsell">
+    <div class="xsell-row">
+      <div class="xsell-item base" data-variant="{{ product.selected_or_first_available_variant.id }}">
+        <div class="ph{% if product.featured_image %} has-photo{% endif %}" style="aspect-ratio:1;border-radius:16px;{% unless product.featured_image %}background:#EFEEEA{% endunless %}">
+          {%- if product.featured_image -%}<img class="ph-img" src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" width="300" height="300" loading="lazy">{%- endif -%}
+        </div>
+        <div class="xs-meta"><strong>This item</strong><span>{{ product.title }}</span></div>
+        <div class="xs-price">₹{{ product.price | money_without_currency }}</div>
+      </div>
+
+      {%- assign pick_count = 0 -%}
+      {%- assign bundle_total = product.price -%}
+      {%- for p in pool -%}
+        {%- unless p.id == product.id -%}
+          {%- if pick_count < 3 and p.available -%}
+            <span class="xsell-plus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span>
+            <a class="xsell-item" href="{{ p.url }}" data-variant="{{ p.selected_or_first_available_variant.id }}">
+              <div class="ph{% if p.featured_image %} has-photo{% endif %}" style="aspect-ratio:1;border-radius:16px">
+                {%- if p.featured_image -%}<img class="ph-img" src="{{ p.featured_image | image_url: width: 300 }}" alt="{{ p.title | escape }}" width="300" height="300" loading="lazy">{%- endif -%}
+              </div>
+              <div class="xs-meta"><strong>{{ p.type }}</strong><span>{{ p.title }}</span></div>
+              <div class="xs-price">₹{{ p.price | money_without_currency }}</div>
+            </a>
+            {%- assign bundle_total = bundle_total | plus: p.price -%}
+            {%- assign pick_count = pick_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if pick_count > 0 -%}
+      <div class="xsell-buy">
+        <div><span class="xs-lbl">Bundle of {{ pick_count | plus: 1 }}</span><div class="xs-total">₹{{ bundle_total | money_without_currency }}</div></div>
+        <button type="button" class="btn btn-primary" id="gf-xsell-add">Add all to bag <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<!-- You may also like (conveyor) -->
+<section class="wrap section tight">
+  <div class="section-head">
+    <div class="left"><span class="eyebrow"><span class="dot"></span>You may also like</span></div>
+    <div class="right"><a href="{{ routes.all_products_collection_url }}" class="btn-link">Shop all <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg></a></div>
+  </div>
+  {%- capture ymal_cards -%}
+    {%- assign c = 0 -%}
+    {%- for p in pool -%}
+      {%- unless p.id == product.id -%}
+        {%- if c < 8 -%}{%- render 'gripfeet-pcard-product', p: p -%}{%- assign c = c | plus: 1 -%}{%- endif -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if ymal_cards != blank -%}
+    <div class="conveyor-wrap">
+      <div class="conveyor">
+        <div class="conveyor-track" style="--belt-dur: 50s; --belt-dir: normal;">{{ ymal_cards }}{{ ymal_cards }}</div>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+<script>
+(function () {
+  var btn = document.getElementById("gf-xsell-add");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    var ids = [];
+    document.querySelectorAll(".xsell-item[data-variant]").forEach(function (el) {
+      var v = el.dataset.variant;
+      if (v) ids.push({ id: v, quantity: 1 });
+    });
+    if (!ids.length) return;
+    btn.setAttribute("disabled", "disabled");
+    fetch("{{ routes.cart_add_url }}.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ items: ids })
+    }).then(function () { window.location.href = "{{ routes.cart_url }}"; })
+      .catch(function () { btn.removeAttribute("disabled"); });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "GF PDP — Cross-sell",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "GF PDP — Cross-sell" }]
+}
+{% endschema %}

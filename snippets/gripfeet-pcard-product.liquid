@@ -1,0 +1,20 @@
+{%- comment -%} Product card from a product object. Usage: {% render 'gripfeet-pcard-product', p: product %} {%- endcomment -%}
+<a class="pcard" href="{{ p.url }}">
+  <div class="pimg">
+    {%- if p.compare_at_price_max > p.price_min -%}
+      {%- assign off = p.compare_at_price_max | minus: p.price_min | times: 100 | divided_by: p.compare_at_price_max -%}
+      <span class="save-tag">−{{ off }}%</span>
+    {%- endif -%}
+    {%- if p.featured_image -%}
+      <div class="ph has-photo" style="width:100%;height:100%"><img class="ph-img" src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title | escape }}" width="600" height="600" loading="lazy"></div>
+    {%- else -%}
+      <div class="ph" style="width:100%;height:100%"><span class="ph-label">{{ p.title }}</span><span class="ph-corner">{{ p.handle | upcase | truncate: 8, "" }}</span></div>
+    {%- endif -%}
+  </div>
+  <div class="prange">{{ p.type }}</div>
+  <div class="pname">{{ p.title }}</div>
+  <div class="pprice">
+    {%- if p.compare_at_price_max > p.price_min -%}<span class="was">₹{{ p.compare_at_price_max | money_without_currency }}</span>{%- endif -%}
+    ₹{{ p.price_min | money_without_currency }}
+  </div>
+</a>

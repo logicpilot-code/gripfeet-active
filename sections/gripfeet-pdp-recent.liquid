@@ -1,0 +1,51 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+
+<section class="wrap section tight" id="gf-recent-sec" style="display:none">
+  <div class="section-head">
+    <div class="left"><span class="eyebrow"><span class="dot"></span>Recently viewed</span></div>
+  </div>
+  <div class="conveyor-wrap">
+    <div class="conveyor">
+      <div class="conveyor-track" id="gf-recent-track" style="--belt-dur: 46s; --belt-dir: reverse;"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var sec = document.getElementById("gf-recent-sec");
+  var track = document.getElementById("gf-recent-track");
+  if (!sec || !track) return;
+  var current = {{ product.handle | json }};
+  var list = [];
+  try { list = JSON.parse(localStorage.getItem("gf_recently_viewed") || "[]"); } catch (e) {}
+  list = (list || []).filter(function (x) { return x && x.handle && x.handle !== current; }).slice(0, 8);
+  if (!list.length) return;
+
+  function card(p) {
+    var img = p.img
+      ? '<div class="ph has-photo" style="width:100%;height:100%"><img class="ph-img" src="' + p.img + '" alt="" width="600" height="600" loading="lazy"></div>'
+      : '<div class="ph" style="width:100%;height:100%"><span class="ph-label">' + (p.title || "") + '</span></div>';
+    return '<a class="pcard" href="' + p.url + '">' +
+      '<div class="pimg">' + img + '</div>' +
+      '<div class="prange">' + (p.type || "") + '</div>' +
+      '<div class="pname">' + (p.title || "") + '</div>' +
+      '<div class="pprice">₹' + (p.price || "") + '</div></a>';
+  }
+  // duplicate for a seamless belt; if very few, repeat to fill
+  var base = list.slice();
+  while (base.length < 4) base = base.concat(list);
+  var html = base.map(card).join("");
+  track.innerHTML = html + html;
+  sec.style.display = "";
+})();
+</script>
+
+{% schema %}
+{
+  "name": "GF PDP — Recently viewed",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "GF PDP — Recently viewed" }]
+}
+{% endschema %}
