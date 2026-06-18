@@ -1,8 +1,21 @@
 {{ 'gripfeet-collection.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign active_count = 0
+  for f in collection.filters
+    assign active_count = active_count | plus: f.active_values.size
+  endfor
+  if collection.sort_by != blank
+    assign sort_now = collection.sort_by
+  else
+    assign sort_now = collection.default_sort_by
+  endif
+-%}
+
+{%- paginate collection.products by 9 -%}
 <div class="wrap">
   <div class="col-breadcrumb">
-    <a href="/">Home</a><span class="sep">/</span>
+    <a href="{{ routes.root_url }}">Home</a><span class="sep">/</span>
     <span class="here">{{ collection.title | default: "All Socks" }}</span>
   </div>
 
@@ -17,51 +30,51 @@
       <span>Sort</span>
       <div class="sort-select">
         <select id="gf-sort" onchange="window.location.href=this.value">
-          <option value="?sort_by=manual"{% if collection.sort_by == 'manual' %} selected{% endif %}>Featured</option>
-          <option value="?sort_by=price-ascending"{% if collection.sort_by == 'price-ascending' %} selected{% endif %}>Price: low to high</option>
-          <option value="?sort_by=price-descending"{% if collection.sort_by == 'price-descending' %} selected{% endif %}>Price: high to low</option>
-          <option value="?sort_by=best-selling"{% if collection.sort_by == 'best-selling' %} selected{% endif %}>Best selling</option>
+          <option value="{{ collection.url }}?sort_by=manual"{% if sort_now == 'manual' %} selected{% endif %}>Featured</option>
+          <option value="{{ collection.url }}?sort_by=price-ascending"{% if sort_now == 'price-ascending' %} selected{% endif %}>Price: low to high</option>
+          <option value="{{ collection.url }}?sort_by=price-descending"{% if sort_now == 'price-descending' %} selected{% endif %}>Price: high to low</option>
+          <option value="{{ collection.url }}?sort_by=best-selling"{% if sort_now == 'best-selling' %} selected{% endif %}>Best selling</option>
         </select>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
   </div>
 
+  {%- if active_count > 0 -%}
+    <div class="active-chips">
+      {%- for f in collection.filters -%}
+        {%- for v in f.active_values -%}
+          <a href="{{ v.url_to_remove }}" class="chip" rel="nofollow">
+            {{ v.label }}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </a>
+        {%- endfor -%}
+      {%- endfor -%}
+      <a href="{{ collection.url }}" class="chip chip-clear" rel="nofollow">Clear all</a>
+    </div>
+  {%- endif -%}
+
   <div class="col-layout">
     <!-- Filter rail (desktop) -->
     <aside class="col-rail">
       <div class="rail-head">
         <span>Filters</span>
-        <a href="{{ collection.url }}" class="rail-clear">Clear all</a>
+        <a href="{{ collection.url }}" class="rail-clear" rel="nofollow">Clear all</a>
       </div>
-      {%- for filter in collection.filters -%}
-        <div class="filter-group open">
-          <button class="fg-head" onclick="this.closest('.filter-group').classList.toggle('open')">
-            {{ filter.label }}
-            <span class="fg-ico">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </span>
-          </button>
-          <div class="fg-body">
-            {%- for value in filter.values -%}
-              <a href="{{ value.url_to_add }}" class="facet{% if value.active %} on{% endif %}">
-                <span class="box">{% if value.active %}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>{% endif %}</span>
-                <span class="flab">{{ value.label }}</span>
-                <span class="fcount">{{ value.count }}</span>
-              </a>
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endfor -%}
+      {%- render 'gripfeet-collection-filters' -%}
     </aside>
 
     <!-- Main grid -->
     <div>
       <div class="col-toolbar">
+        <button type="button" class="filter-trigger" id="gf-filter-open">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg>
+          Filters{% if active_count > 0 %} <span class="ft-badge">{{ active_count }}</span>{% endif %}
+        </button>
         <span class="col-count">{{ collection.products_count }} products</span>
       </div>
 
-      <div class="col-grid">
+      <div class="col-grid" id="gf-col-grid">
         {%- for product in collection.products -%}
           <a class="pcard" href="{{ product.url }}">
             <div class="pimg">
@@ -70,7 +83,9 @@
                 <span class="save-tag">−{{ off }}%</span>
               {%- endif -%}
               {%- if product.featured_image -%}
-                <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" width="600" height="600" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+                <div class="ph has-photo" style="width:100%;height:100%">
+                  <img class="ph-img" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" width="600" height="600" loading="lazy">
+                </div>
               {%- else -%}
                 <div class="ph" style="width:100%;height:100%">
                   <span class="ph-label">{{ product.title }}</span>
@@ -89,6 +104,7 @@
           </a>
         {%- else -%}
           <div class="col-empty" style="grid-column:1/-1">
+            <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
             <h3>No products found</h3>
             <p>Try adjusting your filters.</p>
             <a href="{{ collection.url }}" class="btn btn-primary">Clear filters</a>
@@ -96,14 +112,111 @@
         {%- endfor -%}
       </div>
 
-      {%- if paginate.pages > 1 -%}
-        <div class="col-foot">
-          {{ paginate | default_pagination }}
-        </div>
+      {%- if collection.products_count > 0 -%}
+        {%- if paginate.next.url -%}
+          <div class="col-sentinel" id="gf-col-sentinel" data-next-url="{{ paginate.next.url }}" data-section-id="{{ section.id }}">
+            <span class="col-spinner"><span class="ring"></span> Loading more</span>
+          </div>
+        {%- else -%}
+          <div class="col-foot">End of range · {{ collection.products_count }} styles</div>
+        {%- endif -%}
       {%- endif -%}
     </div>
   </div>
 </div>
+
+<!-- Mobile filter bottom-sheet -->
+<div class="sheet-bg" id="gf-sheet-bg"></div>
+<aside class="filter-sheet" id="gf-filter-sheet" aria-hidden="true">
+  <div class="sheet-head">
+    <span class="title">Filters &amp; sort</span>
+    <button type="button" id="gf-sheet-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="sheet-body">
+    <div class="sheet-sort">
+      {%- assign sort_opts = "manual:Featured,price-ascending:Price: low to high,price-descending:Price: high to low,best-selling:Best selling" | split: "," -%}
+      {%- for opt in sort_opts -%}
+        {%- assign parts = opt | split: ":" -%}
+        <a href="{{ collection.url }}?sort_by={{ parts[0] }}" class="sheet-sort-opt{% if sort_now == parts[0] %} on{% endif %}" rel="nofollow">
+          {{ parts[1] }}<span class="radio"></span>
+        </a>
+      {%- endfor -%}
+    </div>
+    {%- render 'gripfeet-collection-filters' -%}
+  </div>
+  <div class="sheet-foot">
+    <a href="{{ collection.url }}" class="btn btn-outline" rel="nofollow">Clear</a>
+    <button type="button" class="btn btn-primary" id="gf-sheet-apply">Show results</button>
+  </div>
+</aside>
+{%- endpaginate -%}
+
+<script>
+(function () {
+  // ---------- mobile filter sheet ----------
+  var openBtn  = document.getElementById("gf-filter-open");
+  var sheet    = document.getElementById("gf-filter-sheet");
+  var bg       = document.getElementById("gf-sheet-bg");
+  var closeBtn = document.getElementById("gf-sheet-close");
+  var applyBtn = document.getElementById("gf-sheet-apply");
+  function openSheet()  { if (!sheet) return; sheet.classList.add("open"); bg.classList.add("open"); sheet.setAttribute("aria-hidden", "false"); document.body.classList.add("no-scroll"); }
+  function closeSheet() { if (!sheet) return; sheet.classList.remove("open"); bg.classList.remove("open"); sheet.setAttribute("aria-hidden", "true"); document.body.classList.remove("no-scroll"); }
+  if (openBtn)  openBtn.addEventListener("click", openSheet);
+  if (closeBtn) closeBtn.addEventListener("click", closeSheet);
+  if (applyBtn) applyBtn.addEventListener("click", closeSheet);
+  if (bg)       bg.addEventListener("click", closeSheet);
+
+  // ---------- infinite scroll (Section Rendering API) ----------
+  var grid     = document.getElementById("gf-col-grid");
+  var sentinel = document.getElementById("gf-col-sentinel");
+  if (!grid || !sentinel || !sentinel.dataset.nextUrl) return;
+  var sectionId = sentinel.dataset.sectionId;
+  var loading = false, done = false;
+
+  function nearBottom() {
+    return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 600;
+  }
+  function finish() {
+    done = true;
+    var note = document.createElement("div");
+    note.className = "col-foot";
+    note.textContent = "End of range";
+    sentinel.replaceWith(note);
+  }
+  function loadMore() {
+    if (loading || done) return;
+    var url = sentinel.dataset.nextUrl;
+    if (!url) { finish(); return; }
+    loading = true;
+    var sep = url.indexOf("?") >= 0 ? "&" : "?";
+    fetch(url + sep + "section_id=" + sectionId)
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var cards = doc.querySelectorAll("#gf-col-grid > .pcard");
+        cards.forEach(function (c) {
+          c.classList.add("col-fresh", "is-in");
+          c.setAttribute("data-reveal", "fade"); // keep auto-reveal from re-hiding appended cards
+          grid.appendChild(c);
+        });
+        var ns = doc.getElementById("gf-col-sentinel");
+        var next = ns && ns.dataset ? ns.dataset.nextUrl : null;
+        loading = false;
+        if (next) { sentinel.dataset.nextUrl = next; check(); }
+        else { finish(); }
+      })
+      .catch(function () { loading = false; });
+  }
+  function check() { if (!loading && !done && nearBottom()) loadMore(); }
+
+  window.addEventListener("scroll", check, { passive: true });
+  window.addEventListener("resize", check, { passive: true });
+  if (window.gfOnTick) window.gfOnTick(check); // ride the motion-layer poll
+  check();
+})();
+</script>
 
 {% schema %}
 {

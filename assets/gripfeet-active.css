@@ -29,11 +29,14 @@
   --ease-out: cubic-bezier(.16,1,.3,1);
 }
 
-/* accent variants */
-.acc-blue { --accent:#2E64E0; --accent-deep:#1E4FC0; --accent-soft:#DCE6FF; --on-accent:#fff; }
-.acc-lime { --accent:#C6E61F; --accent-deep:#A9C70B; --accent-soft:#EEF8C0; --on-accent:#0E0E0E; }
-.acc-red  { --accent:#D33A2C; --accent-deep:#B42C20; --accent-soft:#F8D7D2; --on-accent:#fff; }
-.acc-navy { --accent:#1E2E4F; --accent-deep:#13203A; --accent-soft:#D6DCEA; --on-accent:#fff; }
+/* accent variants — home defaults (blue/lime/red/navy) + PDP range accents (sage/clay/coral) */
+.acc-blue  { --accent:#2E64E0; --accent-deep:#1E4FC0; --accent-soft:#DCE6FF; --on-accent:#fff; }
+.acc-lime  { --accent:#C6E61F; --accent-deep:#A9C70B; --accent-soft:#EEF8C0; --on-accent:#0E0E0E; }
+.acc-red   { --accent:#D33A2C; --accent-deep:#B42C20; --accent-soft:#F8D7D2; --on-accent:#fff; }
+.acc-navy  { --accent:#1E2E4F; --accent-deep:#13203A; --accent-soft:#D6DCEA; --on-accent:#fff; }
+.acc-sage  { --accent:#5E7A52; --accent-deep:#4A6341; --accent-soft:#E2EAD9; --on-accent:#fff; }
+.acc-clay  { --accent:#A6755A; --accent-deep:#8A5E47; --accent-soft:#EEE3DA; --on-accent:#fff; }
+.acc-coral { --accent:#E0664B; --accent-deep:#C44E36; --accent-soft:#FBE0D8; --on-accent:#fff; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
