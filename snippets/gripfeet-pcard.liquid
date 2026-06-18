@@ -1,0 +1,44 @@
+{%- comment -%}
+  Gripfeet product card — used by the featured dual-belt conveyor.
+  Usage: {% render 'gripfeet-pcard', block: block %}
+  Falls back to block text settings when no product is linked.
+{%- endcomment -%}
+{%- assign prod = block.settings.product -%}
+{%- if prod != blank -%}
+  <a class="pcard" href="{{ prod.url }}" {{ block.shopify_attributes }}>
+    <div class="pimg">
+      {%- if prod.compare_at_price > prod.price -%}
+        {%- assign off = prod.compare_at_price | minus: prod.price | times: 100 | divided_by: prod.compare_at_price -%}
+        <span class="save-tag">−{{ off }}%</span>
+      {%- endif -%}
+      {%- if prod.featured_image != blank -%}
+        <div class="ph has-photo" style="width:100%;height:100%">
+          <img class="ph-img" src="{{ prod.featured_image | image_url: width: 600 }}" alt="{{ prod.title | escape }}" width="600" height="600" loading="lazy">
+        </div>
+      {%- else -%}
+        <div class="ph" style="width:100%;height:100%">
+          <span class="ph-label">{{ prod.title }}</span>
+          <span class="ph-corner">{{ prod.handle | upcase | truncate: 8, "" }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="prange">{{ prod.type }}</div>
+    <div class="pname">{{ prod.title }}</div>
+    <div class="pprice">
+      {%- if prod.compare_at_price > prod.price -%}<span class="was">₹{{ prod.compare_at_price | divided_by: 100 }}</span>{%- endif -%}
+      ₹{{ prod.price | divided_by: 100 }}
+    </div>
+  </a>
+{%- else -%}
+  <div class="pcard" {{ block.shopify_attributes }}>
+    <div class="pimg">
+      <div class="ph" style="width:100%;height:100%">
+        <span class="ph-label">{{ block.settings.ph_label | default: 'Product placeholder' }}</span>
+        <span class="ph-corner">GF</span>
+      </div>
+    </div>
+    <div class="prange">{{ block.settings.range }}</div>
+    <div class="pname">{{ block.settings.name }}</div>
+    <div class="pprice"><span class="was">₹{{ block.settings.was }}</span>₹{{ block.settings.price }}</div>
+  </div>
+{%- endif -%}

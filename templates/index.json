@@ -537,8 +537,8 @@
   "order": [
     "hero",
     "trust",
-    "statement",
     "categories",
+    "statement",
     "featured",
     "trends",
     "story",
