@@ -4,6 +4,10 @@
       "type": "gripfeet-pdp",
       "settings": {}
     },
+    "category": {
+      "type": "gripfeet-pdp-category",
+      "settings": {}
+    },
     "reviews": {
       "type": "gripfeet-pdp-reviews",
       "settings": {
@@ -48,6 +52,7 @@
   },
   "order": [
     "pdp",
+    "category",
     "reviews",
     "qna",
     "crosssell",

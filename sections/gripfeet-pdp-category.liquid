@@ -1,0 +1,33 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} Range-routed PDP sections — picks the bespoke set by range, matching the buy-box accent {%- endcomment -%}
+{%- liquid
+  assign hay = product.type | append: ' ' | append: product.title | downcase
+  assign tagstr = product.tags | join: ' ' | downcase
+  assign hay = hay | append: ' ' | append: tagstr
+  if hay contains 'crew' or hay contains 'active hold'
+    assign range_id = 'crew'
+  elsif hay contains 'loafer' or hay contains 'invisible'
+    assign range_id = 'loafer'
+  elsif hay contains 'kid' or hay contains 'lil steps'
+    assign range_id = 'kids'
+  else
+    assign range_id = 'ankle'
+  endif
+-%}
+
+{%- case range_id -%}
+  {%- when 'crew' -%}{%- render 'gripfeet-pdp-crew' -%}
+  {%- when 'loafer' -%}{%- render 'gripfeet-pdp-loafer' -%}
+  {%- when 'kids' -%}{%- render 'gripfeet-pdp-kids' -%}
+  {%- else -%}{%- render 'gripfeet-pdp-ankle' -%}
+{%- endcase -%}
+
+{% schema %}
+{
+  "name": "GF PDP — Range sections",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "GF PDP — Range sections" }]
+}
+{% endschema %}
