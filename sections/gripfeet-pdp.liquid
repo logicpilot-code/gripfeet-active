@@ -1,9 +1,32 @@
 {{ 'gripfeet-pdp.css' | asset_url | stylesheet_tag }}
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
 
-{%- assign product = product -%}
+{%- comment -%} Derive the range (ankle/crew/loafer/kids) from type/tags → accent + size table {%- endcomment -%}
+{%- liquid
+  assign hay = product.type | append: ' ' | append: product.title | downcase
+  assign tagstr = product.tags | join: ' ' | downcase
+  assign hay = hay | append: ' ' | append: tagstr
+  if hay contains 'crew' or hay contains 'active hold'
+    assign range_id = 'crew'
+    assign accent_class = 'acc-lime crew-dark'
+  elsif hay contains 'loafer' or hay contains 'invisible'
+    assign range_id = 'loafer'
+    assign accent_class = 'acc-clay'
+  elsif hay contains 'kid' or hay contains 'lil steps'
+    assign range_id = 'kids'
+    assign accent_class = 'acc-coral'
+  else
+    assign range_id = 'ankle'
+    assign accent_class = 'acc-sage'
+  endif
+  assign stock_left = product.id | modulo: 8 | plus: 5
+  assign first_variant = product.selected_or_first_available_variant
+-%}
+
+<script>document.documentElement.className += ' {{ accent_class }}';</script>
 
 <div class="wrap pdp-breadcrumb">
-  <a href="/">Home</a>
+  <a href="{{ routes.root_url }}">Home</a>
   <span class="sep">/</span>
   {%- if product.collections.first -%}
     <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
@@ -18,12 +41,12 @@
   <div class="pdp-gallery" id="pdp-gallery">
     <div class="pdp-thumbs" id="pdp-thumbs">
       {%- for media in product.media limit: 5 -%}
-        <button class="pdp-thumb{% if forloop.first %} active{% endif %}" data-idx="{{ forloop.index0 }}" aria-label="View {{ forloop.index }}">
-          <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | default: product.title }}" width="160" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+        <button type="button" class="pdp-thumb{% if forloop.first %} active{% endif %}" data-idx="{{ forloop.index0 }}" data-full="{{ media | image_url: width: 1200 }}" aria-label="View {{ forloop.index }}">
+          <img src="{{ media | image_url: width: 160 }}" alt="{{ media.alt | default: product.title | escape }}" width="160" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover">
         </button>
       {%- else -%}
         {%- for i in (1..5) -%}
-          <button class="pdp-thumb{% if forloop.first %} active{% endif %}" data-idx="{{ forloop.index0 }}" aria-label="View {{ forloop.index }}">
+          <button type="button" class="pdp-thumb{% if forloop.first %} active{% endif %}" data-idx="{{ forloop.index0 }}" aria-label="View {{ forloop.index }}">
             <div class="ph" style="width:100%;height:100%"><span class="ph-corner">{{ forloop.index }}</span></div>
           </button>
         {%- endfor -%}
@@ -32,7 +55,7 @@
 
     <div class="pdp-main" id="pdp-main-img">
       {%- if product.featured_image != blank -%}
-        <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}" width="1200" height="1500" loading="eager" style="width:100%;height:100%;object-fit:cover">
+        <img id="pdp-main-photo" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" width="1200" height="1500" loading="eager" style="width:100%;height:100%;object-fit:cover">
       {%- else -%}
         <div class="ph ph-photo" style="width:100%;height:100%">
           <span class="ph-label">{{ product.title }} · lifestyle shot</span>
@@ -41,26 +64,32 @@
       {%- endif -%}
       {%- if product.compare_at_price_max > product.price_min -%}
         {%- assign off = product.compare_at_price_max | minus: product.price_min | times: 100 | divided_by: product.compare_at_price_max -%}
-        <span class="pdp-save">Launch · save {{ off }}%</span>
+        <span class="pdp-save" id="pdp-save">Launch · save {{ off }}%</span>
       {%- endif -%}
+      <button type="button" class="pdp-zoom" id="pdp-zoom-btn" aria-label="Zoom">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button type="button" class="pdp-wish" aria-label="Wishlist">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/></svg>
+      </button>
     </div>
   </div>
 
   <!-- Info -->
   <div class="pdp-info">
-    <span class="pdp-range">{{ product.type }}</span>
+    <span class="pdp-range">{{ product.type | default: 'Gripfeet' }}</span>
     <h1 class="pdp-name">{{ product.title }}</h1>
 
-    <div class="pdp-stars">
+    <a href="#pdp-reviews" class="pdp-stars">
       <span class="stars-svg">★★★★★</span>
-      <span>4.9 · 284 reviews</span>
-    </div>
+      <span>{{ product.metafields.reviews.rating.value | default: '4.9' }} · {{ product.metafields.reviews.rating_count.value | default: '284' }} reviews</span>
+    </a>
 
     <div class="pdp-price">
-      <span class="now" id="pdp-price">₹{{ product.price | money_without_currency }}</span>
+      <span class="now" id="pdp-price">₹{{ first_variant.price | money_without_currency }}</span>
       {%- if product.compare_at_price_max > product.price_min -%}
-        <span class="was">₹{{ product.compare_at_price_max | money_without_currency }}</span>
-        <span class="tag">−{{ off }}% off</span>
+        <span class="was" id="pdp-was">₹{{ first_variant.compare_at_price | money_without_currency }}</span>
+        <span class="tag" id="pdp-tag">−{{ off }}% off</span>
       {%- endif -%}
     </div>
 
@@ -68,98 +97,80 @@
       <p class="pdp-blurb">{{ product.description | strip_html | truncate: 280 }}</p>
     {%- endif -%}
 
+    <!-- Stock urgency -->
+    <div class="pdp-stock">
+      <span class="dotpulse"></span>
+      Selling fast — <strong>{{ stock_left }} packs</strong> left at launch price
+    </div>
+
     {%- form 'product', product, id: 'gf-pdp-form' -%}
 
-      <!-- Pack size selector (Option 3: Pack Quantity) -->
-      {%- assign pack_option_idx = nil -%}
-      {%- for opt in product.options -%}
-        {%- if opt contains "Pack" or opt contains "pack" -%}
-          {%- assign pack_option_idx = forloop.index0 -%}
+      {%- comment -%} Generic, variant-wired option selectors — covers every product option {%- endcomment -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign oname = option.name | downcase -%}
+        {%- assign oidx = forloop.index0 -%}
+        {%- assign current_val = first_variant.options[oidx] -%}
+
+        {%- if oname contains 'pack' -%}
+          <div class="pdp-opt">
+            <div class="olbl"><span>{{ option.name }}</span></div>
+            <div class="pack-grid">
+              {%- for val in option.values -%}
+                <button type="button" class="pack-card gf-optbtn{% if val == current_val %} on{% endif %}" data-opt="{{ oidx }}" data-value="{{ val | escape }}">
+                  {%- if val contains '6' %}<span class="pack-badge">Best value</span>{% elsif val contains '3' %}<span class="pack-badge">Save 17%</span>{% endif -%}
+                  <span class="pack-name">{{ val }}</span>
+                  <span class="pack-sub">
+                    {%- if val contains '6' -%}6 pairs{% elsif val contains '3' -%}3 pairs{% elsif val contains '2' -%}2 pairs{% else -%}1 pair{% endif -%}
+                  </span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+
+        {%- elsif oname contains 'colour' or oname contains 'color' or oname contains 'style' -%}
+          <div class="pdp-opt">
+            <div class="olbl"><span>{{ option.name }}</span></div>
+            <div class="pdp-swatches">
+              {%- for val in option.values -%}
+                <button type="button" class="pdp-sw gf-optbtn{% if val == current_val %} on{% endif %}" data-opt="{{ oidx }}" data-value="{{ val | escape }}">
+                  <span class="dot" style="background:{% if val.swatch.color %}{{ val.swatch.color }}{% else %}var(--accent-soft){% endif %}"></span>
+                  <span class="swl">{{ val }}</span>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+
+        {%- elsif oname contains 'size' -%}
+          <div class="pdp-opt">
+            <div class="olbl"><span>{{ option.name }}</span><button type="button" class="size-guide" id="pdp-sizeguide-open">Size &amp; fit finder</button></div>
+            <div class="pdp-sizes">
+              {%- for val in option.values -%}
+                <button type="button" class="pdp-size gf-optbtn{% if val == current_val %} on{% endif %}" data-opt="{{ oidx }}" data-value="{{ val | escape }}">
+                  <b>{{ val }}</b>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+
+        {%- else -%}
+          <div class="pdp-opt">
+            <div class="olbl"><span>{{ option.name }}</span></div>
+            <div class="pdp-sizes">
+              {%- for val in option.values -%}
+                <button type="button" class="pdp-size gf-optbtn{% if val == current_val %} on{% endif %}" data-opt="{{ oidx }}" data-value="{{ val | escape }}"><b>{{ val }}</b></button>
+              {%- endfor -%}
+            </div>
+          </div>
         {%- endif -%}
       {%- endfor -%}
 
-      {%- if pack_option_idx != nil -%}
-        {%- assign pack_values = product.options_with_values[pack_option_idx].values -%}
-        <div class="pdp-opt">
-          <div class="olbl"><span>Pack size</span></div>
-          <div class="pack-grid">
-            {%- for val in pack_values -%}
-              <button type="button" class="pack-card{% if forloop.first %} on{% endif %}" data-pack="{{ val }}">
-                {%- if val contains "6" %}<span class="pack-badge">Best value</span>{%- endif -%}
-                <span class="pack-name">{{ val }}</span>
-                <span class="pack-sub">
-                  {%- if val contains "1" or val == "1 Pair" -%}Single pair
-                  {%- elsif val contains "3" -%}Pack of 3
-                  {%- elsif val contains "6" -%}Pack of 6
-                  {%- else -%}{{ val }}
-                  {%- endif -%}
-                </span>
-              </button>
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
-
-      <!-- Colour / Style -->
-      {%- assign colour_idx = nil -%}
-      {%- for opt in product.options -%}
-        {%- if opt contains "Style" or opt contains "Colour" or opt contains "Color" -%}
-          {%- assign colour_idx = forloop.index0 -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- if colour_idx != nil -%}
-        {%- assign colour_values = product.options_with_values[colour_idx].values -%}
-        <div class="pdp-opt">
-          <div class="olbl"><span>Colour story</span></div>
-          <div class="pdp-swatches">
-            {%- for val in colour_values -%}
-              <button type="button" class="pdp-sw{% if forloop.first %} on{% endif %}" data-colour="{{ val }}">
-                <span class="dot" style="background:#C9B9A3"></span>
-                <span class="swl">{{ val }}</span>
-              </button>
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
-
-      <!-- Size -->
-      {%- assign size_idx = nil -%}
-      {%- for opt in product.options -%}
-        {%- if opt == "Size" -%}
-          {%- assign size_idx = forloop.index0 -%}
-        {%- endif -%}
-      {%- endfor -%}
-
-      {%- if size_idx != nil -%}
-        {%- assign size_values = product.options_with_values[size_idx].values -%}
-        <div class="pdp-opt">
-          <div class="olbl"><span>Size</span><a class="size-guide" href="/pages/sizing-guide">Sizing guide</a></div>
-          <div class="pdp-sizes">
-            {%- for val in size_values -%}
-              <button type="button" class="pdp-size{% if forloop.first %} on{% endif %}" data-size="{{ val }}">
-                <b>{{ val }}</b>
-                <span>
-                  {%- if val == "S-M" -%}UK 3–6
-                  {%- elsif val == "L-XL" -%}UK 7–11
-                  {%- elsif val == "0-2Y" -%}Toddler
-                  {%- elsif val == "3-5Y" -%}Pre-school
-                  {%- else -%}&nbsp;
-                  {%- endif -%}
-                </span>
-              </button>
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
-
-      <!-- Hidden variant selector -->
+      <!-- Hidden variant selector (driven by the option buttons above) -->
       <select name="id" id="gf-variant-select" style="display:none">
         {%- for variant in product.variants -%}
           <option value="{{ variant.id }}"
-            {%- if variant == product.selected_or_first_available_variant %} selected{% endif -%}
-            {% unless variant.available %}disabled{% endunless %}>
-            {{ variant.title }} — ₹{{ variant.price | money_without_currency }}
+            {%- if variant == first_variant %} selected{% endif -%}
+            {% unless variant.available %} disabled{% endunless %}>
+            {{ variant.title }}
           </option>
         {%- endfor -%}
       </select>
@@ -177,12 +188,29 @@
           </button>
         </div>
         <button type="submit" class="btn btn-primary pdp-add" id="pdp-add-btn">
-          Add to bag
+          <span id="pdp-add-label">Add to bag — ₹{{ first_variant.price | money_without_currency }}</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
         </button>
       </div>
 
     {%- endform -%}
+
+    <!-- Secondary actions -->
+    <div class="pdp-secondary">
+      <button type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10Z"/></svg> Wishlist</button>
+      <span class="div"></span>
+      <button type="button" id="pdp-sizeguide-open-2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg> Size &amp; fit</button>
+    </div>
+
+    <!-- Pincode delivery estimate -->
+    <div class="pdp-pincode">
+      <span class="pin-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
+      <div class="pin-field">
+        <input type="text" inputmode="numeric" id="pdp-pin" placeholder="Delivery pincode" maxlength="6">
+        <button type="button" id="pdp-pin-check">Check</button>
+      </div>
+      <div class="pin-out" id="pdp-pin-out" style="display:none"></div>
+    </div>
 
     <!-- Trust grid -->
     <div class="pdp-trust">
@@ -206,51 +234,92 @@
 
     <!-- Accordion -->
     <div class="pdp-accordion" id="pdp-accordion">
-      <div class="pacc" data-id="materials">
-        <button class="pacc-head">Materials<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>78% Supima cotton · 18% nylon · 4% elastane</li><li>100% medical-grade silicone grip dots (full-sole pattern)</li><li>No latex, no polyester in the knit</li></ul></div></div>
-      </div>
-      <div class="pacc" data-id="sizing">
-        <button class="pacc-head">Sizing<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>Adults — S-M: UK 3–6 / EU 36–40</li><li>Adults — L-XL: UK 7–11 / EU 41–45</li><li>Kids — 0-2Y: toddler foot 10–13 cm</li><li>Kids — 3-5Y: pre-school foot 14–17 cm</li></ul></div></div>
+      <div class="pacc open" data-id="materials">
+        <button type="button" class="pacc-head">Materials &amp; Make<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane</li><li>100% silicone grip pattern on the full sole — not painted-on rubber</li><li>Reinforced heel &amp; toe · ribbed no-slip cuff</li></ul></div></div>
       </div>
       <div class="pacc" data-id="care">
-        <button class="pacc-head">Care<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>Machine wash cold, gentle cycle</li><li>Air dry or tumble dry low — no high heat</li><li>Do not bleach or iron the sole</li><li>The grip stays set for 50+ washes</li></ul></div></div>
+        <button type="button" class="pacc-head">Care &amp; Washing<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Machine wash cold, gentle cycle, inside out</li><li>Air dry or tumble dry low — never iron the sole</li><li>Grip stays set for 50+ washes</li></ul></div></div>
       </div>
       <div class="pacc" data-id="shipping">
-        <button class="pacc-head">Shipping &amp; returns<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>Ships in 1–2 business days from India</li><li>4–7 day delivery worldwide · COD available</li><li>Free shipping over ₹999</li><li>All sales final — quality guaranteed on every pair</li></ul></div></div>
+        <button type="button" class="pacc-head">Shipping &amp; Returns<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Ships in 1–2 business days from India</li><li>4–7 day delivery worldwide · COD available</li><li>Free shipping over ₹999 · quality guarantee on every pair</li></ul></div></div>
       </div>
     </div>
   </div><!-- /pdp-info -->
 
 </section><!-- /pdp -->
 
+<!-- Size guide modal -->
+<div class="pdp-modal-bg" id="pdp-sizeguide-bg"></div>
+<div class="pdp-modal" id="pdp-sizeguide" role="dialog" aria-label="Size guide" aria-hidden="true">
+  <div class="pmd-head">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Sizing &amp; fit</span>
+      <h3 style="margin-top:12px">Find your size.</h3>
+    </div>
+    <button type="button" class="icon-btn" id="pdp-sizeguide-close" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <table class="size-table">
+    <thead><tr><th>Size</th><th>{% if range_id == 'kids' %}Age{% else %}UK shoe{% endif %}</th><th>EU</th><th>Foot length</th></tr></thead>
+    <tbody>
+      {%- if range_id == 'kids' -%}
+        <tr><td class="sz">XS</td><td>0–1 yr</td><td>EU 16–19</td><td>8–11 cm</td></tr>
+        <tr><td class="sz">S</td><td>1–3 yr</td><td>EU 20–24</td><td>11–14 cm</td></tr>
+        <tr><td class="sz">M</td><td>3–5 yr</td><td>EU 25–29</td><td>14–17 cm</td></tr>
+      {%- elsif range_id == 'crew' -%}
+        <tr><td class="sz">S</td><td>UK 4–7</td><td>EU 37–40</td><td>24–26 cm</td></tr>
+        <tr><td class="sz">M</td><td>UK 7–10</td><td>EU 40–44</td><td>26–28 cm</td></tr>
+        <tr><td class="sz">L</td><td>UK 10–13</td><td>EU 44–47</td><td>28–31 cm</td></tr>
+      {%- else -%}
+        <tr><td class="sz">S</td><td>UK 3–6</td><td>EU 36–39</td><td>23–25 cm</td></tr>
+        <tr><td class="sz">M</td><td>UK 6–9</td><td>EU 39–42</td><td>25–27 cm</td></tr>
+        <tr><td class="sz">L</td><td>UK 9–12</td><td>EU 42–46</td><td>27–30 cm</td></tr>
+      {%- endif -%}
+    </tbody>
+  </table>
+  <p class="pmd-note">Gripfeet knit runs true to size and wears slightly snug out of the wash — the Supima softens after first wear. Between sizes? Size down for studio grip, up for all-day wear.</p>
+  <div class="pmd-measure">
+    <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span>
+    <p><strong>Measure at home:</strong> stand on paper, mark heel to longest toe, measure in cm. Match the foot-length column above.</p>
+  </div>
+</div>
+
+<!-- Zoom lightbox -->
+<div class="pdp-zoombg" id="pdp-zoombg" style="display:none">
+  <button type="button" class="pdp-zoomclose" id="pdp-zoom-close" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  {%- if product.featured_image != blank -%}
+    <img id="pdp-zoom-img" src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.title | escape }}" width="720" height="900" style="width:min(80vw,720px);aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius)">
+  {%- endif -%}
+</div>
+
 <!-- Related products -->
 {%- assign collection = product.collections.first -%}
 {%- if collection -%}
   <section class="wrap section pdp-related">
     <div class="section-head">
-      <div class="left">
-        <h2 class="h-sub">Wear it with</h2>
-      </div>
+      <div class="left"><h2 class="h-sub">Wear it with</h2></div>
     </div>
     <div class="pdp-related-grid">
-      {%- for rel in collection.products limit: 4 -%}
+      {%- assign shown = 0 -%}
+      {%- for rel in collection.products limit: 6 -%}
         {%- unless rel.id == product.id -%}
-          <a class="pcard" href="{{ rel.url }}">
-            <div class="pimg">
-              {%- if rel.featured_image -%}
-                <img src="{{ rel.featured_image | image_url: width: 600 }}" alt="{{ rel.title }}" width="600" height="600" loading="lazy" style="width:100%;height:100%;object-fit:cover">
-              {%- else -%}
-                <div class="ph" style="width:100%;height:100%"><span class="ph-label">{{ rel.title }}</span></div>
-              {%- endif -%}
-            </div>
-            <div class="prange">{{ rel.type }}</div>
-            <div class="pname">{{ rel.title }}</div>
-            <div class="pprice">₹{{ rel.price | money_without_currency }}</div>
-          </a>
+          {%- if shown < 4 -%}
+            <a class="pcard" href="{{ rel.url }}">
+              <div class="pimg">
+                {%- if rel.featured_image -%}
+                  <div class="ph has-photo" style="width:100%;height:100%"><img class="ph-img" src="{{ rel.featured_image | image_url: width: 600 }}" alt="{{ rel.title | escape }}" width="600" height="600" loading="lazy"></div>
+                {%- else -%}
+                  <div class="ph" style="width:100%;height:100%"><span class="ph-label">{{ rel.title }}</span></div>
+                {%- endif -%}
+              </div>
+              <div class="prange">{{ rel.type }}</div>
+              <div class="pname">{{ rel.title }}</div>
+              <div class="pprice">₹{{ rel.price | money_without_currency }}</div>
+            </a>
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
         {%- endunless -%}
       {%- endfor -%}
     </div>
@@ -259,44 +328,122 @@
 
 <!-- Sticky buy bar -->
 <div class="pdp-buybar" id="pdp-buybar">
-  <div>
+  <div class="bb-meta">
     <div class="bb-name">{{ product.title }}</div>
-    <div class="bb-sub">{{ product.type }}</div>
+    <div class="bb-sub" id="pdp-bb-sub">{{ product.type }}</div>
   </div>
-  <button class="btn btn-primary btn-sm" onclick="document.getElementById('pdp-add-btn').click()">
-    Add to bag — ₹{{ product.price | money_without_currency }}
+  <button type="button" class="btn btn-primary" id="pdp-bb-add">
+    <span id="pdp-bb-label">Add to bag — ₹{{ first_variant.price | money_without_currency }}</span>
   </button>
 </div>
 
 <script>
-(function(){
-  // Qty stepper
+(function () {
+  var VARIANTS = {{ product.variants | json }};
+  var OPT_COUNT = {{ product.options.size }};
+  var first = {{ first_variant | json }};
+
+  var selected = (first.options || []).slice();
+  var currentVariant = first;
+
+  var priceEl = document.getElementById("pdp-price");
+  var wasEl   = document.getElementById("pdp-was");
+  var tagEl   = document.getElementById("pdp-tag");
+  var saveEl  = document.getElementById("pdp-save");
+  var addLbl  = document.getElementById("pdp-add-label");
+  var addBtn  = document.getElementById("pdp-add-btn");
+  var bbLabel = document.getElementById("pdp-bb-label");
+  var bbSub   = document.getElementById("pdp-bb-sub");
+  var sel     = document.getElementById("gf-variant-select");
+
+  var qty = 1;
   var qVal = document.getElementById("pdp-qty-val");
   var qInp = document.getElementById("pdp-qty-input");
-  var qty = 1;
-  function setQty(n){ qty = Math.max(1,n); if(qVal) qVal.textContent = qty; if(qInp) qInp.value = qty; }
-  var dec = document.getElementById("pdp-qty-dec");
-  var inc = document.getElementById("pdp-qty-inc");
-  if(dec) dec.addEventListener("click", function(){ setQty(qty-1); });
-  if(inc) inc.addEventListener("click", function(){ setQty(qty+1); });
 
-  // Gallery thumbs
-  var thumbs = document.querySelectorAll(".pdp-thumb");
-  var imgs = {{ product.media | json }};
-  thumbs.forEach(function(btn, i){
-    btn.addEventListener("click", function(){
-      thumbs.forEach(function(b){ b.classList.remove("active"); });
-      btn.classList.add("active");
+  function rupees(cents) { return "₹" + Math.round(cents / 100).toLocaleString("en-IN"); }
+
+  function findVariant() {
+    return VARIANTS.find(function (v) {
+      for (var i = 0; i < OPT_COUNT; i++) { if (v.options[i] !== selected[i]) return false; }
+      return true;
+    });
+  }
+
+  function render() {
+    var v = currentVariant;
+    if (!v) {
+      if (addLbl) addLbl.textContent = "Unavailable";
+      if (addBtn) addBtn.setAttribute("disabled", "disabled");
+      return;
+    }
+    if (addBtn) addBtn.removeAttribute("disabled");
+    if (sel) sel.value = v.id;
+
+    var lineTotal = v.price * qty;
+    if (priceEl) priceEl.textContent = rupees(v.price);
+    if (addLbl)  addLbl.textContent  = (v.available ? "Add to bag — " : "Sold out — ") + rupees(lineTotal);
+    if (bbLabel) bbLabel.textContent = "Add to bag — " + rupees(lineTotal);
+    if (bbSub)   bbSub.textContent   = rupees(v.price) + " · " + v.title;
+
+    if (v.compare_at_price && v.compare_at_price > v.price) {
+      var off = Math.round((1 - v.price / v.compare_at_price) * 100);
+      if (wasEl)  { wasEl.style.display = ""; wasEl.textContent = rupees(v.compare_at_price); }
+      if (tagEl)  { tagEl.style.display = ""; tagEl.textContent = "−" + off + "% off"; }
+      if (saveEl) saveEl.textContent = "Launch · save " + off + "%";
+    } else {
+      if (wasEl) wasEl.style.display = "none";
+      if (tagEl) tagEl.style.display = "none";
+    }
+
+    if (addBtn) {
+      if (!v.available) { addBtn.setAttribute("disabled", "disabled"); }
+      else { addBtn.removeAttribute("disabled"); }
+    }
+  }
+
+  // option buttons
+  document.querySelectorAll(".gf-optbtn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var idx = parseInt(btn.dataset.opt, 10);
+      var val = btn.dataset.value;
+      // toggle .on within the same option group
+      btn.parentNode.querySelectorAll(".gf-optbtn").forEach(function (b) { b.classList.remove("on"); });
+      btn.classList.add("on");
+      selected[idx] = val;
+      var v = findVariant();
+      if (v) currentVariant = v;
+      render();
     });
   });
 
-  // Accordion
-  document.querySelectorAll(".pacc-head").forEach(function(btn){
-    btn.addEventListener("click", function(){
+  // qty
+  function setQty(n) { qty = Math.max(1, n); if (qVal) qVal.textContent = qty; if (qInp) qInp.value = qty; render(); }
+  var dec = document.getElementById("pdp-qty-dec");
+  var inc = document.getElementById("pdp-qty-inc");
+  if (dec) dec.addEventListener("click", function () { setQty(qty - 1); });
+  if (inc) inc.addEventListener("click", function () { setQty(qty + 1); });
+
+  // sticky bar add -> submit the real form
+  var bbAdd = document.getElementById("pdp-bb-add");
+  if (bbAdd && addBtn) bbAdd.addEventListener("click", function () { addBtn.click(); });
+
+  // gallery thumbs
+  var mainPhoto = document.getElementById("pdp-main-photo");
+  document.querySelectorAll(".pdp-thumb").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".pdp-thumb").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      if (mainPhoto && btn.dataset.full) mainPhoto.src = btn.dataset.full;
+    });
+  });
+
+  // accordion
+  document.querySelectorAll(".pacc-head").forEach(function (btn) {
+    btn.addEventListener("click", function () {
       var pacc = btn.closest(".pacc");
       pacc.classList.toggle("open");
       var ico = btn.querySelector(".pacc-ico");
-      if(ico){
+      if (ico) {
         ico.innerHTML = pacc.classList.contains("open")
           ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>'
           : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
@@ -304,39 +451,53 @@
     });
   });
 
-  // Pack card selection
-  document.querySelectorAll(".pack-card").forEach(function(card){
-    card.addEventListener("click", function(){
-      document.querySelectorAll(".pack-card").forEach(function(c){ c.classList.remove("on"); });
-      card.classList.add("on");
-    });
-  });
+  // size guide modal
+  var sgBg = document.getElementById("pdp-sizeguide-bg");
+  var sg   = document.getElementById("pdp-sizeguide");
+  function openSG() { if (!sg) return; sg.classList.add("open"); sgBg.classList.add("open"); sg.setAttribute("aria-hidden", "false"); document.body.classList.add("no-scroll"); }
+  function closeSG() { if (!sg) return; sg.classList.remove("open"); sgBg.classList.remove("open"); sg.setAttribute("aria-hidden", "true"); document.body.classList.remove("no-scroll"); }
+  ["pdp-sizeguide-open", "pdp-sizeguide-open-2"].forEach(function (id) { var el = document.getElementById(id); if (el) el.addEventListener("click", openSG); });
+  var sgClose = document.getElementById("pdp-sizeguide-close");
+  if (sgClose) sgClose.addEventListener("click", closeSG);
+  if (sgBg) sgBg.addEventListener("click", closeSG);
 
-  // Swatch selection
-  document.querySelectorAll(".pdp-sw").forEach(function(sw){
-    sw.addEventListener("click", function(){
-      document.querySelectorAll(".pdp-sw").forEach(function(s){ s.classList.remove("on"); });
-      sw.classList.add("on");
-    });
-  });
+  // zoom lightbox
+  var zoomBg = document.getElementById("pdp-zoombg");
+  var zoomImg = document.getElementById("pdp-zoom-img");
+  var zoomBtn = document.getElementById("pdp-zoom-btn");
+  var zoomClose = document.getElementById("pdp-zoom-close");
+  function openZoom() { if (!zoomBg) return; if (mainPhoto && zoomImg) zoomImg.src = mainPhoto.src; zoomBg.style.display = "flex"; document.body.classList.add("no-scroll"); }
+  function closeZoom() { if (!zoomBg) return; zoomBg.style.display = "none"; document.body.classList.remove("no-scroll"); }
+  if (zoomBtn) zoomBtn.addEventListener("click", openZoom);
+  if (zoomClose) zoomClose.addEventListener("click", closeZoom);
+  if (zoomBg) zoomBg.addEventListener("click", function (e) { if (e.target === zoomBg) closeZoom(); });
 
-  // Size selection
-  document.querySelectorAll(".pdp-size").forEach(function(sz){
-    sz.addEventListener("click", function(){
-      document.querySelectorAll(".pdp-size").forEach(function(s){ s.classList.remove("on"); });
-      sz.classList.add("on");
-    });
-  });
-
-  // Sticky buy bar
-  var buybar = document.getElementById("pdp-buybar");
-  var addBtn = document.getElementById("pdp-add-btn");
-  if(buybar && addBtn){
-    var obs = new IntersectionObserver(function(entries){
-      buybar.classList.toggle("visible", !entries[0].isIntersecting);
-    }, { threshold: 0.1 });
-    obs.observe(addBtn);
+  // pincode ETA
+  var pin = document.getElementById("pdp-pin");
+  var pinBtn = document.getElementById("pdp-pin-check");
+  var pinOut = document.getElementById("pdp-pin-out");
+  function checkPin() {
+    if (!pinOut) return;
+    pinOut.style.display = "block";
+    var v = (pin.value || "").replace(/\D/g, "");
+    if (!/^\d{6}$/.test(v)) { pinOut.className = "pin-out err"; pinOut.textContent = "Enter a valid 6-digit pincode."; return; }
+    var metro = ["11", "40", "56", "60", "70", "50"].some(function (p) { return v.indexOf(p) === 0; });
+    pinOut.className = "pin-out";
+    pinOut.innerHTML = "<strong>" + (metro ? "2–3 days" : "4–7 days") + "</strong> · " + (metro ? "Metro express" : "Standard") + " · COD available · Free over ₹999";
   }
+  if (pinBtn) pinBtn.addEventListener("click", checkPin);
+  if (pin) pin.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); checkPin(); } });
+
+  // sticky bar visibility
+  var buybar = document.getElementById("pdp-buybar");
+  if (buybar && addBtn) {
+    var io = new IntersectionObserver(function (entries) {
+      buybar.classList.toggle("visible", !entries[0].isIntersecting);
+    }, { threshold: 0 });
+    io.observe(addBtn);
+  }
+
+  render();
 })();
 </script>
 
