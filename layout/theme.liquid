@@ -16,7 +16,38 @@
     {%- endunless -%}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    {%- liquid
+      case settings.gf_font_pairing
+        when 'space'
+          assign gf_display = '"Space Grotesk"'
+          assign gf_body = '"Manrope"'
+          assign gf_fonts = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+        when 'sora'
+          assign gf_display = '"Sora"'
+          assign gf_body = '"Inter"'
+          assign gf_fonts = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap'
+        when 'clash'
+          assign gf_display = '"Clash Display"'
+          assign gf_body = '"Satoshi"'
+          assign gf_fonts = 'https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700,900&display=swap'
+        when 'bricolage'
+          assign gf_display = '"Bricolage Grotesque"'
+          assign gf_body = '"Hanken Grotesk"'
+          assign gf_fonts = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap'
+        when 'unbounded'
+          assign gf_display = '"Unbounded"'
+          assign gf_body = '"Plus Jakarta Sans"'
+          assign gf_fonts = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap'
+        else
+          assign gf_display = '"Hanken Grotesk"'
+          assign gf_body = '"Hanken Grotesk"'
+          assign gf_fonts = 'https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap'
+      endcase
+    -%}
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="{{ gf_fonts }}" rel="stylesheet" />
     {{ 'gripfeet-header.css' | asset_url | stylesheet_tag }}
 
     <title>
@@ -266,6 +297,12 @@
     {{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
     {{ 'gripfeet-motion.css' | asset_url | stylesheet_tag }}
     {{ 'gripfeet-pages.css' | asset_url | stylesheet_tag }}
+    {% style %}
+      :root {
+        --sans: {{ gf_body }}, -apple-system, "Helvetica Neue", Arial, sans-serif;
+        --gf-display: {{ gf_display }}, {{ gf_body }}, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      }
+    {% endstyle %}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}

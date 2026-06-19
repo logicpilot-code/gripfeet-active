@@ -21,6 +21,7 @@
 
   --sans: "Hanken Grotesk", -apple-system, "Helvetica Neue", Arial, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gf-display: var(--sans); /* primary/display font — overridden per pairing in theme.liquid */
 
   --gutter: clamp(20px, 4.4vw, 76px);
   --max: 1500px;
@@ -71,8 +72,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .no-scroll { overflow: hidden; }
 
 /* ---------- type ---------- */
-h1, h2, h3, h4 { margin: 0; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+h1, h2, h3, h4 { margin: 0; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); font-family: var(--gf-display); }
 body h1, body h2, body h3, body h4 { color: var(--ink); }
+.display, .h-section, .h-sub, .h-card { font-family: var(--gf-display); }
 
 .display {
   font-weight: 800;

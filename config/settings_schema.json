@@ -8,6 +8,33 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Typography (Gripfeet)",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Font pairing"
+      },
+      {
+        "type": "paragraph",
+        "content": "Primary = headings & display · Secondary = body & UI. JetBrains Mono is always used for the small mono labels."
+      },
+      {
+        "type": "select",
+        "id": "gf_font_pairing",
+        "label": "Primary + secondary combination",
+        "default": "hanken",
+        "options": [
+          { "value": "hanken", "label": "Hanken Grotesk — clean modern (current)" },
+          { "value": "space", "label": "Space Grotesk + Manrope — techy & clean" },
+          { "value": "sora", "label": "Sora + Inter — geometric & sharp" },
+          { "value": "clash", "label": "Clash Display + Satoshi — premium athletic" },
+          { "value": "bricolage", "label": "Bricolage Grotesque + Hanken — editorial" },
+          { "value": "unbounded", "label": "Unbounded + Plus Jakarta Sans — rounded sporty" }
+        ]
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {
