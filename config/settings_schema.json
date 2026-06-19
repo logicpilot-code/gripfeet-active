@@ -31,6 +31,17 @@
           { "value": "bricolage", "label": "Bricolage Grotesque + Hanken — editorial" },
           { "value": "unbounded", "label": "Unbounded + Plus Jakarta Sans — rounded sporty" }
         ]
+      },
+      {
+        "type": "header",
+        "content": "On-site font switcher"
+      },
+      {
+        "type": "checkbox",
+        "id": "gf_font_switcher",
+        "label": "Show floating font switcher on the storefront",
+        "info": "A preview tool to compare pairings live on the site. Turn off for the public launch.",
+        "default": true
       }
     ]
   },

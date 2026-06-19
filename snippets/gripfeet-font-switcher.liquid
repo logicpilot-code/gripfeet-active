@@ -1,0 +1,100 @@
+{%- comment -%}
+  Front-end font-pairing switcher (preview/decision tool).
+  Swaps --sans (body) and --gf-display (headings) live, loads the faces on demand,
+  and remembers the choice per-visitor in localStorage. Gated by settings.gf_font_switcher.
+{%- endcomment -%}
+
+<div class="gf-fontsw" data-default="{{ settings.gf_font_pairing | default: 'hanken' }}">
+  <button type="button" class="gf-fontsw-btn" id="gf-fontsw-btn" aria-label="Try fonts">
+    <span class="gf-fontsw-aa">Aa</span><span class="gf-fontsw-lbl">Fonts</span>
+  </button>
+  <div class="gf-fontsw-panel" id="gf-fontsw-panel" hidden>
+    <div class="gf-fontsw-head">
+      <span>Try a font pairing</span>
+      <button type="button" id="gf-fontsw-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="gf-fontsw-list" id="gf-fontsw-list"></div>
+    <p class="gf-fontsw-note">Preview only — saved on this device. Set the default in Theme settings → Typography (Gripfeet).</p>
+  </div>
+</div>
+
+<style>
+  .gf-fontsw { position: fixed; left: 22px; bottom: 22px; z-index: 65; }
+  .gf-fontsw-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--ink, #0E0E0E); color: #fff; padding: 12px 18px 12px 14px; border-radius: 999px; box-shadow: 0 20px 40px -16px rgba(0,0,0,0.45); font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: transform .3s var(--ease, ease); }
+  .gf-fontsw-btn:hover { transform: translateY(-3px); }
+  .gf-fontsw-aa { font-size: 16px; font-weight: 800; line-height: 1; }
+  .gf-fontsw-panel { position: absolute; left: 0; bottom: calc(100% + 12px); width: 300px; max-width: calc(100vw - 44px); background: #fff; border: 1px solid var(--hair, #E6E2D8); border-radius: 18px; box-shadow: 0 30px 60px -24px rgba(0,0,0,0.4); padding: 16px; }
+  .gf-fontsw-head { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #5C5B57); margin-bottom: 12px; }
+  .gf-fontsw-head button { color: var(--ink-2, #5C5B57); display: inline-flex; }
+  .gf-fontsw-list { display: flex; flex-direction: column; gap: 8px; }
+  .gf-fontsw-opt { text-align: left; border: 1.5px solid var(--hair, #E6E2D8); border-radius: 12px; padding: 11px 14px; cursor: pointer; transition: border-color .2s var(--ease, ease), background .2s var(--ease, ease); }
+  .gf-fontsw-opt:hover { border-color: var(--ink-2, #5C5B57); }
+  .gf-fontsw-opt.on { border-color: var(--ink, #0E0E0E); background: var(--cream, #F3F0E8); }
+  .gf-fontsw-opt .o-name { display: block; font-size: 18px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .gf-fontsw-opt .o-desc { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3, #9C9A92); margin-top: 4px; }
+  .gf-fontsw-note { font-family: var(--mono); font-size: 9.5px; line-height: 1.5; letter-spacing: 0.04em; color: var(--ink-3, #9C9A92); margin: 14px 0 0; }
+  @media (max-width: 600px) { .gf-fontsw-lbl { display: none; } .gf-fontsw-btn { padding: 13px; } }
+</style>
+
+<script>
+(function () {
+  var PAIRS = {
+    hanken:    { name: "Hanken Grotesk", desc: "Clean modern (current)", display: '"Hanken Grotesk"', body: '"Hanken Grotesk"', url: "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" },
+    space:     { name: "Space Grotesk + Manrope", desc: "Techy & clean", display: '"Space Grotesk"', body: '"Manrope"', url: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" },
+    sora:      { name: "Sora + Inter", desc: "Geometric & sharp", display: '"Sora"', body: '"Inter"', url: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" },
+    clash:     { name: "Clash Display + Satoshi", desc: "Premium athletic", display: '"Clash Display"', body: '"Satoshi"', url: "https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700,900&display=swap" },
+    bricolage: { name: "Bricolage + Hanken", desc: "Editorial", display: '"Bricolage Grotesque"', body: '"Hanken Grotesk"', url: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" },
+    unbounded: { name: "Unbounded + Jakarta", desc: "Rounded sporty", display: '"Unbounded"', body: '"Plus Jakarta Sans"', url: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap" }
+  };
+  var STACK = ', -apple-system, "Helvetica Neue", Arial, sans-serif';
+  var KEY = "gf_font_pref";
+  var root = document.documentElement;
+  var wrap = document.querySelector(".gf-fontsw");
+  if (!wrap) return;
+  var def = wrap.dataset.default || "hanken";
+  var loaded = {};
+
+  function loadFace(p) {
+    if (loaded[p.url]) return;
+    var l = document.createElement("link");
+    l.rel = "stylesheet"; l.href = p.url;
+    document.head.appendChild(l);
+    loaded[p.url] = true;
+  }
+  function apply(key, persist) {
+    var p = PAIRS[key]; if (!p) return;
+    loadFace(p);
+    root.style.setProperty("--sans", p.body + STACK);
+    root.style.setProperty("--gf-display", p.display + ", " + p.body + STACK);
+    if (persist) { try { localStorage.setItem(KEY, key); } catch (e) {} }
+    var list = document.getElementById("gf-fontsw-list");
+    if (list) list.querySelectorAll(".gf-fontsw-opt").forEach(function (b) { b.classList.toggle("on", b.dataset.key === key); });
+  }
+
+  // build options
+  var list = document.getElementById("gf-fontsw-list");
+  Object.keys(PAIRS).forEach(function (key) {
+    var p = PAIRS[key];
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "gf-fontsw-opt"; b.dataset.key = key;
+    b.innerHTML = '<span class="o-name" style="font-family:' + p.display + STACK + '">' + p.name + '</span><span class="o-desc">' + p.desc + '</span>';
+    b.addEventListener("click", function () { apply(key, true); });
+    list.appendChild(b);
+  });
+
+  // initial: saved pref overrides the server default
+  var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+  apply(saved && PAIRS[saved] ? saved : def, false);
+
+  // panel toggle
+  var btn = document.getElementById("gf-fontsw-btn");
+  var panel = document.getElementById("gf-fontsw-panel");
+  var close = document.getElementById("gf-fontsw-close");
+  function toggle(open) { panel.hidden = !open; }
+  btn.addEventListener("click", function () { toggle(panel.hidden); });
+  if (close) close.addEventListener("click", function () { toggle(false); });
+  document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) toggle(false); });
+})();
+</script>

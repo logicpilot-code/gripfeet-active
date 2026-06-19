@@ -419,5 +419,9 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {%- if settings.gf_font_switcher -%}
+      {%- render 'gripfeet-font-switcher' -%}
+    {%- endif -%}
   </body>
 </html>
