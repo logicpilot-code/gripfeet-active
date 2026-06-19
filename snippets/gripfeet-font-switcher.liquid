@@ -5,37 +5,27 @@
 {%- endcomment -%}
 
 <div class="gf-fontsw" data-default="{{ settings.gf_font_pairing | default: 'hanken' }}">
-  <button type="button" class="gf-fontsw-btn" id="gf-fontsw-btn" aria-label="Try fonts">
-    <span class="gf-fontsw-aa">Aa</span><span class="gf-fontsw-lbl">Fonts</span>
-  </button>
+  <button type="button" class="gf-fontsw-btn" id="gf-fontsw-btn" aria-label="Try fonts">Aa</button>
   <div class="gf-fontsw-panel" id="gf-fontsw-panel" hidden>
-    <div class="gf-fontsw-head">
-      <span>Try a font pairing</span>
-      <button type="button" id="gf-fontsw-close" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      </button>
-    </div>
+    <div class="gf-fontsw-head"><span>Fonts</span></div>
     <div class="gf-fontsw-list" id="gf-fontsw-list"></div>
-    <p class="gf-fontsw-note">Preview only — saved on this device. Set the default in Theme settings → Typography (Gripfeet).</p>
   </div>
 </div>
 
 <style>
-  .gf-fontsw { position: fixed; left: 22px; bottom: 22px; z-index: 65; }
-  .gf-fontsw-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--ink, #0E0E0E); color: #fff; padding: 12px 18px 12px 14px; border-radius: 999px; box-shadow: 0 20px 40px -16px rgba(0,0,0,0.45); font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: transform .3s var(--ease, ease); }
-  .gf-fontsw-btn:hover { transform: translateY(-3px); }
-  .gf-fontsw-aa { font-size: 16px; font-weight: 800; line-height: 1; }
-  .gf-fontsw-panel { position: absolute; left: 0; bottom: calc(100% + 12px); width: 300px; max-width: calc(100vw - 44px); background: #fff; border: 1px solid var(--hair, #E6E2D8); border-radius: 18px; box-shadow: 0 30px 60px -24px rgba(0,0,0,0.4); padding: 16px; }
-  .gf-fontsw-head { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2, #5C5B57); margin-bottom: 12px; }
-  .gf-fontsw-head button { color: var(--ink-2, #5C5B57); display: inline-flex; }
-  .gf-fontsw-list { display: flex; flex-direction: column; gap: 8px; }
-  .gf-fontsw-opt { text-align: left; border: 1.5px solid var(--hair, #E6E2D8); border-radius: 12px; padding: 11px 14px; cursor: pointer; transition: border-color .2s var(--ease, ease), background .2s var(--ease, ease); }
-  .gf-fontsw-opt:hover { border-color: var(--ink-2, #5C5B57); }
-  .gf-fontsw-opt.on { border-color: var(--ink, #0E0E0E); background: var(--cream, #F3F0E8); }
-  .gf-fontsw-opt .o-name { display: block; font-size: 18px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
-  .gf-fontsw-opt .o-desc { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3, #9C9A92); margin-top: 4px; }
-  .gf-fontsw-note { font-family: var(--mono); font-size: 9.5px; line-height: 1.5; letter-spacing: 0.04em; color: var(--ink-3, #9C9A92); margin: 14px 0 0; }
-  @media (max-width: 600px) { .gf-fontsw-lbl { display: none; } .gf-fontsw-btn { padding: 13px; } }
+  .gf-fontsw { position: fixed; left: 20px; bottom: 20px; z-index: 65; }
+  .gf-fontsw-btn { width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--ink, #0E0E0E); border: 1px solid var(--hair-2, #D8D3C7); box-shadow: 0 10px 24px -12px rgba(0,0,0,0.35); font-family: var(--gf-display, var(--sans)); font-size: 15px; font-weight: 700; line-height: 1; transition: background .2s ease, color .2s ease; }
+  .gf-fontsw-btn:hover, .gf-fontsw.open .gf-fontsw-btn { background: var(--ink, #0E0E0E); color: #fff; }
+  .gf-fontsw-panel { position: absolute; left: 0; bottom: calc(100% + 10px); width: 224px; max-width: calc(100vw - 40px); max-height: 62vh; overflow-y: auto; background: #fff; border: 1px solid var(--hair, #E6E2D8); border-radius: 14px; box-shadow: 0 24px 50px -22px rgba(0,0,0,0.38); padding: 8px; }
+  .gf-fontsw-head { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3, #9C9A92); padding: 6px 8px 8px; }
+  .gf-fontsw-list { display: flex; flex-direction: column; }
+  .gf-fontsw-opt { text-align: left; border: 0; border-radius: 8px; padding: 9px 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; transition: background .15s ease; }
+  .gf-fontsw-opt:hover { background: var(--cream, #F3F0E8); }
+  .gf-fontsw-opt.on { background: var(--cream, #F3F0E8); }
+  .gf-fontsw-opt .o-name { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; }
+  .gf-fontsw-opt .o-tick { width: 6px; height: 6px; border-radius: 50%; background: var(--ink, #0E0E0E); flex-shrink: 0; opacity: 0; }
+  .gf-fontsw-opt.on .o-tick { opacity: 1; }
+  .gf-fontsw-panel::-webkit-scrollbar { width: 0; }
 </style>
 
 <script>
@@ -87,7 +77,7 @@
     var p = PAIRS[key];
     var b = document.createElement("button");
     b.type = "button"; b.className = "gf-fontsw-opt"; b.dataset.key = key;
-    b.innerHTML = '<span class="o-name" style="font-family:' + p.display + STACK + '">' + p.name + '</span><span class="o-desc">' + p.desc + '</span>';
+    b.innerHTML = '<span class="o-name" style="font-family:' + p.display + STACK + '">' + p.name + '</span><span class="o-tick"></span>';
     b.addEventListener("click", function () { apply(key, true); });
     list.appendChild(b);
   });
@@ -99,10 +89,8 @@
   // panel toggle
   var btn = document.getElementById("gf-fontsw-btn");
   var panel = document.getElementById("gf-fontsw-panel");
-  var close = document.getElementById("gf-fontsw-close");
-  function toggle(open) { panel.hidden = !open; }
+  function toggle(open) { panel.hidden = !open; wrap.classList.toggle("open", open); }
   btn.addEventListener("click", function () { toggle(panel.hidden); });
-  if (close) close.addEventListener("click", function () { toggle(false); });
   document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) toggle(false); });
 })();
 </script>
