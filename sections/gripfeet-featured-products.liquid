@@ -16,16 +16,22 @@
     </div>
 
     {%- comment -%} Dual-belt infinite conveyor: top belt scrolls one way, bottom the other.
+       Pulls live from the selected collection; falls back to manual product blocks.
        Each belt's cards are rendered twice so the -50% keyframe loops seamlessly. {%- endcomment -%}
+    {%- assign feat_collection = section.settings.collection -%}
     {%- capture cards_fwd -%}
-      {%- for block in section.blocks -%}
-        {%- if block.type == "product" -%}{%- render 'gripfeet-pcard', block: block -%}{%- endif -%}
-      {%- endfor -%}
+      {%- if feat_collection != blank and feat_collection.products_count > 0 -%}
+        {%- for p in feat_collection.products limit: 12 -%}{%- render 'gripfeet-pcard-product', p: p -%}{%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}{%- if block.type == "product" -%}{%- render 'gripfeet-pcard', block: block -%}{%- endif -%}{%- endfor -%}
+      {%- endif -%}
     {%- endcapture -%}
     {%- capture cards_rev -%}
-      {%- for block in section.blocks reversed -%}
-        {%- if block.type == "product" -%}{%- render 'gripfeet-pcard', block: block -%}{%- endif -%}
-      {%- endfor -%}
+      {%- if feat_collection != blank and feat_collection.products_count > 0 -%}
+        {%- for p in feat_collection.products reversed limit: 12 -%}{%- render 'gripfeet-pcard-product', p: p -%}{%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks reversed -%}{%- if block.type == "product" -%}{%- render 'gripfeet-pcard', block: block -%}{%- endif -%}{%- endfor -%}
+      {%- endif -%}
     {%- endcapture -%}
 
     <div class="conveyor-wrap">
@@ -64,6 +70,7 @@
   "name": "GF Featured Products",
   "tag": "section",
   "settings": [
+    { "type": "collection", "id": "collection", "label": "Source collection", "info": "Pulls products live from this collection (up to 12). Leave empty to use the manual product blocks below." },
     { "type": "text", "id": "eyebrow",        "label": "Eyebrow",       "default": "Newly knit · Featured sets" },
     { "type": "text", "id": "heading",        "label": "Heading",       "default": "Built for the way you move." },
     { "type": "url",  "id": "all_link",       "label": "All link" },
