@@ -1,0 +1,33 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+{%- render 'gripfeet-pdp-loafer',
+  under_eyebrow: section.settings.under_eyebrow,
+  under_heading: section.settings.under_heading,
+  cut_eyebrow: section.settings.cut_eyebrow,
+  cut_heading: section.settings.cut_heading,
+  shade_eyebrow: section.settings.shade_eyebrow,
+  shade_heading: section.settings.shade_heading,
+  line_lead: section.settings.line_lead,
+  line_rest: section.settings.line_rest
+-%}
+
+{% schema %}
+{
+  "name": "GF PDP — Loafer",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Disappears under" },
+    { "type": "text", "id": "under_eyebrow", "label": "Eyebrow", "default": "The point of a no-show" },
+    { "type": "text", "id": "under_heading", "label": "Heading", "default": "Seen by no one. Felt all day." },
+    { "type": "header", "content": "Heel cutaway" },
+    { "type": "text", "id": "cut_eyebrow", "label": "Eyebrow", "default": "How it holds" },
+    { "type": "text", "id": "cut_heading", "label": "Heading", "default": "The whole trick is one silicone ring." },
+    { "type": "header", "content": "Shade match" },
+    { "type": "text", "id": "shade_eyebrow", "label": "Eyebrow", "default": "Match to skin" },
+    { "type": "text", "id": "shade_heading", "label": "Heading", "default": "Find your invisible." },
+    { "type": "header", "content": "Statement line" },
+    { "type": "text", "id": "line_lead", "label": "Lead phrase", "default": "Looks bare." },
+    { "type": "text", "id": "line_rest", "label": "Rest phrase", "default": "Holds tight." }
+  ],
+  "presets": [{ "name": "GF PDP — Loafer" }]
+}
+{% endschema %}

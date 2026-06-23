@@ -1,0 +1,31 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+{%- render 'gripfeet-pdp-ankle',
+  surf_eyebrow: section.settings.surf_eyebrow,
+  surf_heading: section.settings.surf_heading,
+  prac_eyebrow: section.settings.prac_eyebrow,
+  prac_heading: section.settings.prac_heading,
+  story_heading: section.settings.story_heading,
+  story_lead: section.settings.story_lead,
+  instr_eyebrow: section.settings.instr_eyebrow
+-%}
+
+{% schema %}
+{
+  "name": "GF PDP — Ankle",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Surfaces" },
+    { "type": "text", "id": "surf_eyebrow", "label": "Eyebrow", "default": "Grip you can trust" },
+    { "type": "text", "id": "surf_heading", "label": "Heading", "default": "Sure-footed on every studio surface." },
+    { "type": "header", "content": "Practice" },
+    { "type": "text", "id": "prac_eyebrow", "label": "Eyebrow", "default": "Made for your mat" },
+    { "type": "text", "id": "prac_heading", "label": "Heading", "default": "What's your practice?" },
+    { "type": "header", "content": "Colour story" },
+    { "type": "text", "id": "story_heading", "label": "Heading", "default": "A tonal story, knit to be worn together." },
+    { "type": "text", "id": "story_lead", "label": "Lead", "default": "Three quiet tones that move from mat to street without trying." },
+    { "type": "header", "content": "Instructors" },
+    { "type": "text", "id": "instr_eyebrow", "label": "Eyebrow", "default": "From the studio floor" }
+  ],
+  "presets": [{ "name": "GF PDP — Ankle" }]
+}
+{% endschema %}

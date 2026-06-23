@@ -4,8 +4,8 @@
 <section class="wrap section kid-finder">
   <div class="kid-finder-card">
     <div class="kid-finder-copy">
-      <span class="eyebrow"><span class="dot"></span>Fit finder</span>
-      <h2 class="h-section" style="margin-top:12px">What size are<br>their little feet?</h2>
+      <span class="eyebrow"><span class="dot"></span>{{ finder_eyebrow | default: 'Fit finder' }}</span>
+      <h2 class="h-section" style="margin-top:12px">{{ finder_heading | default: 'What size are their little feet?' }}</h2>
       <p>Slide to their age — we'll match the size and the pack. Between sizes? Size up; the stretchy cuff grows with them.</p>
     </div>
     <div class="kid-finder-tool">
@@ -26,8 +26,8 @@
   <div class="wrap">
     <div class="section-head center">
       <div class="left">
-        <span class="eyebrow"><span class="dot"></span>Built for parents' peace of mind</span>
-        <h2 class="h-section" style="margin-top:14px">Safe steps, every floor.</h2>
+        <span class="eyebrow"><span class="dot"></span>{{ safety_eyebrow | default: "Built for parents' peace of mind" }}</span>
+        <h2 class="h-section" style="margin-top:14px">{{ safety_heading | default: 'Safe steps, every floor.' }}</h2>
       </div>
     </div>
     <div class="kid-safety-grid">
@@ -53,8 +53,8 @@
 <!-- 3 · Room to grow -->
 <section class="wrap section kid-grow">
   <div class="kid-grow-head">
-    <h2 class="h-sub">Knit to grow with them.</h2>
-    <p class="muted">Stretchy Supima and a forgiving cuff mean each size lasts longer than you'd expect.</p>
+    <h2 class="h-sub">{{ grow_heading | default: 'Knit to grow with them.' }}</h2>
+    <p class="muted">{{ grow_lead | default: "Stretchy Supima and a forgiving cuff mean each size lasts longer than you'd expect." }}</p>
   </div>
   <div class="kid-grow-track">
     <div class="kid-grow-step"><span class="kgs-dot">1</span><span class="kgs-age">0–1 yr</span><strong>First crawls</strong><p>Soft, seamless toe for tiny feet finding their footing.</p></div>
@@ -68,8 +68,8 @@
   <div class="wrap">
     <div class="section-head">
       <div class="left">
-        <span class="eyebrow"><span class="dot"></span>From the parents</span>
-        <h2 class="h-section" style="margin-top:14px">Tested by tiny feet.</h2>
+        <span class="eyebrow"><span class="dot"></span>{{ parents_eyebrow | default: 'From the parents' }}</span>
+        <h2 class="h-section" style="margin-top:14px">{{ parents_heading | default: 'Tested by tiny feet.' }}</h2>
       </div>
     </div>
     <div class="kid-parents-grid">

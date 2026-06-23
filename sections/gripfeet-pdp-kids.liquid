@@ -1,0 +1,33 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+{%- render 'gripfeet-pdp-kids',
+  finder_eyebrow: section.settings.finder_eyebrow,
+  finder_heading: section.settings.finder_heading,
+  safety_eyebrow: section.settings.safety_eyebrow,
+  safety_heading: section.settings.safety_heading,
+  grow_heading: section.settings.grow_heading,
+  grow_lead: section.settings.grow_lead,
+  parents_eyebrow: section.settings.parents_eyebrow,
+  parents_heading: section.settings.parents_heading
+-%}
+
+{% schema %}
+{
+  "name": "GF PDP — Kids",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Fit finder" },
+    { "type": "text", "id": "finder_eyebrow", "label": "Eyebrow", "default": "Fit finder" },
+    { "type": "text", "id": "finder_heading", "label": "Heading", "default": "What size are their little feet?" },
+    { "type": "header", "content": "Safety story" },
+    { "type": "text", "id": "safety_eyebrow", "label": "Eyebrow", "default": "Built for parents' peace of mind" },
+    { "type": "text", "id": "safety_heading", "label": "Heading", "default": "Safe steps, every floor." },
+    { "type": "header", "content": "Room to grow" },
+    { "type": "text", "id": "grow_heading", "label": "Heading", "default": "Knit to grow with them." },
+    { "type": "textarea", "id": "grow_lead", "label": "Lead", "default": "Stretchy Supima and a forgiving cuff mean each size lasts longer than you'd expect." },
+    { "type": "header", "content": "Parent reviews" },
+    { "type": "text", "id": "parents_eyebrow", "label": "Eyebrow", "default": "From the parents" },
+    { "type": "text", "id": "parents_heading", "label": "Heading", "default": "Tested by tiny feet." }
+  ],
+  "presets": [{ "name": "GF PDP — Kids" }]
+}
+{% endschema %}

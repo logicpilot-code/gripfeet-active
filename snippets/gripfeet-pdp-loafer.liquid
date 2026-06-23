@@ -3,8 +3,8 @@
 <!-- 1 · Disappears under -->
 <section class="wrap section lof-under">
   <div class="lof-under-head">
-    <span class="eyebrow"><span class="dot"></span>The point of a no-show</span>
-    <h2 class="h-section">Seen by no one.<br>Felt all day.</h2>
+    <span class="eyebrow"><span class="dot"></span>{{ under_eyebrow | default: 'The point of a no-show' }}</span>
+    <h2 class="h-section">{{ under_heading | default: 'Seen by no one. Felt all day.' }}</h2>
   </div>
   <div class="lof-under-grid">
     <div class="lof-shoe"><div class="ph" style="background:#EEE9E0;aspect-ratio:1;border-radius:18px;margin-bottom:18px"><span class="ph-corner">01</span></div><h4>Loafers</h4><p>Sits below the topline. Bare-ankle look, zero slip-down.</p></div>
@@ -25,8 +25,8 @@
       <div class="lof-cut-line" id="lof-cut-line" style="top:38%"></div>
     </div>
     <div class="lof-cut-side">
-      <span class="eyebrow"><span class="dot"></span>How it holds</span>
-      <h2 class="h-sub" style="margin-top:12px">The whole trick is one silicone ring.</h2>
+      <span class="eyebrow"><span class="dot"></span>{{ cut_eyebrow | default: 'How it holds' }}</span>
+      <h2 class="h-sub" style="margin-top:12px">{{ cut_heading | default: 'The whole trick is one silicone ring.' }}</h2>
       <ol class="lof-parts" id="lof-parts">
         <li data-i="0"><span class="lp-n">01</span><div><strong>Scalloped low-cut</strong><p>Drops below the shoe line so nothing peeks out.</p></div></li>
         <li class="on" data-i="1"><span class="lp-n">02</span><div><strong>Silicone heel band</strong><p>A continuous grip ring — the part that actually stops the slide-down.</p></div></li>
@@ -41,8 +41,8 @@
 <section class="wrap section lof-shade">
   <div class="section-head">
     <div class="left">
-      <span class="eyebrow"><span class="dot"></span>Match to skin</span>
-      <h2 class="h-section" style="margin-top:14px">Find your invisible.</h2>
+      <span class="eyebrow"><span class="dot"></span>{{ shade_eyebrow | default: 'Match to skin' }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ shade_heading | default: 'Find your invisible.' }}</h2>
     </div>
     <div class="right"><span class="muted" style="font-size:13px;max-width:26ch">The closer the tone, the more it vanishes under open shoes.</span></div>
   </div>
@@ -70,7 +70,7 @@
 <!-- 4 · Statement line -->
 <section class="lof-line">
   <div class="wrap">
-    <p><span class="lead">Looks bare.</span> <span class="rest">Holds tight.</span></p>
+    <p><span class="lead">{{ line_lead | default: 'Looks bare.' }}</span> <span class="rest">{{ line_rest | default: 'Holds tight.' }}</span></p>
     <div class="lof-line-foot">
       <span>Scalloped low-cut</span><span class="div"></span>
       <span>Silicone heel ring</span><span class="div"></span>

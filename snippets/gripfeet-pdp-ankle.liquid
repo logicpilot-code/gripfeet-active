@@ -3,8 +3,8 @@
 <!-- 1 · Surfaces -->
 <section class="wrap section ank-surf">
   <div class="ank-surf-head">
-    <span class="eyebrow"><span class="dot"></span>Grip you can trust</span>
-    <h2 class="h-section">Sure-footed on<br>every studio surface.</h2>
+    <span class="eyebrow"><span class="dot"></span>{{ surf_eyebrow | default: 'Grip you can trust' }}</span>
+    <h2 class="h-section">{{ surf_heading | default: 'Sure-footed on every studio surface.' }}</h2>
   </div>
   <div class="ank-surf-body">
     <div class="ank-surf-vis">
@@ -36,8 +36,8 @@
   <div class="wrap">
     <div class="section-head center">
       <div class="left">
-        <span class="eyebrow"><span class="dot"></span>Made for your mat</span>
-        <h2 class="h-section" style="margin-top:14px">What's your practice?</h2>
+        <span class="eyebrow"><span class="dot"></span>{{ prac_eyebrow | default: 'Made for your mat' }}</span>
+        <h2 class="h-section" style="margin-top:14px">{{ prac_heading | default: "What's your practice?" }}</h2>
       </div>
     </div>
     <div class="ank-prac-chips" id="ank-prac-chips">
@@ -66,8 +66,8 @@
 <!-- 3 · Tonal colour story -->
 <section class="wrap section tight ank-story">
   <div class="ank-story-head">
-    <h2 class="h-sub">A tonal story, knit to be worn together.</h2>
-    <p class="muted">Three quiet tones that move from mat to street without trying.</p>
+    <h2 class="h-sub">{{ story_heading | default: 'A tonal story, knit to be worn together.' }}</h2>
+    <p class="muted">{{ story_lead | default: 'Three quiet tones that move from mat to street without trying.' }}</p>
   </div>
   <div class="ank-story-flat">
     {%- assign color_opt = nil -%}
@@ -97,7 +97,7 @@
   <div class="ank-instr-card">
     <div class="aic-portrait"><div class="ph" style="background:#E7ECE0;width:100%;height:100%"><span class="ph-corner">INSTRUCTOR</span></div></div>
     <div class="aic-body">
-      <span class="eyebrow"><span class="dot"></span>From the studio floor</span>
+      <span class="eyebrow"><span class="dot"></span>{{ instr_eyebrow | default: 'From the studio floor' }}</span>
       <blockquote id="ank-quote">“I put my whole studio in these. They're the first grip sock that doesn't feel like a compromise.”</blockquote>
       <div class="aic-who"><strong id="ank-quote-n">Megha R.</strong><span id="ank-quote-r">Reformer Pilates · Hyderabad</span></div>
       <div class="aic-dots" id="ank-dots">

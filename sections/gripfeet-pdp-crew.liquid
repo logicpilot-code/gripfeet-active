@@ -1,0 +1,35 @@
+{{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
+{%- render 'gripfeet-pdp-crew',
+  spec_eyebrow: section.settings.spec_eyebrow,
+  spec_heading: section.settings.spec_heading,
+  spec_lead: section.settings.spec_lead,
+  zones_eyebrow: section.settings.zones_eyebrow,
+  zones_heading: section.settings.zones_heading,
+  sport_eyebrow: section.settings.sport_eyebrow,
+  sport_heading: section.settings.sport_heading,
+  stress_eyebrow: section.settings.stress_eyebrow,
+  stress_heading: section.settings.stress_heading
+-%}
+
+{% schema %}
+{
+  "name": "GF PDP — Crew",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Spec sheet" },
+    { "type": "text", "id": "spec_eyebrow", "label": "Eyebrow", "default": "The spec sheet" },
+    { "type": "text", "id": "spec_heading", "label": "Heading", "default": "Engineered to hold under load." },
+    { "type": "textarea", "id": "spec_lead", "label": "Lead", "default": "Not a lifestyle sock with a logo on it. Every line below is tuned for movement — football pivots, gym sets, hard miles." },
+    { "type": "header", "content": "Grip zones" },
+    { "type": "text", "id": "zones_eyebrow", "label": "Eyebrow", "default": "Four working zones" },
+    { "type": "text", "id": "zones_heading", "label": "Heading", "default": "Grip where it earns it." },
+    { "type": "header", "content": "Sport use" },
+    { "type": "text", "id": "sport_eyebrow", "label": "Eyebrow", "default": "Pick your arena" },
+    { "type": "text", "id": "sport_heading", "label": "Heading", "default": "Tuned for how you train." },
+    { "type": "header", "content": "Stress test" },
+    { "type": "text", "id": "stress_eyebrow", "label": "Eyebrow", "default": "Lab + locker room" },
+    { "type": "text", "id": "stress_heading", "label": "Heading", "default": "Stress-tested, then worn for a season." }
+  ],
+  "presets": [{ "name": "GF PDP — Crew" }]
+}
+{% endschema %}

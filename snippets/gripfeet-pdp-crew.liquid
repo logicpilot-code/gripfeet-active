@@ -4,9 +4,9 @@
 <section class="crew-spec">
   <div class="wrap">
     <div class="crew-spec-head">
-      <span class="eyebrow"><span class="dot"></span>The spec sheet</span>
-      <h2 class="h-section">Engineered to hold<br>under load.</h2>
-      <p>Not a lifestyle sock with a logo on it. Every line below is tuned for movement — football pivots, gym sets, hard miles.</p>
+      <span class="eyebrow"><span class="dot"></span>{{ spec_eyebrow | default: 'The spec sheet' }}</span>
+      <h2 class="h-section">{{ spec_heading | default: 'Engineered to hold under load.' }}</h2>
+      <p>{{ spec_lead | default: 'Not a lifestyle sock with a logo on it. Every line below is tuned for movement — football pivots, gym sets, hard miles.' }}</p>
     </div>
     <div class="crew-spec-table">
       <div class="csr"><span class="csr-k">Grip pattern</span><span class="csr-v">Full-sole silicone</span><span class="csr-d">100% food-grade, hex-lattice</span></div>
@@ -32,8 +32,8 @@
     <button type="button" class="crew-pin pin-3" data-z="3" aria-label="Toe spring">4</button>
   </div>
   <div class="crew-zones-side">
-    <span class="eyebrow"><span class="dot"></span>Four working zones</span>
-    <h2 class="h-sub" style="margin-top:12px">Grip where it earns it.</h2>
+    <span class="eyebrow"><span class="dot"></span>{{ zones_eyebrow | default: 'Four working zones' }}</span>
+    <h2 class="h-sub" style="margin-top:12px">{{ zones_heading | default: 'Grip where it earns it.' }}</h2>
     <div class="crew-zone-list" id="crew-zone-list">
       <button type="button" class="czl on" data-z="0"><span class="czl-n">01</span><div><strong>Heel lock</strong><p>Compression cradle stops heel lift inside the shoe.</p></div></button>
       <button type="button" class="czl" data-z="1"><span class="czl-n">02</span><div><strong>Lateral grip</strong><p>Dense silicone bands resist side-to-side slide on cuts.</p></div></button>
@@ -48,8 +48,8 @@
   <div class="wrap">
     <div class="crew-sport-grid">
       <div class="crew-sport-left">
-        <span class="eyebrow"><span class="dot"></span>Pick your arena</span>
-        <h2 class="h-section">Tuned for how<br>you train.</h2>
+        <span class="eyebrow"><span class="dot"></span>{{ sport_eyebrow | default: 'Pick your arena' }}</span>
+        <h2 class="h-section">{{ sport_heading | default: 'Tuned for how you train.' }}</h2>
         <div class="crew-sport-tabs" id="crew-sport-tabs">
           <button type="button" class="crew-tab on" data-label="FOOTBALL" data-feat="Stud-pressure heel pad|Lateral grip for cuts|Stay-up crew cuff">Football</button>
           <button type="button" class="crew-tab" data-label="GYM &amp; LIFTING" data-feat="Flat, stable footbed|Grip for barefoot lifts|Breathable midfoot">Gym &amp; lifting</button>
@@ -73,8 +73,8 @@
 <section class="crew-stress">
   <div class="wrap">
     <div class="crew-stress-head">
-      <span class="eyebrow"><span class="dot"></span>Lab + locker room</span>
-      <h2 class="h-sub">Stress-tested, then worn for a season.</h2>
+      <span class="eyebrow"><span class="dot"></span>{{ stress_eyebrow | default: 'Lab + locker room' }}</span>
+      <h2 class="h-sub">{{ stress_heading | default: 'Stress-tested, then worn for a season.' }}</h2>
     </div>
     <div class="crew-stat-row">
       <div class="crew-stat"><span class="cs-v">120k</span><span class="cs-l">Flex cycles tested</span></div>
