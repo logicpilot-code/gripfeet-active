@@ -4,10 +4,7 @@
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Gripfeet story" width="900" height="1125" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)">
       {%- else -%}
-        <div class="ph" style="aspect-ratio:4/5;border-radius:var(--radius)">
-          <span class="ph-label">Editorial · macro of knit + silicone grip dots</span>
-          <span class="ph-corner">GF · 4:5</span>
-        </div>
+        <img src="{{ 'gf-story.jpg' | asset_url }}" alt="Cream cable-knit detail" width="1200" height="1750" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;border-radius:var(--radius)">
       {%- endif -%}
     </div>
     <div class="text">

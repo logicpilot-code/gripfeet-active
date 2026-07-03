@@ -75,11 +75,16 @@
         else
           assign gf_display = '"Hanken Grotesk"'
           assign gf_body = '"Hanken Grotesk"'
-          assign gf_fonts = 'https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap'
+          assign gf_fonts = ''
       endcase
     -%}
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link href="{{ gf_fonts }}" rel="stylesheet" />
+    {%- comment -%} Hanken Grotesk + JetBrains Mono self-hosted (variable woff2). Other switcher pairings load from CDN on demand. {%- endcomment -%}
+    <link rel="preload" as="font" type="font/woff2" href="{{ 'HankenGrotesk-Variable-latin.woff2' | asset_url }}" crossorigin>
+    {% style %}
+      @font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 100 900; font-display: swap; src: url({{ 'HankenGrotesk-Variable-latin.woff2' | asset_url }}) format('woff2'); }
+      @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url({{ 'JetBrainsMono-Variable-latin.woff2' | asset_url }}) format('woff2'); }
+    {% endstyle %}
+    {%- if gf_fonts != blank -%}<link href="{{ gf_fonts }}" rel="stylesheet" />{%- endif -%}
     {{ 'gripfeet-header.css' | asset_url | stylesheet_tag }}
 
     <title>

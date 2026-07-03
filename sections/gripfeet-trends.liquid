@@ -19,10 +19,22 @@
           {%- if block.settings.image != blank -%}
             <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title }}" width="900" height="1100" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
           {%- else -%}
-            <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%;background:{{ block.settings.bg_color | default: '#191919' }}">
-              <span class="ph-label">{{ block.settings.title }} · lifestyle editorial</span>
-              <span class="ph-corner">GF</span>
-            </div>
+            {%- assign tt = block.settings.title | downcase -%}
+            {%- assign trimg = '' -%}
+            {%- if tt contains 'mat' -%}{%- assign trimg = 'gf-trend-ankle.jpg' -%}
+            {%- elsif tt contains 'active' -%}{%- assign trimg = 'gf-trend-crew.jpg' -%}
+            {%- elsif tt contains 'lil' or tt contains 'kid' or tt contains 'step' -%}{%- assign trimg = 'gf-trend-kids.jpg' -%}
+            {%- endif -%}
+            {%- if trimg != '' -%}
+              <div class="ph has-photo ph-dark" style="position:absolute;inset:0;width:100%;height:100%">
+                <img class="ph-img" src="{{ trimg | asset_url }}" alt="{{ block.settings.title }} · lifestyle" width="1200" height="1500" loading="lazy" style="object-position:center 42%">
+              </div>
+            {%- else -%}
+              <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%;background:{{ block.settings.bg_color | default: '#191919' }}">
+                <span class="ph-label">{{ block.settings.title }} · lifestyle editorial</span>
+                <span class="ph-corner">GF</span>
+              </div>
+            {%- endif -%}
           {%- endif -%}
           <div class="scrim"></div>
           <div class="tinfo">

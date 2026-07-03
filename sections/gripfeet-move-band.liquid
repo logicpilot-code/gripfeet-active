@@ -8,10 +8,7 @@
       style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
     >
   {%- else -%}
-    <div class="ph ph-photo" style="position:absolute;inset:0;width:100%;height:100%">
-      <span class="ph-label">Full-bleed · feet in motion on stairs / street · grip socks + trainers</span>
-      <span class="ph-corner">GF · BAND</span>
-    </div>
+    <img src="{{ 'gf-move-band.jpg' | asset_url }}" alt="Feet in motion" width="2200" height="933" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;position:absolute;inset:0">
   {%- endif -%}
   <div class="scrim"></div>
   <h2>{{ section.settings.headline | newline_to_br }}</h2>

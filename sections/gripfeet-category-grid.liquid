@@ -23,13 +23,23 @@
                 style="width:100%;height:100%;object-fit:cover;display:block"
               >
             {%- else -%}
-              <div
-                class="ph"
-                style="width:100%;height:100%;background:{{ block.settings.bg_color }}"
-              >
-                <span class="ph-label">{{ block.settings.name }}</span>
-                <span class="ph-corner">GF</span>
-              </div>
+              {%- assign catn = block.settings.name | downcase -%}
+              {%- assign catimg = '' -%}
+              {%- if catn contains 'ankle' -%}{%- assign catimg = 'gf-cat-ankle.jpg' -%}
+              {%- elsif catn contains 'crew' -%}{%- assign catimg = 'gf-cat-crew.jpg' -%}
+              {%- elsif catn contains 'loafer' -%}{%- assign catimg = 'gf-cat-loafer.jpg' -%}
+              {%- elsif catn contains 'kid' -%}{%- assign catimg = 'gf-cat-kids.jpg' -%}
+              {%- endif -%}
+              {%- if catimg != '' -%}
+                <div class="ph has-photo" style="width:100%;height:100%">
+                  <img class="ph-img" src="{{ catimg | asset_url }}" alt="{{ block.settings.name }} · {{ block.settings.subtitle }}" width="1200" height="1200" loading="lazy" style="transform:scale(1.14);object-position:center 58%">
+                </div>
+              {%- else -%}
+                <div class="ph" style="width:100%;height:100%;background:{{ block.settings.bg_color }}">
+                  <span class="ph-label">{{ block.settings.name }}</span>
+                  <span class="ph-corner">GF</span>
+                </div>
+              {%- endif -%}
             {%- endif -%}
           </div>
           <div class="label">

@@ -20,10 +20,20 @@
             {%- if block.settings.image != blank -%}
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.name }}" width="600" height="400" loading="lazy" style="width:100%;height:100%;object-fit:cover">
             {%- else -%}
-              <div class="ph{% if block.settings.featured %} ph-dark{% endif %}">
-                <span class="ph-label">{{ block.settings.name }} · folded stack</span>
-                <span class="ph-corner">GF · BDL</span>
-              </div>
+              {%- assign bn = block.settings.name | downcase -%}
+              {%- assign bimg = '' -%}
+              {%- if bn contains 'studio' -%}{%- assign bimg = 'gf-bundle-studio.jpg' -%}
+              {%- elsif bn contains 'house' -%}{%- assign bimg = 'gf-bundle-house.jpg' -%}
+              {%- elsif bn contains 'family' -%}{%- assign bimg = 'gf-bundle-family.jpg' -%}
+              {%- endif -%}
+              {%- if bimg != '' -%}
+                <div class="ph has-photo{% if block.settings.featured %} ph-dark{% endif %}"><img class="ph-img" src="{{ bimg | asset_url }}" alt="{{ block.settings.name }}" width="1300" height="800" loading="lazy" style="object-position:center"></div>
+              {%- else -%}
+                <div class="ph{% if block.settings.featured %} ph-dark{% endif %}">
+                  <span class="ph-label">{{ block.settings.name }} · folded stack</span>
+                  <span class="ph-corner">GF · BDL</span>
+                </div>
+              {%- endif -%}
             {%- endif -%}
           </div>
           <p class="bdesc">{{ block.settings.desc }}</p>
