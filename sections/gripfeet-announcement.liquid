@@ -1,30 +1,31 @@
-{{ 'gripfeet-sections.css' | asset_url | stylesheet_tag }}
-<div class="gf-announce">
-  <div class="gf-announce__inner">
-    <span></span>
-    <div class="gf-announce__msg">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'message' -%}
-          <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-          {%- unless forloop.last -%}<span class="sep">&nbsp;·&nbsp;</span>{%- endunless -%}
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
-    <span></span>
+{%- comment -%} Infinite-scrolling announcement ticker (reuses gf-belt from gripfeet-motion.css) {%- endcomment -%}
+{%- capture annc -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'message' -%}
+      <span class="gf-annc-item" {{ block.shopify_attributes }}><span class="gf-annc-dot"></span>{{ block.settings.text }}</span>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if annc != blank -%}
+  <div class="gf-annc gf-mq gf-mq--mask">
+    <div class="gf-mq__track" style="--mq-dur: {{ section.settings.speed | default: 34 }}s">{{ annc }}{{ annc }}</div>
   </div>
-</div>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "GF Announcement Bar",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    { "type": "range", "id": "speed", "label": "Scroll speed (seconds per loop)", "min": 15, "max": 60, "step": 1, "unit": "s", "default": 34 }
+  ],
   "blocks": [
     { "type": "message", "name": "Message",
       "settings": [{ "type": "text", "id": "text", "label": "Message", "default": "Free shipping worldwide on orders over ₹999" }]
     }
   ],
-  "max_blocks": 4,
+  "max_blocks": 6,
   "presets": [{ "name": "GF Announcement Bar",
     "blocks": [
       { "type": "message", "settings": { "text": "Launch pricing — up to 39% off · Shop bundles" } },

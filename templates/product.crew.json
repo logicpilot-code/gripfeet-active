@@ -1,32 +1,161 @@
 {
   "sections": {
-    "pdp": { "type": "gripfeet-pdp", "settings": {} },
-    "range": { "type": "gripfeet-pdp-crew", "settings": {} },
+    "pdp": {
+      "type": "gripfeet-pdp",
+      "settings": {}
+    },
+    "range": {
+      "type": "gripfeet-pdp-crew",
+      "settings": {}
+    },
     "reviews": {
       "type": "gripfeet-pdp-reviews",
-      "settings": { "eyebrow": "Worn-in opinions", "heading": "What buyers say.", "rating": "4.9", "review_count": "1,284", "recommend_pct": "94", "distribution": "86,11,2,1,0" },
-      "blocks": {
-        "r1": { "type": "review", "settings": { "stars": 5, "verified": true, "title": "Finally a grip sock I'd wear out", "quote": "The Supima feels like a proper sock — not a piece of medical equipment. The grip is genuinely grippy.", "name": "Aanya M.", "location": "Mumbai", "fit_tag": "Fit: True to size" } },
-        "r2": { "type": "review", "settings": { "stars": 5, "verified": true, "title": "Travel staple now", "quote": "Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good folded in the bag.", "name": "Rohan K.", "location": "Bengaluru", "fit_tag": "Fit: True to size" } },
-        "r3": { "type": "review", "settings": { "stars": 4, "verified": true, "title": "Great, runs a touch snug", "quote": "Brilliant grip and softness. Sized up after the first wash and they're perfect now.", "name": "Devika S.", "location": "Pune", "fit_tag": "Fit: Runs small" } },
-        "r4": { "type": "review", "settings": { "stars": 5, "verified": true, "title": "Bought a second pack", "quote": "Held up after 30+ washes, silicone still grips like day one. Reordering the neutrals.", "name": "Karan T.", "location": "Delhi", "fit_tag": "Fit: True to size" } },
-        "r5": { "type": "review", "settings": { "stars": 5, "verified": true, "title": "Studio approved", "quote": "I teach 12 classes a week in these. Zero slip on the reformer, zero slip on hardwood.", "name": "Megha R.", "location": "Hyderabad", "fit_tag": "Fit: True to size" } }
+      "settings": {
+        "eyebrow": "Worn-in opinions",
+        "heading": "What buyers say.",
+        "rating": "4.9",
+        "review_count": "1,284",
+        "recommend_pct": "94",
+        "distribution": "86,11,2,1,0"
       },
-      "block_order": ["r1", "r2", "r3", "r4", "r5"]
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "title": "Finally a grip sock I'd wear out",
+            "quote": "The Supima feels like a proper sock — not a piece of medical equipment. The grip is genuinely grippy.",
+            "name": "Aanya M.",
+            "location": "Mumbai",
+            "fit_tag": "Fit: True to size"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "title": "Travel staple now",
+            "quote": "Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good folded in the bag.",
+            "name": "Rohan K.",
+            "location": "Bengaluru",
+            "fit_tag": "Fit: True to size"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "verified": true,
+            "title": "Great, runs a touch snug",
+            "quote": "Brilliant grip and softness. Sized up after the first wash and they're perfect now.",
+            "name": "Devika S.",
+            "location": "Pune",
+            "fit_tag": "Fit: Runs small"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "title": "Bought a second pack",
+            "quote": "Held up after 30+ washes, silicone still grips like day one. Reordering the neutrals.",
+            "name": "Karan T.",
+            "location": "Delhi",
+            "fit_tag": "Fit: True to size"
+          }
+        },
+        "r5": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "verified": true,
+            "title": "Studio approved",
+            "quote": "I teach 12 classes a week in these. Zero slip on the reformer, zero slip on hardwood.",
+            "name": "Megha R.",
+            "location": "Hyderabad",
+            "fit_tag": "Fit: True to size"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ]
     },
     "qna": {
       "type": "gripfeet-pdp-qna",
       "settings": {},
       "blocks": {
-        "q1": { "type": "qa", "settings": { "question": "Do these fit inside running shoes?", "answer": "Yes — the cuff and silicone footbed are low-profile enough for trainers, loafers and most everyday shoes.", "who": "Gripfeet team", "votes": 24 } },
-        "q2": { "type": "qa", "settings": { "question": "Is the silicone safe on hardwood?", "answer": "Completely. The food-grade silicone grips without marking or scratching wood, marble or tile.", "who": "Gripfeet team", "votes": 18 } },
-        "q3": { "type": "qa", "settings": { "question": "How do I wash them without ruining the grip?", "answer": "Cold machine wash inside out, air dry or tumble low. Never iron the sole — the grip lasts 80+ wears.", "who": "Gripfeet team", "votes": 12 } }
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "question": "Do these fit inside running shoes?",
+            "answer": "Yes — the cuff and silicone footbed are low-profile enough for trainers, loafers and most everyday shoes.",
+            "who": "Gripfeet team",
+            "votes": 24
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "question": "Is the silicone safe on hardwood?",
+            "answer": "Completely. The food-grade silicone grips without marking or scratching wood, marble or tile.",
+            "who": "Gripfeet team",
+            "votes": 18
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I wash them without ruining the grip?",
+            "answer": "Cold machine wash inside out, air dry or tumble low. Never iron the sole — the grip lasts 80+ wears.",
+            "who": "Gripfeet team",
+            "votes": 12
+          }
+        }
       },
-      "block_order": ["q1", "q2", "q3"]
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ]
     },
-    "crosssell": { "type": "gripfeet-pdp-crosssell", "settings": {} },
-    "recent": { "type": "gripfeet-pdp-recent", "settings": {} },
-    "whatsapp": { "type": "gripfeet-whatsapp", "settings": {} }
+    "crosssell": {
+      "type": "gripfeet-pdp-crosssell",
+      "settings": {}
+    },
+    "recent": {
+      "type": "gripfeet-pdp-recent",
+      "settings": {}
+    },
+    "whatsapp": {
+      "type": "gripfeet-whatsapp",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "gripfeet-editorial-marquee",
+      "settings": {
+        "text": "100% Silicone Grip · Stretch Supima Yarn · Made in India · Machine Washable · Anti-Slip Sole · Reinforced Heel",
+        "dark": true,
+        "reverse": false,
+        "speed": 44
+      }
+    }
   },
-  "order": ["pdp", "range", "reviews", "qna", "crosssell", "recent", "whatsapp"]
+  "order": [
+    "pdp",
+    "range",
+    "marquee",
+    "reviews",
+    "qna",
+    "crosssell",
+    "recent",
+    "whatsapp"
+  ]
 }

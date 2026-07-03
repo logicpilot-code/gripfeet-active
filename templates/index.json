@@ -3,9 +3,9 @@
     "hero": {
       "type": "gripfeet-hero",
       "settings": {
-        "eyebrow": "Premium Grip Socks \u00b7 Traction Triumphs",
+        "eyebrow": "Premium Grip Socks · Traction Triumphs",
         "headline": "Made to Grip.",
-        "subline": "Anti-slip socks for the way you actually move \u2014 sunrise Pilates, hardwood floors, the long flight in between. Supima up top, 100% silicone on the sole.",
+        "subline": "Anti-slip socks for the way you actually move — sunrise Pilates, hardwood floors, the long flight in between. Supima up top, 100% silicone on the sole.",
         "cta_label": "Shop Grip Socks",
         "secondary_label": "Shop Bundles"
       },
@@ -31,7 +31,7 @@
         "b4": {
           "type": "badge",
           "settings": {
-            "text": "4\u20137 Day Global Delivery"
+            "text": "4–7 Day Global Delivery"
           }
         }
       },
@@ -67,7 +67,7 @@
           "settings": {
             "icon": "fit",
             "title": "Perfect Fit",
-            "subtitle": "Available in 2\u20133 sizes"
+            "subtitle": "Available in 2–3 sizes"
           }
         },
         "t4": {
@@ -89,7 +89,7 @@
     "statement": {
       "type": "gripfeet-statement",
       "settings": {
-        "lead": "India's grip sock you'd actually wear out of the studio \u2014",
+        "lead": "India's grip sock you'd actually wear out of the studio —",
         "rest": "trusted on the mat, loved for everyday."
       },
       "blocks": {
@@ -181,10 +181,10 @@
     "featured": {
       "type": "gripfeet-featured-products",
       "settings": {
-        "eyebrow": "Newly knit \u00b7 Featured sets",
+        "eyebrow": "Newly knit · Featured sets",
         "heading": "Built for the way you move.",
         "sub_banner_text": "Subscribe & save 15% on every refill.",
-        "sub_banner_sub": "Pick a pack, pick a cadence \u2014 every 2, 3 or 6 months. Skip or cancel anytime.",
+        "sub_banner_sub": "Pick a pack, pick a cadence — every 2, 3 or 6 months. Skip or cancel anytime.",
         "sub_banner_cta": "How it works"
       },
       "blocks": {
@@ -192,7 +192,7 @@
           "type": "product",
           "settings": {
             "name": "Soft Studio Ankle",
-            "range": "Ankle \u00b7 Mat Masters",
+            "range": "Ankle · Mat Masters",
             "price": "299",
             "was": "499"
           }
@@ -201,7 +201,7 @@
           "type": "product",
           "settings": {
             "name": "Active Crew Hold",
-            "range": "Crew \u00b7 Active Hold",
+            "range": "Crew · Active Hold",
             "price": "299",
             "was": "499"
           }
@@ -210,7 +210,7 @@
           "type": "product",
           "settings": {
             "name": "Loafer Invisible",
-            "range": "Loafer \u00b7 Invisible Grip",
+            "range": "Loafer · Invisible Grip",
             "price": "249",
             "was": "399"
           }
@@ -219,7 +219,7 @@
           "type": "product",
           "settings": {
             "name": "Lil Steps Kids",
-            "range": "Kids \u00b7 Lil Steps",
+            "range": "Kids · Lil Steps",
             "price": "179",
             "was": "299"
           }
@@ -273,18 +273,18 @@
     "story": {
       "type": "gripfeet-brand-story",
       "settings": {
-        "eyebrow": "Our story \u00b7 Made in India",
+        "eyebrow": "Our story · Made in India",
         "heading": "A grip sock that finally feels like a sock.",
-        "body_1": "Most grip socks fall into two camps \u2014 clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays.",
-        "body_2": "We knit ours in-house in India \u2014 Supima cotton up top, a 100% silicone grip pattern on the sole.",
+        "body_1": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays.",
+        "body_2": "We knit ours in-house in India — Supima cotton up top, a 100% silicone grip pattern on the sole.",
         "sig_name": "The Gripfeet team",
-        "sig_sub": "Knit in India \u00b7 Designed for everywhere"
+        "sig_sub": "Knit in India · Designed for everywhere"
       }
     },
     "usps": {
       "type": "gripfeet-usp-strip",
       "settings": {
-        "eyebrow": "Our promise \u00b7 Six things that matter",
+        "eyebrow": "Our promise · Six things that matter",
         "heading": "Quietly built, obsessively."
       },
       "blocks": {
@@ -292,7 +292,7 @@
           "type": "usp",
           "settings": {
             "title": "Stretch Supima Yarn",
-            "desc": "Naturally breathable, beautifully soft \u2014 every wash."
+            "desc": "Naturally breathable, beautifully soft — every wash."
           }
         },
         "u2": {
@@ -382,7 +382,7 @@
     "bundles": {
       "type": "gripfeet-bundles",
       "settings": {
-        "eyebrow": "Pack & save \u00b7 Bundles",
+        "eyebrow": "Pack & save · Bundles",
         "heading": "Buy them in threes."
       },
       "blocks": {
@@ -404,7 +404,7 @@
             "tag": "Trio",
             "name": "Studio Three",
             "save_label": "Save 21%",
-            "desc": "Three pairs \u2014 your full rotation.",
+            "desc": "Three pairs — your full rotation.",
             "price": "699",
             "was": "897",
             "cta": "Add to bag",
@@ -433,7 +433,7 @@
     "reviews": {
       "type": "gripfeet-reviews",
       "settings": {
-        "eyebrow": "Worn-in opinions \u00b7 Reviews",
+        "eyebrow": "Worn-in opinions · Reviews",
         "heading": "Quiet wins, in their words.",
         "rating": "4.9",
         "review_count": "1,284 reviews"
@@ -484,7 +484,7 @@
       "settings": {
         "eyebrow": "Gift & travel",
         "heading": "The cleanest small gift we know.",
-        "body": "Hand-folded into a Gripfeet linen pouch \u2014 a premium-feeling essential that's quietly useful.",
+        "body": "Hand-folded into a Gripfeet linen pouch — a premium-feeling essential that's quietly useful.",
         "cta_label": "Shop gifting"
       },
       "blocks": {
@@ -524,14 +524,23 @@
       "type": "gripfeet-home-newsletter",
       "settings": {
         "eyebrow": "Letters from the studio",
-        "heading": "Drop your email, get \u20b9200 off.",
-        "body": "One quiet note a month \u2014 new colourways, studio drops, the occasional travel-essentials list.",
+        "heading": "Drop your email, get ₹200 off.",
+        "body": "One quiet note a month — new colourways, studio drops, the occasional travel-essentials list.",
         "cta": "Subscribe"
       }
     },
     "whatsapp": {
       "type": "gripfeet-whatsapp",
       "settings": {}
+    },
+    "marquee": {
+      "type": "gripfeet-editorial-marquee",
+      "settings": {
+        "text": "Pilates · Yoga · Barre · Travel · Home · Hardwood · Marble · Studio · Football · Sleep",
+        "dark": false,
+        "reverse": false,
+        "speed": 40
+      }
     }
   },
   "order": [
@@ -543,6 +552,7 @@
     "trends",
     "story",
     "usps",
+    "marquee",
     "palette",
     "bundles",
     "reviews",
