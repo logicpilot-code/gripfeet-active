@@ -1,4 +1,28 @@
 {{ 'gripfeet-pages.css' | asset_url | stylesheet_tag }}
+<style>
+  .ab-craft { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,64px); align-items: center; }
+  .ab-craft .visual { aspect-ratio: 4/5; border-radius: var(--radius); overflow: hidden; }
+  .ab-craft .visual img, .ab-craft .visual .ph { width: 100%; height: 100%; object-fit: cover; }
+  .ab-craft ul { list-style: none; padding: 0; margin: 24px 0 0; }
+  .ab-craft li { display: flex; gap: 12px; padding: 13px 0; border-top: 1px solid var(--hair); font-size: 14.5px; color: var(--ink-2); }
+  .ab-craft li .tick { color: var(--accent); flex-shrink: 0; }
+  .ab-promise-grid { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); }
+  .ab-promise { padding: clamp(24px,2.6vw,34px); border-right: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .ab-promise .n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-3); }
+  .ab-promise h3 { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; margin: 16px 0 8px; }
+  .ab-promise p { font-size: 14px; color: var(--ink-2); margin: 0; line-height: 1.55; }
+  .ab-founders { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px,4vw,64px); align-items: center; background: var(--ink); color: #fff; padding: clamp(28px,4vw,64px); border-radius: var(--radius); }
+  .ab-founders .visual { aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; }
+  .ab-founders .visual img, .ab-founders .visual .ph { width: 100%; height: 100%; object-fit: cover; }
+  .ab-founders blockquote { font-weight: 800; font-size: clamp(22px,2.6vw,34px); letter-spacing: -0.025em; line-height: 1.15; margin: 0 0 20px; }
+  .ab-founders .who strong { display: block; font-size: 15px; }
+  .ab-founders .who span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+  .ab-bts-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(12px,1.4vw,18px); }
+  .ab-bts { aspect-ratio: 4/5; border-radius: var(--radius); overflow: hidden; }
+  .ab-bts img, .ab-bts .ph { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 860px) { .ab-craft, .ab-founders { grid-template-columns: 1fr; } .ab-promise-grid { grid-template-columns: 1fr 1fr; } .ab-bts-grid { grid-template-columns: 1fr 1fr; } .ab-bts:first-child { grid-column: 1 / -1; aspect-ratio: 16/10; } }
+  @media (max-width: 480px) { .ab-promise-grid { grid-template-columns: 1fr; } }
+</style>
 
 <div class="page-hero">
   <div class="wrap">
@@ -8,48 +32,123 @@
   </div>
 </div>
 
+{%- comment -%} 1 · Our story {%- endcomment -%}
 <section class="wrap section">
   <div class="about-split">
     <div class="about-visual">
       {%- if section.settings.image_1 != blank -%}
         <img src="{{ section.settings.image_1 | image_url: width: 900 }}" alt="Gripfeet story" width="900" height="1125" loading="lazy" style="width:100%;height:100%;object-fit:cover">
       {%- else -%}
-        <div class="ph" style="aspect-ratio:4/5;border-radius:var(--radius)">
-          <span class="ph-label">Knitting room · India · hands at loom · Supima thread</span>
-          <span class="ph-corner">GF · STORY</span>
-        </div>
+        <div class="ph has-photo" style="aspect-ratio:4/5;border-radius:var(--radius)"><img class="ph-img" src="{{ 'gf-story.jpg' | asset_url }}" alt="Gripfeet" width="900" height="1125" loading="lazy"></div>
       {%- endif -%}
     </div>
     <div class="about-text">
       <span class="eyebrow"><span class="dot"></span>{{ section.settings.chapter_1_eyebrow }}</span>
       <h2 class="h-section" style="margin-top:14px">{{ section.settings.chapter_1_heading }}</h2>
       <p>{{ section.settings.chapter_1_body }}</p>
+      {%- if section.settings.chapter_1_body_2 != blank -%}<p>{{ section.settings.chapter_1_body_2 }}</p>{%- endif -%}
     </div>
   </div>
 </section>
 
-<section class="section band">
-  <div class="wrap">
-    <div class="about-values">
-      {%- for block in section.blocks -%}
-        {%- if block.type == "value" -%}
-          <div class="about-value" {{ block.shopify_attributes }}>
-            <span class="n">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
-            <h3>{{ block.settings.title }}</h3>
-            <p>{{ block.settings.body }}</p>
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
+{%- comment -%} 2 · Quality & craftsmanship {%- endcomment -%}
+<section class="wrap section tight">
+  <div class="ab-craft">
+    <div class="about-text">
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.craft_eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.craft_heading }}</h2>
+      <p>{{ section.settings.craft_body }}</p>
+      <ul>
+        {%- assign points = section.settings.craft_points | newline_to_br | split: '<br />' -%}
+        {%- for p in points -%}{%- assign pt = p | strip -%}{%- if pt != blank -%}
+          <li><span class="tick"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></span>{{ pt }}</li>
+        {%- endif -%}{%- endfor -%}
+      </ul>
+    </div>
+    <div class="visual">
+      {%- if section.settings.craft_image != blank -%}
+        <img src="{{ section.settings.craft_image | image_url: width: 900 }}" alt="Craftsmanship" width="900" height="1125" loading="lazy">
+      {%- else -%}<div class="ph"><span class="ph-label">Macro · Supima knit + silicone grip detail</span></div>{%- endif -%}
     </div>
   </div>
 </section>
+
+{%- comment -%} 3 · Our promise {%- endcomment -%}
+<section class="section band">
+  <div class="wrap">
+    <div class="section-head"><div class="left"><span class="eyebrow"><span class="dot"></span>Our promise</span><h2 class="h-section" style="margin-top:14px">{{ section.settings.promise_heading }}</h2></div></div>
+    <div class="ab-promise-grid">
+      {%- assign i = 0 -%}
+      {%- for block in section.blocks -%}{%- if block.type == 'promise' -%}{%- assign i = i | plus: 1 -%}
+        <div class="ab-promise" {{ block.shopify_attributes }}>
+          <span class="n">{{ i | prepend: '0' | slice: -2, 2 }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.body }}</p>
+        </div>
+      {%- endif -%}{%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} 4 · Meet the founders (optional) {%- endcomment -%}
+{%- if section.settings.show_founders -%}
+<section class="wrap section">
+  <div class="ab-founders">
+    <div class="visual">
+      {%- if section.settings.founders_image != blank -%}
+        <img src="{{ section.settings.founders_image | image_url: width: 800 }}" alt="{{ section.settings.founders_names }}" width="800" height="800" loading="lazy">
+      {%- else -%}<div class="ph ph-dark"><span class="ph-label">Founders portrait</span></div>{%- endif -%}
+    </div>
+    <div>
+      <span class="eyebrow" style="color:rgba(255,255,255,0.7)"><span class="dot"></span>Meet the founders</span>
+      <blockquote style="margin-top:16px">&ldquo;{{ section.settings.founders_quote }}&rdquo;</blockquote>
+      <div class="who"><strong>{{ section.settings.founders_names }}</strong><span>{{ section.settings.founders_role }}</span></div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{%- comment -%} 5 · Behind the scenes {%- endcomment -%}
+<section class="wrap section tight">
+  <div class="section-head"><div class="left"><span class="eyebrow"><span class="dot"></span>Behind the scenes</span><h2 class="h-sub" style="margin-top:12px">{{ section.settings.bts_heading }}</h2></div></div>
+  <div class="ab-bts-grid">
+    {%- assign bts = section.settings.bts_image_1 | default: section.settings.bts_image_2 -%}
+    {%- for n in (1..3) -%}
+      {%- assign img = section.settings['bts_image_' | append: n] -%}
+      <div class="ab-bts">
+        {%- if img != blank -%}<img src="{{ img | image_url: width: 800 }}" alt="Behind the scenes" width="800" height="1000" loading="lazy">
+        {%- else -%}<div class="ph"><span class="ph-label">BTS · {% cycle 'design process','packaging','the team' %}</span></div>{%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- comment -%} 6 · Why trust us (values / milestones) {%- endcomment -%}
+{%- assign has_values = false -%}
+{%- for block in section.blocks -%}{%- if block.type == 'value' -%}{%- assign has_values = true -%}{%- endif -%}{%- endfor -%}
+{%- if has_values -%}
+<section class="section band">
+  <div class="wrap">
+    <div class="section-head"><div class="left"><span class="eyebrow"><span class="dot"></span>Why trust us</span><h2 class="h-section" style="margin-top:14px">{{ section.settings.trust_heading }}</h2></div></div>
+    <div class="about-values">
+      {%- for block in section.blocks -%}{%- if block.type == 'value' -%}
+        <div class="about-value" {{ block.shopify_attributes }}>
+          <span class="n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.body }}</p>
+        </div>
+      {%- endif -%}{%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
 
 <div class="page-cta">
   <div class="wrap">
     <h2>{{ section.settings.cta_heading }}</h2>
     <p>{{ section.settings.cta_body }}</p>
     <div class="cta-actions">
-      <a href="/collections/all" class="btn btn-light">Shop all socks</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-light">Shop all socks</a>
       <a href="/pages/contact" class="btn btn-ghost-light">Get in touch</a>
     </div>
   </div>
@@ -60,34 +159,63 @@
   "name": "Gripfeet — About",
   "tag": "section",
   "settings": [
-    { "type": "text",         "id": "eyebrow",           "label": "Hero eyebrow",    "default": "Our story · Made in India" },
-    { "type": "text",         "id": "title",             "label": "Hero title",      "default": "Built between the mat and the floor." },
-    { "type": "textarea",     "id": "subtitle",          "label": "Hero subtitle",   "default": "We made Gripfeet because the grip socks we could find were either clinical, loud, or forgettable. We wanted something worth wearing." },
-    { "type": "image_picker", "id": "image_1",           "label": "Story image" },
-    { "type": "text",         "id": "chapter_1_eyebrow", "label": "Chapter 1 eyebrow", "default": "The beginning" },
-    { "type": "text",         "id": "chapter_1_heading", "label": "Chapter 1 heading", "default": "A sock that finally feels like a sock." },
-    { "type": "textarea",     "id": "chapter_1_body",    "label": "Chapter 1 body",    "default": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays. We knit ours in-house in India — Supima cotton up top, a 100% silicone grip pattern on the sole." },
-    { "type": "text",         "id": "cta_heading",       "label": "CTA heading",     "default": "Try a pair." },
-    { "type": "text",         "id": "cta_body",          "label": "CTA body",        "default": "Start with one pair. Most people come back for a three-pack." }
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story · Made in India" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Built between the mat and the floor." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "We made Gripfeet because the grip socks we could find were either clinical, loud, or forgettable. We wanted something worth wearing." },
+    { "type": "header", "content": "1 · Our story" },
+    { "type": "image_picker", "id": "image_1", "label": "Story image" },
+    { "type": "text", "id": "chapter_1_eyebrow", "label": "Eyebrow", "default": "The beginning" },
+    { "type": "text", "id": "chapter_1_heading", "label": "Heading", "default": "A sock that finally feels like a sock." },
+    { "type": "textarea", "id": "chapter_1_body", "label": "Body", "default": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays." },
+    { "type": "textarea", "id": "chapter_1_body_2", "label": "Body (continued)", "default": "So we knit ours in-house in India — Supima cotton up top, a 100% silicone grip pattern on the sole. A depth of manufacturing most lifestyle brands have to import." },
+    { "type": "header", "content": "2 · Quality & craftsmanship" },
+    { "type": "text", "id": "craft_eyebrow", "label": "Eyebrow", "default": "Quality & craftsmanship" },
+    { "type": "text", "id": "craft_heading", "label": "Heading", "default": "Made properly, to be worn for years." },
+    { "type": "textarea", "id": "craft_body", "label": "Body", "default": "Every pair is knit from long-staple Stretch Supima cotton and finished with a full-sole, food-grade silicone grip that is set in permanently, not printed on. Reinforced heels, ribbed stay-up cuffs, seamless toes." },
+    { "type": "textarea", "id": "craft_points", "label": "Detail points (one per line)", "default": "Stretch Supima cotton, softer with every wash\n100% silicone full-sole grip, 80+ wears\nReinforced heel + stay-up ribbed cuff\n2 to 3 sizes per range for a true fit" },
+    { "type": "image_picker", "id": "craft_image", "label": "Craft image" },
+    { "type": "header", "content": "3 · Our promise" },
+    { "type": "text", "id": "promise_heading", "label": "Heading", "default": "What every pair comes with." },
+    { "type": "header", "content": "4 · Founders (optional)" },
+    { "type": "checkbox", "id": "show_founders", "label": "Show founders section", "default": false },
+    { "type": "image_picker", "id": "founders_image", "label": "Founders photo" },
+    { "type": "textarea", "id": "founders_quote", "label": "Founder quote", "default": "We wanted a grip sock you would reach for even when no floor demanded it. So we made the one we wanted to wear." },
+    { "type": "text", "id": "founders_names", "label": "Names", "default": "The Gripfeet founders" },
+    { "type": "text", "id": "founders_role", "label": "Role/line", "default": "Founders · Gripfeet" },
+    { "type": "header", "content": "5 · Behind the scenes" },
+    { "type": "text", "id": "bts_heading", "label": "Heading", "default": "The making of a pair." },
+    { "type": "image_picker", "id": "bts_image_1", "label": "BTS image 1" },
+    { "type": "image_picker", "id": "bts_image_2", "label": "BTS image 2" },
+    { "type": "image_picker", "id": "bts_image_3", "label": "BTS image 3" },
+    { "type": "header", "content": "6 · Why trust us" },
+    { "type": "text", "id": "trust_heading", "label": "Heading", "default": "The proof, quietly." },
+    { "type": "header", "content": "Closing CTA" },
+    { "type": "text", "id": "cta_heading", "label": "CTA heading", "default": "Try a pair." },
+    { "type": "text", "id": "cta_body", "label": "CTA body", "default": "Start with one pair. Most people come back for a three-pack." }
   ],
   "blocks": [
-    {
-      "type": "value",
-      "name": "Brand value",
-      "settings": [
-        { "type": "text",     "id": "title", "label": "Title", "default": "Made in India" },
-        { "type": "textarea", "id": "body",  "label": "Body",  "default": "Knit in-house with manufacturing depth most brands import." }
-      ]
-    }
+    { "type": "promise", "name": "Promise", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Comfort" },
+      { "type": "textarea", "id": "body", "label": "Body", "default": "Soft enough to wear all day, every day." }
+    ] },
+    { "type": "value", "name": "Trust point", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Made in India" },
+      { "type": "textarea", "id": "body", "label": "Body", "default": "Knit in-house with manufacturing depth most brands import." }
+    ] }
   ],
-  "max_blocks": 6,
+  "max_blocks": 12,
   "presets": [{
     "name": "Gripfeet — About",
     "blocks": [
-      { "type": "value", "settings": { "title": "Made in India",            "body": "Designed and knit in-house with the manufacturing depth most lifestyle brands import." } },
-      { "type": "value", "settings": { "title": "100% Silicone Grip",        "body": "Full-sole pattern, set in permanently. Never peels after 50+ washes." } },
-      { "type": "value", "settings": { "title": "Stretch Supima Cotton",     "body": "Naturally breathable and beautifully soft — every single wash." } },
-      { "type": "value", "settings": { "title": "Designed for Modern Life",  "body": "Studio, hardwood, hotel rooms, sofa Sundays." } }
+      { "type": "promise", "settings": { "title": "Comfort", "body": "Soft Supima that stays soft, wash after wash." } },
+      { "type": "promise", "settings": { "title": "Thoughtful design", "body": "Grip where you need it, invisible where you don't." } },
+      { "type": "promise", "settings": { "title": "Real quality", "body": "Full-sole silicone that never peels or flattens." } },
+      { "type": "promise", "settings": { "title": "Honest service", "body": "Easy returns, quick replies, no runaround." } },
+      { "type": "value", "settings": { "title": "Made in India", "body": "Designed and knit in-house with the depth most lifestyle brands import." } },
+      { "type": "value", "settings": { "title": "4.9 average rating", "body": "Across 1,284+ verified reviews and counting." } },
+      { "type": "value", "settings": { "title": "80+ wears of grip", "body": "The silicone sole is set in permanently — tested to last." } },
+      { "type": "value", "settings": { "title": "4 ranges, every floor", "body": "Studio, sport, no-show and kids — one grip you can trust." } }
     ]
   }]
 }
