@@ -4,8 +4,17 @@
   "sections": {
     "gf-announce": {
       "type": "gripfeet-announcement",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "Free shipping worldwide" } },
+        "m2": { "type": "message", "settings": { "text": "Made in India" } },
+        "m3": { "type": "message", "settings": { "text": "Launch pricing — up to 39% off" } },
+        "m4": { "type": "message", "settings": { "text": "COD available across India" } },
+        "m5": { "type": "message", "settings": { "text": "4–7 day global delivery" } },
+        "m6": { "type": "message", "settings": { "text": "Stretch Supima · 100% silicone grip" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],
       "settings": {
-        "text": "Free shipping worldwide · Made in India · Launch pricing — up to 39% off · COD available across India · 4–7 day global delivery · Stretch Supima · 100% silicone grip"
+        "speed": 34
       }
     },
     "gf-header": {
