@@ -541,6 +541,98 @@
         "reverse": false,
         "speed": 40
       }
+    },
+    "reels": {
+      "type": "gripfeet-reels",
+      "settings": {
+        "eyebrow": "As seen on Instagram",
+        "heading": "In the wild.",
+        "handle": "@gripfeet"
+      },
+      "blocks": {
+        "rl1": {
+          "type": "reel",
+          "settings": {
+            "caption": "Grip check on hardwood"
+          }
+        },
+        "rl2": {
+          "type": "reel",
+          "settings": {
+            "caption": "Sunrise Pilates"
+          }
+        },
+        "rl3": {
+          "type": "reel",
+          "settings": {
+            "caption": "No-slip, no-show"
+          }
+        },
+        "rl4": {
+          "type": "reel",
+          "settings": {
+            "caption": "Lil Steps first runs"
+          }
+        }
+      },
+      "block_order": [
+        "rl1",
+        "rl2",
+        "rl3",
+        "rl4"
+      ]
+    },
+    "faq": {
+      "type": "gripfeet-faq",
+      "settings": {
+        "eyebrow": "Good to know",
+        "heading": "Questions, answered.",
+        "bg_color": "#ECE7F3"
+      },
+      "blocks": {
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "Which sock is right for me?",
+            "answer": "Mat Masters for studio and everyday, Active Hold for sport and training, Invisible Grip for a no-show under loafers and sneakers, Lil Steps for little ones aged 0 to 5."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "Are they available in all sizes?",
+            "answer": "Yes, each range comes in 2 to 3 sizes for a proper fit. The stretchy ribbed cuff and reinforced heel keep them from sliding down."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I wear these for intense workouts?",
+            "answer": "Absolutely. The full-sole silicone grip and channelled knit are built for lateral movement, gym sets and long runs, while still feeling soft enough for all-day wear."
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "Will they shrink or fade after washing?",
+            "answer": "No. Cold machine wash inside out, air dry or tumble low. The Supima softens with every wash and the silicone grip lasts 80+ wears."
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "question": "Where are they made?",
+            "answer": "Knit and finished in India, with Stretch Supima cotton up top and a 100% food-grade silicone sole."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ]
     }
   },
   "order": [
@@ -558,6 +650,8 @@
     "reviews",
     "move_band",
     "gifting",
+    "reels",
+    "faq",
     "newsletter",
     "whatsapp"
   ]

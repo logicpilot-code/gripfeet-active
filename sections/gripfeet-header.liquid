@@ -56,7 +56,7 @@
     display: flex; justify-content: center; align-items: center;
   }
   .gf-nav-logo img {
-    height: 80px;
+    height: 46px;
     width: auto;
     display: block;
   }
@@ -126,7 +126,7 @@
     border-bottom: 1px solid var(--gf-hair);
   }
   .gf-mnav-head img { height: 22px; width: auto; }
-  .gf-mnav-head .gf-wordmark { font-family: var(--gf-serif); font-size: 22px; color: var(--gf-ink); text-decoration: none; }
+  .gf-mnav-head .gf-wordmark { font-family: var(--gf-sans); font-weight: 800; letter-spacing: -0.02em; font-size: 20px; color: var(--gf-ink); text-decoration: none; }
   .gf-mnav-close { background: none; border: 0; cursor: pointer; color: var(--gf-ink); display: flex; }
   .gf-mnav ul {
     list-style: none; padding: 32px 24px; margin: 0; flex: 1;
@@ -134,8 +134,8 @@
   }
   .gf-mnav ul li { border-bottom: 1px solid var(--gf-hair); }
   .gf-mnav ul li a {
-    display: block; padding: 20px 0;
-    font-family: var(--gf-serif); font-size: 28px;
+    display: flex; align-items: center; justify-content: space-between; padding: 18px 0;
+    font-family: var(--gf-sans); font-weight: 800; letter-spacing: -0.02em; font-size: 22px;
     color: var(--gf-ink); text-decoration: none;
   }
   .gf-mnav-foot {
@@ -160,7 +160,7 @@
     .gf-nav-inner { grid-template-columns: auto 1fr auto; height: 64px; }
     .gf-nav-links  { display: none; }
     .gf-nav-burger { display: inline-flex; }
-    .gf-nav-logo img { height: 64px; }
+    .gf-nav-logo img { height: 40px; }
     .gf-nav-logo .gf-nav-wordmark { font-size: 20px; }
     .gf-nav-icons  { gap: 14px; }
   }
@@ -195,9 +195,9 @@
           <img
             src="{{ 'gripfeet-logo.png' | asset_url }}"
             alt="{{ shop.name }}"
-            height="80"
+            height="46"
             width="auto"
-            style="height:80px;width:auto"
+            style="height:46px;width:auto"
           >
         {%- endif -%}
       </a>
