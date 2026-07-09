@@ -1,3 +1,15 @@
+<style>
+  .height-card .frame { position: relative; }
+  .height-card .cat-img, .height-card .cat-img-hover {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; display: block;
+  }
+  .height-card .cat-img { transition: transform .55s var(--ease-out); }
+  .height-card:hover .cat-img { transform: scale(1.04); }
+  .height-card .cat-img-hover { opacity: 0; transition: opacity .45s var(--ease); }
+  .height-card:hover .cat-img-hover { opacity: 1; }
+</style>
+
 <section class="wrap section" id="shop">
   <div class="section-head center">
     <div class="left">
@@ -14,32 +26,30 @@
             {%- if block.settings.badge != blank -%}
               <span class="badge">{{ block.settings.badge }}</span>
             {%- endif -%}
+            {%- comment -%} Resolve default (A) + hover (B): editor image_picker overrides, else the approved per-range asset {%- endcomment -%}
+            {%- assign catn = block.settings.name | downcase -%}
+            {%- assign asset_a = '' -%}
+            {%- assign asset_b = '' -%}
+            {%- if catn contains 'ankle' -%}{%- assign asset_a = 'gf-cat-ankle.jpg' -%}{%- assign asset_b = 'gf-cat-ankle-hover.jpg' -%}
+            {%- elsif catn contains 'crew' -%}{%- assign asset_a = 'gf-cat-crew.jpg' -%}{%- assign asset_b = 'gf-cat-crew-hover.jpg' -%}
+            {%- elsif catn contains 'loafer' -%}{%- assign asset_a = 'gf-cat-loafer.jpg' -%}{%- assign asset_b = 'gf-cat-loafer-hover.jpg' -%}
+            {%- elsif catn contains 'kid' -%}{%- assign asset_a = 'gf-cat-kids.jpg' -%}{%- assign asset_b = 'gf-cat-kids-hover.jpg' -%}
+            {%- endif -%}
             {%- if block.settings.image != blank -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 800 }}"
-                alt="{{ block.settings.name }}"
-                width="800" height="800"
-                loading="lazy"
-                style="width:100%;height:100%;object-fit:cover;display:block"
-              >
+              <img class="cat-img" src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.name }} · {{ block.settings.subtitle }}" width="900" height="675" loading="lazy">
+              {%- if block.settings.image_hover != blank -%}
+                <img class="cat-img-hover" src="{{ block.settings.image_hover | image_url: width: 900 }}" alt="" width="900" height="675" loading="lazy" aria-hidden="true">
+              {%- endif -%}
+            {%- elsif asset_a != '' -%}
+              <img class="cat-img" src="{{ asset_a | asset_url }}" alt="{{ block.settings.name }} · {{ block.settings.subtitle }}" width="1400" height="1046" loading="lazy">
+              {%- if asset_b != '' -%}
+                <img class="cat-img-hover" src="{{ asset_b | asset_url }}" alt="" width="1400" height="1046" loading="lazy" aria-hidden="true">
+              {%- endif -%}
             {%- else -%}
-              {%- assign catn = block.settings.name | downcase -%}
-              {%- assign catimg = '' -%}
-              {%- if catn contains 'ankle' -%}{%- assign catimg = 'gf-cat-ankle.jpg' -%}
-              {%- elsif catn contains 'crew' -%}{%- assign catimg = 'gf-cat-crew.jpg' -%}
-              {%- elsif catn contains 'loafer' -%}{%- assign catimg = 'gf-cat-loafer.jpg' -%}
-              {%- elsif catn contains 'kid' -%}{%- assign catimg = 'gf-cat-kids.jpg' -%}
-              {%- endif -%}
-              {%- if catimg != '' -%}
-                <div class="ph has-photo" style="width:100%;height:100%">
-                  <img class="ph-img" src="{{ catimg | asset_url }}" alt="{{ block.settings.name }} · {{ block.settings.subtitle }}" width="1200" height="1200" loading="lazy" style="transform:scale(1.14);object-position:center 58%">
-                </div>
-              {%- else -%}
-                <div class="ph" style="width:100%;height:100%;background:{{ block.settings.bg_color }}">
-                  <span class="ph-label">{{ block.settings.name }}</span>
-                  <span class="ph-corner">GF</span>
-                </div>
-              {%- endif -%}
+              <div class="ph" style="width:100%;height:100%;background:{{ block.settings.bg_color }}">
+                <span class="ph-label">{{ block.settings.name }}</span>
+                <span class="ph-corner">GF</span>
+              </div>
             {%- endif -%}
           </div>
           <div class="label">
@@ -74,8 +84,9 @@
         { "type": "text",         "id": "subtitle", "label": "Subtitle", "default": "Mat Masters" },
         { "type": "text",         "id": "badge",    "label": "Badge",    "default": "New" },
         { "type": "url",          "id": "link",     "label": "Link" },
-        { "type": "image_picker", "id": "image",    "label": "Image" },
-        { "type": "color",        "id": "bg_color", "label": "Background", "default": "#F3F0E8" }
+        { "type": "image_picker", "id": "image",       "label": "Image" },
+        { "type": "image_picker", "id": "image_hover", "label": "Hover image (optional)", "info": "Shown on hover, e.g. the sock on-foot or a lifestyle shot." },
+        { "type": "color",        "id": "bg_color",    "label": "Background", "default": "#F3F0E8" }
       ]
     }
   ],
