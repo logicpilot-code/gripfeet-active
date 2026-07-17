@@ -1,0 +1,74 @@
+{%- comment -%} Founders showcase. Slot is ready; real photos drop into the image pickers. {%- endcomment -%}
+<style>
+  .gf-founders-grid { display: grid; grid-template-columns: repeat({{ section.blocks.size | at_least: 1 | at_most: 3 }}, 1fr); gap: clamp(16px, 2vw, 28px); }
+  .gf-founder { display: flex; flex-direction: column; }
+  .gf-founder .pic { aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--cream); }
+  .gf-founder .pic img { width: 100%; height: 100%; object-fit: cover; }
+  .gf-founder .who { padding: 14px 4px 0; }
+  .gf-founder .who b { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; display: block; }
+  .gf-founder .who span { font-size: 12.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-top: 3px; display: block; }
+  .gf-founder .bio { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin-top: 8px; }
+  @media (max-width: 720px) { .gf-founders-grid { grid-template-columns: 1fr; } }
+</style>
+
+<section class="wrap section">
+  <div class="section-head">
+    <div class="left">
+      <span class="eyebrow"><span class="dot"></span>{{ section.settings.eyebrow }}</span>
+      <h2 class="h-section" style="margin-top:14px">{{ section.settings.heading }}</h2>
+    </div>
+  </div>
+  {%- if section.settings.intro != blank -%}
+    <p class="lede" style="margin-bottom:clamp(20px,2.6vw,34px)">{{ section.settings.intro }}</p>
+  {%- endif -%}
+  <div class="gf-founders-grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'founder' -%}
+        <div class="gf-founder" {{ block.shopify_attributes }}>
+          <div class="pic">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.name | escape }}" width="800" height="1000" loading="lazy">
+            {%- else -%}
+              <div class="ph" style="width:100%;height:100%">
+                <span class="ph-label">Founder photo</span>
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="who">
+            <b>{{ block.settings.name }}</b>
+            <span>{{ block.settings.role }}</span>
+            {%- if block.settings.bio != blank -%}<p class="bio">{{ block.settings.bio }}</p>{%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GF Founders",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The people behind the pairs" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Meet the founders." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Six million pairs into the craft, and still checking every knit by hand." }
+  ],
+  "blocks": [
+    { "type": "founder", "name": "Founder", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Photo" },
+      { "type": "text", "id": "name", "label": "Name", "default": "Founder name" },
+      { "type": "text", "id": "role", "label": "Role", "default": "Co-founder" },
+      { "type": "textarea", "id": "bio", "label": "Short bio" }
+    ] }
+  ],
+  "max_blocks": 3,
+  "presets": [{
+    "name": "GF Founders",
+    "blocks": [
+      { "type": "founder", "settings": { "name": "Founder name", "role": "Co-founder" } },
+      { "type": "founder", "settings": { "name": "Founder name", "role": "Co-founder" } }
+    ]
+  }]
+}
+{% endschema %}

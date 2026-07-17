@@ -20,7 +20,7 @@
   --on-accent: #FFFFFF;
 
   --sans: "Hanken Grotesk", -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --mono: "Hanken Grotesk", -apple-system, "Helvetica Neue", Arial, sans-serif; /* typewriter font retired per client */
   --gf-display: var(--sans); /* primary/display font — overridden per pairing in theme.liquid */
 
   --gutter: clamp(20px, 4.4vw, 76px);
@@ -65,8 +65,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   padding-left: var(--gutter);
   padding-right: var(--gutter);
 }
-.section { padding-top: clamp(56px, 8vw, 128px); padding-bottom: clamp(56px, 8vw, 128px); }
-.section.tight { padding-top: clamp(40px, 5.5vw, 88px); padding-bottom: clamp(40px, 5.5vw, 88px); }
+.section { padding-top: clamp(40px, 5.5vw, 84px); padding-bottom: clamp(40px, 5.5vw, 84px); }
+.section.tight { padding-top: clamp(28px, 4vw, 56px); padding-bottom: clamp(28px, 4vw, 56px); }
 .section.band { background: var(--cream); }
 .hr { height: 1px; background: var(--hair); border: 0; }
 .no-scroll { overflow: hidden; }
@@ -100,11 +100,11 @@ body h1, body h2, body h3, body h4 { color: var(--ink); }
 .accent-text { color: var(--accent); }
 
 .eyebrow {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   color: var(--ink-2);
   display: inline-flex;
   align-items: center;
@@ -357,13 +357,18 @@ body h1, body h2, body h3, body h4 { color: var(--ink); }
 .hero-badges .b-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
 @media (max-width: 640px) {
   .hero { min-height: 78vh; }
-  .hero-badges { gap: 18px; font-size: 9.5px; padding: 12px var(--gutter); }
+  .hero-badges {
+    display: grid; grid-template-columns: repeat(2, auto);
+    justify-content: center; justify-items: start;
+    column-gap: 26px; row-gap: 7px;
+    font-size: 9.5px; padding: 12px var(--gutter);
+  }
 }
 
 /* ---------- two-tone big statement ---------- */
 .statement {
-  padding-top: clamp(56px, 7vw, 110px);
-  padding-bottom: clamp(56px, 7vw, 110px);
+  padding-top: clamp(40px, 5vw, 76px);
+  padding-bottom: clamp(40px, 5vw, 76px);
 }
 .statement p {
   margin: 0;
@@ -390,12 +395,14 @@ body h1, body h2, body h3, body h4 { color: var(--ink); }
 .trust-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
 .trust-item {
   display: flex; align-items: center; gap: 14px;
-  padding: 26px 24px 26px 0;
+  padding: 22px 20px;
   border-right: 1px solid var(--hair);
+  min-width: 0;
 }
 .trust-item:last-child { border-right: 0; }
 .trust-item .ico {
-  width: 40px; height: 40px; flex-shrink: 0;
+  position: relative;
+  width: 40px; height: 40px; flex: 0 0 40px;
   border: 1.5px solid var(--ink); border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
 }
@@ -403,7 +410,7 @@ body h1, body h2, body h3, body h4 { color: var(--ink); }
 .trust-item small { display: block; color: var(--ink-2); font-size: 12px; font-weight: 400; margin-top: 2px; }
 @media (max-width: 860px) {
   .trust-inner { grid-template-columns: 1fr 1fr; }
-  .trust-item { padding: 20px 16px 20px 0; }
+  .trust-item { padding: 16px 14px; }
   .trust-item:nth-child(2n) { border-right: 0; }
   .trust-item:nth-child(-n+2) { border-bottom: 1px solid var(--hair); }
 }
@@ -415,7 +422,7 @@ body h1, body h2, body h3, body h4 { color: var(--ink); }
 /* ---------- section head ---------- */
 .section-head {
   display: flex; justify-content: space-between; align-items: flex-end;
-  gap: 24px; margin-bottom: clamp(26px, 3.6vw, 48px);
+  gap: 24px; margin-bottom: clamp(18px, 2.6vw, 34px);
 }
 .section-head .left .eyebrow { margin-bottom: 16px; }
 .section-head .right { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }

@@ -345,7 +345,7 @@
       "settings": {
         "eyebrow": "Signature palette",
         "heading": "Colours that get along.",
-        "subtext": "Thoughtfully curated for comfort, style & everyday function."
+        "subtext": "Curated for comfort, style & function."
       },
       "blocks": {
         "pg1": {
@@ -633,6 +633,10 @@
         "f4",
         "f5"
       ]
+    },
+    "b2b": {
+      "type": "gripfeet-b2b-band",
+      "settings": {}
     }
   },
   "order": [
@@ -640,6 +644,7 @@
     "trust",
     "categories",
     "statement",
+    "b2b",
     "featured",
     "trends",
     "story",

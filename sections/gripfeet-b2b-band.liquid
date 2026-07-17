@@ -1,0 +1,38 @@
+{%- comment -%} B2B heritage credential band. Brand-voice trust, not a loud banner. {%- endcomment -%}
+<style>
+  .gf-b2b { background: var(--cream); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .gf-b2b .wrap { display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; padding-top: clamp(30px, 3.6vw, 52px); padding-bottom: clamp(30px, 3.6vw, 52px); }
+  .gf-b2b-stat { display: flex; flex-direction: column; }
+  .gf-b2b-stat b { font-family: var(--gf-display, var(--sans)); font-weight: 800; font-size: clamp(40px, 5vw, 72px); letter-spacing: -0.035em; line-height: 0.95; color: var(--ink); white-space: nowrap; }
+  .gf-b2b-stat span { font-size: 12.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); margin-top: 8px; }
+  .gf-b2b-copy p { margin: 0; font-size: clamp(15px, 1.25vw, 17.5px); line-height: 1.55; color: var(--ink); max-width: 52ch; font-weight: 500; }
+  .gf-b2b-copy small { display: block; margin-top: 10px; font-size: 13px; color: var(--ink-2); }
+  @media (max-width: 760px) { .gf-b2b .wrap { grid-template-columns: 1fr; gap: 16px; } .gf-b2b-stat b { white-space: normal; } }
+</style>
+
+<section class="gf-b2b">
+  <div class="wrap">
+    <div class="gf-b2b-stat">
+      <b>{{ section.settings.stat }}</b>
+      <span>{{ section.settings.stat_label }}</span>
+    </div>
+    <div class="gf-b2b-copy">
+      <p>{{ section.settings.line }}</p>
+      {%- if section.settings.subline != blank -%}<small>{{ section.settings.subline }}</small>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GF B2B Credential",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "stat", "label": "Stat", "default": "6,000,000+" },
+    { "type": "text", "id": "stat_label", "label": "Stat label", "default": "pairs supplied · B2B" },
+    { "type": "textarea", "id": "line", "label": "Line", "default": "From India's largest grip socks manufacturer — trusted by the country's leading trampoline parks, indoor play zones and family entertainment centres." },
+    { "type": "text", "id": "subline", "label": "Subline", "default": "The volumes and the trust of the entertainment industry's who's who, now knit for home." }
+  ],
+  "presets": [{ "name": "GF B2B Credential" }]
+}
+{% endschema %}
