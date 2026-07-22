@@ -31,7 +31,7 @@
         "b4": {
           "type": "badge",
           "settings": {
-            "text": "4–7 Day Global Delivery"
+            "text": "4-7 Day Global Delivery"
           }
         }
       },
@@ -67,7 +67,7 @@
           "settings": {
             "icon": "fit",
             "title": "Perfect Fit",
-            "subtitle": "Available in 2–3 sizes"
+            "subtitle": "Available in 2-3 sizes"
           }
         },
         "t4": {

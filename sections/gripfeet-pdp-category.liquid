@@ -1,6 +1,6 @@
 {{ 'gripfeet-pdp-cat.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} Range-routed PDP sections — picks the bespoke set by range, matching the buy-box accent {%- endcomment -%}
+{%- comment -%} Range-routed PDP sections - picks the bespoke set by range, matching the buy-box accent {%- endcomment -%}
 {%- liquid
   assign hay = product.type | append: ' ' | append: product.title | downcase
   assign tagstr = product.tags | join: ' ' | downcase
@@ -25,9 +25,9 @@
 
 {% schema %}
 {
-  "name": "GF PDP — Range sections",
+  "name": "GF PDP - Range sections",
   "tag": "section",
   "settings": [],
-  "presets": [{ "name": "GF PDP — Range sections" }]
+  "presets": [{ "name": "GF PDP - Range sections" }]
 }
 {% endschema %}

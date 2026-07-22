@@ -1,5 +1,5 @@
 /* ============================================================
-   Gripfeet — Category PDP templates
+   Gripfeet - Category PDP templates
    Accent themes · enhanced buy box · 4 bespoke templates · ecom sections
    ============================================================ */
 
@@ -100,7 +100,7 @@
 .pmd-measure p { margin:0; font-size:12.5px; line-height:1.5; color:var(--ink-2); }
 
 /* =====================================================================
-   ANKLE · Mat Masters — calm studio editorial (sage)
+   ANKLE · Mat Masters - calm studio editorial (sage)
    ===================================================================== */
 .ank-surf { padding-top:clamp(48px,7vw,104px); }
 .ank-surf-head { margin-bottom:clamp(28px,3.6vw,48px); }
@@ -155,7 +155,7 @@
 .aic-dots button.on { background:var(--accent-deep); width:26px; border-radius:5px; }
 
 /* =====================================================================
-   CREW · Active Hold — dark technical (lime on near-black)
+   CREW · Active Hold - dark technical (lime on near-black)
    ===================================================================== */
 .crew-spec { background:#101012; color:#fff; padding:clamp(56px,8vw,120px) 0; }
 .crew-spec-head { max-width:60ch; margin-bottom:clamp(32px,4vw,56px); }
@@ -203,7 +203,7 @@
 .cs-l { display:block; margin-top:10px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,0.6); }
 
 /* =====================================================================
-   LOAFER · Invisible Grip — quiet luxe (clay)
+   LOAFER · Invisible Grip - quiet luxe (clay)
    ===================================================================== */
 .lof-under-head { text-align:center; max-width:60ch; margin:0 auto clamp(32px,4vw,52px); }
 .lof-under-head .eyebrow { margin-bottom:18px; }
@@ -247,7 +247,7 @@
 .lof-line-foot .div { width:4px; height:4px; border-radius:50%; background:var(--hair-2); }
 
 /* =====================================================================
-   KIDS · Lil Steps — playful & reassuring (coral)
+   KIDS · Lil Steps - playful & reassuring (coral)
    ===================================================================== */
 .kid-finder-card { display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,64px); background:var(--accent-soft); border-radius:32px; padding:clamp(28px,4vw,64px); align-items:center; }
 .kid-finder-copy p { margin:18px 0 0; font-size:15px; line-height:1.6; color:var(--ink-2); max-width:42ch; }
@@ -290,7 +290,7 @@
 .kpc-who span { font-size:12.5px; color:var(--ink-2); }
 
 /* =====================================================================
-   SHARED ECOM SECTIONS — reviews breakdown · Q&A · cross-sell
+   SHARED ECOM SECTIONS - reviews breakdown · Q&A · cross-sell
    ===================================================================== */
 .rev-layout { display:grid; grid-template-columns:300px 1fr; gap:clamp(28px,4vw,64px); align-items:start; }
 .rev-summary { position:sticky; top:96px; background:#fff; border-radius:20px; padding:28px; }

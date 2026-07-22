@@ -1,8 +1,8 @@
 /* ============================================================
-   Gripfeet — Motion layer (vanilla port of design-handoff motion.jsx)
+   Gripfeet - Motion layer (vanilla port of design-handoff motion.jsx)
    1. Scroll-reveal auto-tagger (no per-section edits needed)
    2. Infinite conveyor drag-to-scrub (loop + pause-on-hover are CSS)
-   3. window.gfOnTick — shared poll used by the collection infinite grid
+   3. window.gfOnTick - shared poll used by the collection infinite grid
    ============================================================ */
 (function () {
   "use strict";
@@ -54,7 +54,7 @@
     reveal();
   }
 
-  /* scroll-driven reveal — no IntersectionObserver dependency (robust in embedded frames) */
+  /* scroll-driven reveal - no IntersectionObserver dependency (robust in embedded frames) */
   function reveal() {
     var vh = window.innerHeight || document.documentElement.clientHeight;
     each("[data-reveal]:not(.is-in)", function (el) {
@@ -122,7 +122,7 @@
     new MutationObserver(schedule).observe(root, { childList: true, subtree: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
-    /* poll fallback — scroll events can be suppressed in embedded frames */
+    /* poll fallback - scroll events can be suppressed in embedded frames */
     setInterval(function () { reveal(); ticks.forEach(function (fn) { try { fn(); } catch (e) {} }); }, 240);
     /* Shopify theme editor: re-scan when sections are re-rendered */
     document.addEventListener("shopify:section:load", schedule);

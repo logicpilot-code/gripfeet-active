@@ -1,9 +1,9 @@
 /* ============================================================
-   Gripfeet — Editorial monochrome design system
+   Gripfeet - Editorial monochrome design system
    Instrument Serif + Hanken Grotesk
    ============================================================ */
 
-/* Fonts loaded via <link> tags in each section — not @import (blocked by Shopify CDN) */
+/* Fonts loaded via <link> tags in each section - not @import (blocked by Shopify CDN) */
 
 :root {
   --gf-bg:          #FFFFFF;
@@ -1034,7 +1034,7 @@
 @keyframes gf-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 /* ============================================================
-   PDP — PRODUCT DETAIL PAGE
+   PDP - PRODUCT DETAIL PAGE
    ============================================================ */
 
 .gf-pdp-breadcrumb {
@@ -1191,7 +1191,7 @@
 .gf-pdp-acc-plus { transition: transform .3s var(--gf-ease); display: inline-flex; }
 .gf-pdp-acc.open .gf-pdp-acc-plus { transform: rotate(45deg); }
 
-/* sticky buy bar — mobile only */
+/* sticky buy bar - mobile only */
 .gf-pdp-buybar {
   position: fixed; left: 0; right: 0; bottom: 0;
   background: rgba(255,255,255,.97);

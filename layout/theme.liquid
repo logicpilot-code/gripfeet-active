@@ -100,7 +100,7 @@
 
     {% render 'meta-tags' %}
 
-    {%- comment -%} Gripfeet structured data (JSON-LD) — inlined (custom templates don't inherit Dawn's schema). Real data only. {%- endcomment -%}
+    {%- comment -%} Gripfeet structured data (JSON-LD) - inlined (custom templates don't inherit Dawn's schema). Real data only. {%- endcomment -%}
     {%- liquid
       assign cur = cart.currency.iso_code | default: shop.currency
       assign shop_url = shop.url

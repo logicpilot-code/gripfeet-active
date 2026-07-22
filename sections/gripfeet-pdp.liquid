@@ -105,7 +105,7 @@
 
     {%- form 'product', product, id: 'gf-pdp-form' -%}
 
-      {%- comment -%} Generic, variant-wired option selectors — covers every product option {%- endcomment -%}
+      {%- comment -%} Generic, variant-wired option selectors - covers every product option {%- endcomment -%}
       {%- for option in product.options_with_values -%}
         {%- assign oname = option.name | downcase -%}
         {%- assign oidx = forloop.index0 -%}
@@ -220,7 +220,7 @@
       </div>
       <div class="pdp-trust-item">
         <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="m16 8 5 3v5h-5"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
-        <div><strong>Ships in 1–2 days</strong><small>4–7 day global delivery. COD available.</small></div>
+        <div><strong>Ships in 1-2 days</strong><small>4-7 day global delivery. COD available.</small></div>
       </div>
       <div class="pdp-trust-item">
         <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg></span>
@@ -244,7 +244,7 @@
       </div>
       <div class="pacc" data-id="shipping">
         <button type="button" class="pacc-head">Shipping &amp; Returns<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>Ships in 1–2 business days from India</li><li>4–7 day delivery worldwide · COD available</li><li>Free shipping over ₹999 · quality guarantee on every pair</li></ul></div></div>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Ships in 1-2 business days from India</li><li>4-7 day delivery worldwide · COD available</li><li>Free shipping over ₹999 · quality guarantee on every pair</li></ul></div></div>
       </div>
     </div>
   </div><!-- /pdp-info -->
@@ -265,17 +265,17 @@
     <thead><tr><th>Size</th><th>{% if range_id == 'kids' %}Age{% else %}UK shoe{% endif %}</th><th>EU</th><th>Foot length</th></tr></thead>
     <tbody>
       {%- if range_id == 'kids' -%}
-        <tr><td class="sz">XS</td><td>0–1 yr</td><td>EU 16–19</td><td>8–11 cm</td></tr>
-        <tr><td class="sz">S</td><td>1–3 yr</td><td>EU 20–24</td><td>11–14 cm</td></tr>
-        <tr><td class="sz">M</td><td>3–5 yr</td><td>EU 25–29</td><td>14–17 cm</td></tr>
+        <tr><td class="sz">XS</td><td>0-1 yr</td><td>EU 16-19</td><td>8-11 cm</td></tr>
+        <tr><td class="sz">S</td><td>1-3 yr</td><td>EU 20-24</td><td>11-14 cm</td></tr>
+        <tr><td class="sz">M</td><td>3-5 yr</td><td>EU 25-29</td><td>14-17 cm</td></tr>
       {%- elsif range_id == 'crew' -%}
-        <tr><td class="sz">S</td><td>UK 4–7</td><td>EU 37–40</td><td>24–26 cm</td></tr>
-        <tr><td class="sz">M</td><td>UK 7–10</td><td>EU 40–44</td><td>26–28 cm</td></tr>
-        <tr><td class="sz">L</td><td>UK 10–13</td><td>EU 44–47</td><td>28–31 cm</td></tr>
+        <tr><td class="sz">S</td><td>UK 4-7</td><td>EU 37-40</td><td>24-26 cm</td></tr>
+        <tr><td class="sz">M</td><td>UK 7-10</td><td>EU 40-44</td><td>26-28 cm</td></tr>
+        <tr><td class="sz">L</td><td>UK 10-13</td><td>EU 44-47</td><td>28-31 cm</td></tr>
       {%- else -%}
-        <tr><td class="sz">S</td><td>UK 3–6</td><td>EU 36–39</td><td>23–25 cm</td></tr>
-        <tr><td class="sz">M</td><td>UK 6–9</td><td>EU 39–42</td><td>25–27 cm</td></tr>
-        <tr><td class="sz">L</td><td>UK 9–12</td><td>EU 42–46</td><td>27–30 cm</td></tr>
+        <tr><td class="sz">S</td><td>UK 3-6</td><td>EU 36-39</td><td>23-25 cm</td></tr>
+        <tr><td class="sz">M</td><td>UK 6-9</td><td>EU 39-42</td><td>25-27 cm</td></tr>
+        <tr><td class="sz">L</td><td>UK 9-12</td><td>EU 42-46</td><td>27-30 cm</td></tr>
       {%- endif -%}
     </tbody>
   </table>
@@ -294,7 +294,7 @@
   {%- endif -%}
 </div>
 
-{%- comment -%} Related products / cross-sell handled by the GF PDP — Cross-sell section in product.json {%- endcomment -%}
+{%- comment -%} Related products / cross-sell handled by the GF PDP - Cross-sell section in product.json {%- endcomment -%}
 
 <!-- Sticky buy bar -->
 <div class="pdp-buybar" id="pdp-buybar">
@@ -461,7 +461,7 @@
     if (!/^\d{6}$/.test(v)) { pinOut.className = "pin-out err"; pinOut.textContent = "Enter a valid 6-digit pincode."; return; }
     var metro = ["11", "40", "56", "60", "70", "50"].some(function (p) { return v.indexOf(p) === 0; });
     pinOut.className = "pin-out";
-    pinOut.innerHTML = "<strong>" + (metro ? "2–3 days" : "4–7 days") + "</strong> · " + (metro ? "Metro express" : "Standard") + " · COD available · Free over ₹999";
+    pinOut.innerHTML = "<strong>" + (metro ? "2-3 days" : "4-7 days") + "</strong> · " + (metro ? "Metro express" : "Standard") + " · COD available · Free over ₹999";
   }
   if (pinBtn) pinBtn.addEventListener("click", checkPin);
   if (pin) pin.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); checkPin(); } });
@@ -481,9 +481,9 @@
 
 {% schema %}
 {
-  "name": "Gripfeet — PDP",
+  "name": "Gripfeet - PDP",
   "tag": "section",
   "settings": [],
-  "presets": [{ "name": "Gripfeet — PDP" }]
+  "presets": [{ "name": "Gripfeet - PDP" }]
 }
 {% endschema %}

@@ -1,5 +1,5 @@
 /* ============================================================
-   Gripfeet — Header overrides for Dawn
+   Gripfeet - Header overrides for Dawn
    Targets Dawn's .header class to match editorial design
    ============================================================ */
 
@@ -29,7 +29,7 @@
   .header__heading-logo { max-height: 22px; }
 }
 
-/* Nav links — Gripfeet style */
+/* Nav links - Gripfeet style */
 .header__inline-menu .list-menu__item,
 .header__menu-item {
   font-family: "Hanken Grotesk", -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -93,5 +93,5 @@
   outline-color: #0A0A0A;
 }
 
-/* Announcement bar — hide Dawn default, our custom section handles it */
+/* Announcement bar - hide Dawn default, our custom section handles it */
 .section-header .announcement-bar { display: none; }
