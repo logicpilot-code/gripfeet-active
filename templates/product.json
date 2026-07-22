@@ -25,7 +25,7 @@
             "stars": 5,
             "verified": true,
             "title": "Finally a grip sock I'd wear out",
-            "quote": "The Supima feels like a proper sock — not a piece of medical equipment. The grip is genuinely grippy.",
+            "quote": "The Supima feels like a proper sock, not a piece of medical equipment. The grip is genuinely grippy.",
             "name": "Aanya M.",
             "location": "Mumbai",
             "fit_tag": "Fit: True to size"
@@ -37,7 +37,7 @@
             "stars": 5,
             "verified": true,
             "title": "Travel staple now",
-            "quote": "Hotel floors, long-haul flights, AirBnB tiles — they just work. And they look good folded in the bag.",
+            "quote": "Hotel floors, long-haul flights, AirBnB tiles, they just work. And they look good folded in the bag.",
             "name": "Rohan K.",
             "location": "Bengaluru",
             "fit_tag": "Fit: True to size"
@@ -96,7 +96,7 @@
           "type": "qa",
           "settings": {
             "question": "Do these fit inside running shoes?",
-            "answer": "Yes — the cuff and silicone footbed are low-profile enough for trainers, loafers and most everyday shoes.",
+            "answer": "Yes, the cuff and silicone footbed are low-profile enough for trainers, loafers and most everyday shoes.",
             "who": "Gripfeet team",
             "votes": 24
           }
@@ -114,7 +114,7 @@
           "type": "qa",
           "settings": {
             "question": "How do I wash them without ruining the grip?",
-            "answer": "Cold machine wash inside out, air dry or tumble low. Never iron the sole — the grip lasts 80+ wears.",
+            "answer": "Cold machine wash inside out, air dry or tumble low. Never iron the sole. The grip lasts 80+ wears.",
             "who": "Gripfeet team",
             "votes": 12
           }

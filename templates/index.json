@@ -5,7 +5,7 @@
       "settings": {
         "eyebrow": "Premium Grip Socks · Traction Triumphs",
         "headline": "Made to Grip.",
-        "subline": "Anti-slip socks for the way you actually move — sunrise Pilates, hardwood floors, the long flight in between. Supima up top, 100% silicone on the sole.",
+        "subline": "Anti-slip socks for the way you actually move: sunrise Pilates, hardwood floors, the long flight in between. Supima up top, 100% silicone on the sole.",
         "cta_label": "Shop Grip Socks",
         "secondary_label": "Shop Bundles"
       },
@@ -89,7 +89,7 @@
     "statement": {
       "type": "gripfeet-statement",
       "settings": {
-        "lead": "India's grip sock you'd actually wear out of the studio —",
+        "lead": "India's grip sock you'd actually wear out of the studio,",
         "rest": "trusted on the mat, loved for everyday."
       },
       "blocks": {
@@ -184,7 +184,7 @@
         "eyebrow": "Newly knit · Featured sets",
         "heading": "Built for the way you move.",
         "sub_banner_text": "Subscribe & save 15% on every refill.",
-        "sub_banner_sub": "Pick a pack, pick a cadence — every 2, 3 or 6 months. Skip or cancel anytime.",
+        "sub_banner_sub": "Pick a pack, pick a cadence, every 2, 3 or 6 months. Skip or cancel anytime.",
         "sub_banner_cta": "How it works"
       },
       "blocks": {
@@ -275,8 +275,8 @@
       "settings": {
         "eyebrow": "Our story · Made in India",
         "heading": "A grip sock that finally feels like a sock.",
-        "body_1": "Most grip socks fall into two camps — clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays.",
-        "body_2": "We knit ours in-house in India — Supima cotton up top, a 100% silicone grip pattern on the sole.",
+        "body_1": "Most grip socks fall into two camps: clinical and forgettable, or loud and over-sporty. We sat between them and built Gripfeet for the way people actually move: studios, hotel rooms, school runs, long flights, slow Sundays.",
+        "body_2": "We knit ours in-house in India, Supima cotton up top, a 100% silicone grip pattern on the sole.",
         "sig_name": "The Gripfeet team",
         "sig_sub": "Knit in India · Designed for everywhere"
       }
@@ -292,7 +292,7 @@
           "type": "usp",
           "settings": {
             "title": "Stretch Supima Yarn",
-            "desc": "Naturally breathable, beautifully soft — every wash."
+            "desc": "Naturally breathable, beautifully soft, every wash."
           }
         },
         "u2": {
@@ -404,7 +404,7 @@
             "tag": "Trio",
             "name": "Studio Three",
             "save_label": "Save 21%",
-            "desc": "Three pairs — your full rotation.",
+            "desc": "Three pairs, your full rotation.",
             "price": "699",
             "was": "897",
             "cta": "Add to bag",
@@ -484,7 +484,7 @@
       "settings": {
         "eyebrow": "Gift & travel",
         "heading": "The cleanest small gift we know.",
-        "body": "Hand-folded into a Gripfeet linen pouch — a premium-feeling essential that's quietly useful.",
+        "body": "Hand-folded into a Gripfeet linen pouch, a premium-feeling essential that's quietly useful.",
         "cta_label": "Shop gifting"
       },
       "blocks": {
@@ -525,7 +525,7 @@
       "settings": {
         "eyebrow": "Letters from the studio",
         "heading": "Drop your email, get ₹200 off.",
-        "body": "One quiet note a month — new colourways, studio drops, the occasional travel-essentials list.",
+        "body": "One quiet note a month: new colourways, studio drops, the occasional travel-essentials list.",
         "cta": "Subscribe"
       }
     },
@@ -637,6 +637,34 @@
     "b2b": {
       "type": "gripfeet-b2b-band",
       "settings": {}
+    },
+    "founders": {
+      "type": "gripfeet-founders",
+      "settings": {
+        "eyebrow": "The people behind the pairs",
+        "heading": "Meet the founders.",
+        "intro": "Six million pairs into the craft, and still checking every knit by hand."
+      },
+      "blocks": {
+        "f1": {
+          "type": "founder",
+          "settings": {
+            "name": "Founder name",
+            "role": "Co-founder"
+          }
+        },
+        "f2": {
+          "type": "founder",
+          "settings": {
+            "name": "Founder name",
+            "role": "Co-founder"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2"
+      ]
     }
   },
   "order": [
@@ -645,6 +673,7 @@
     "categories",
     "statement",
     "b2b",
+    "founders",
     "featured",
     "trends",
     "story",

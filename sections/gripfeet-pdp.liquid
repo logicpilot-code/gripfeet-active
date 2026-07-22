@@ -100,7 +100,7 @@
     <!-- Stock urgency -->
     <div class="pdp-stock">
       <span class="dotpulse"></span>
-      Selling fast — <strong>{{ stock_left }} packs</strong> left at launch price
+      Selling fast: <strong>{{ stock_left }} packs</strong> left at launch price
     </div>
 
     {%- form 'product', product, id: 'gf-pdp-form' -%}
@@ -188,7 +188,7 @@
           </button>
         </div>
         <button type="submit" class="btn btn-primary pdp-add" id="pdp-add-btn">
-          <span id="pdp-add-label">Add to bag — ₹{{ first_variant.price | money_without_currency }}</span>
+          <span id="pdp-add-label">Add to bag · ₹{{ first_variant.price | money_without_currency }}</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
         </button>
       </div>
@@ -236,11 +236,11 @@
     <div class="pdp-accordion" id="pdp-accordion">
       <div class="pacc open" data-id="materials">
         <button type="button" class="pacc-head">Materials &amp; Make<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane</li><li>100% silicone grip pattern on the full sole — not painted-on rubber</li><li>Reinforced heel &amp; toe · ribbed no-slip cuff</li></ul></div></div>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>72% Stretch Supima cotton · 24% recycled nylon · 4% elastane</li><li>100% silicone grip pattern on the full sole, not painted-on rubber</li><li>Reinforced heel &amp; toe · ribbed no-slip cuff</li></ul></div></div>
       </div>
       <div class="pacc" data-id="care">
         <button type="button" class="pacc-head">Care &amp; Washing<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
-        <div class="pacc-body"><div class="pacc-inner"><ul><li>Machine wash cold, gentle cycle, inside out</li><li>Air dry or tumble dry low — never iron the sole</li><li>Grip stays set for 50+ washes</li></ul></div></div>
+        <div class="pacc-body"><div class="pacc-inner"><ul><li>Machine wash cold, gentle cycle, inside out</li><li>Air dry or tumble dry low, never iron the sole</li><li>Grip stays set for 50+ washes</li></ul></div></div>
       </div>
       <div class="pacc" data-id="shipping">
         <button type="button" class="pacc-head">Shipping &amp; Returns<span class="pacc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
@@ -279,7 +279,7 @@
       {%- endif -%}
     </tbody>
   </table>
-  <p class="pmd-note">Gripfeet knit runs true to size and wears slightly snug out of the wash — the Supima softens after first wear. Between sizes? Size down for studio grip, up for all-day wear.</p>
+  <p class="pmd-note">Gripfeet knit runs true to size and wears slightly snug out of the wash. The Supima softens after first wear. Between sizes? Size down for studio grip, up for all-day wear.</p>
   <div class="pmd-measure">
     <span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span>
     <p><strong>Measure at home:</strong> stand on paper, mark heel to longest toe, measure in cm. Match the foot-length column above.</p>
@@ -303,7 +303,7 @@
     <div class="bb-sub" id="pdp-bb-sub">{{ product.type }}</div>
   </div>
   <button type="button" class="btn btn-primary" id="pdp-bb-add">
-    <span id="pdp-bb-label">Add to bag — ₹{{ first_variant.price | money_without_currency }}</span>
+    <span id="pdp-bb-label">Add to bag · ₹{{ first_variant.price | money_without_currency }}</span>
   </button>
 </div>
 
@@ -359,8 +359,8 @@
 
     var lineTotal = v.price * qty;
     if (priceEl) priceEl.textContent = rupees(v.price);
-    if (addLbl)  addLbl.textContent  = (v.available ? "Add to bag — " : "Sold out — ") + rupees(lineTotal);
-    if (bbLabel) bbLabel.textContent = "Add to bag — " + rupees(lineTotal);
+    if (addLbl)  addLbl.textContent  = (v.available ? "Add to bag · " : "Sold out · ") + rupees(lineTotal);
+    if (bbLabel) bbLabel.textContent = "Add to bag · " + rupees(lineTotal);
     if (bbSub)   bbSub.textContent   = rupees(v.price) + " · " + v.title;
 
     if (v.compare_at_price && v.compare_at_price > v.price) {
